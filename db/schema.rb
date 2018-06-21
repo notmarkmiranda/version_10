@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_21_194545) do
+ActiveRecord::Schema.define(version: 2018_06_21_200252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "games", force: :cascade do |t|
+    t.bigint "season_id"
+    t.datetime "date"
+    t.boolean "completed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["season_id"], name: "index_games_on_season_id"
+  end
 
   create_table "leagues", force: :cascade do |t|
     t.string "name"
@@ -21,6 +30,15 @@ ActiveRecord::Schema.define(version: 2018_06_21_194545) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_leagues_on_user_id"
+  end
+
+  create_table "seasons", force: :cascade do |t|
+    t.bigint "league_id"
+    t.boolean "active", default: true
+    t.boolean "completed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_seasons_on_league_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -40,5 +58,7 @@ ActiveRecord::Schema.define(version: 2018_06_21_194545) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "games", "seasons"
   add_foreign_key "leagues", "users"
+  add_foreign_key "seasons", "leagues"
 end
