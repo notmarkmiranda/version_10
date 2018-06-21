@@ -5,6 +5,8 @@ RSpec.describe User, type: :model do
     it { should validate_presence_of :email }
   end
 
-  context 'relationships'
+  context 'relationships' do
+    it { should have_many :leagues }
+  end
   context 'methods'
 end
