@@ -1,0 +1,14 @@
+language: ruby
+rvm:
+- 2.4.0
+env:
+  matrix:
+  - DB=postgresql
+script:
+  - RAILS_ENV=test bundle exec rake db:create db:migrate --trace
+  - bundle exec rspec
+before_install:
+  - export TZ=US/Mountain
+before_script:
+  - cp config/database.travis.yml config/database.yml
+  - psql -c 'create database travis_ci_test;' -U postgres
