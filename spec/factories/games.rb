@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :game do
-    season nil
+    season
     date "2018-06-21 14:02:52"
     completed false
   end

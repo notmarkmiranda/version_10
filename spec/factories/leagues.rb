@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :league do
     name "MyString"
-    user nil
+    user
   end
 end

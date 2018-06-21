@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :season do
-    league nil
+    league
     active false
   end
 end
