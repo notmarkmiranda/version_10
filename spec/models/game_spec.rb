@@ -7,7 +7,7 @@ RSpec.describe Game, type: :model do
 
   context 'relationships' do
     it { should belong_to :season }
-    xit { should have_many :players }
+    it { should have_many :players }
   end
 
   context 'methods'

@@ -8,6 +8,8 @@ RSpec.describe League, type: :model do
 
   context 'relationships' do
     it { should belong_to :user }
+    it { should have_many :seasons }
+    it { should delegate_method(:count).to(:seasons).with_prefix(true) }
   end
 
   context 'methods'
