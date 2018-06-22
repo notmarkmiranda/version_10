@@ -19,6 +19,20 @@ RSpec.describe League, type: :model do
     let!(:first_season) { create(:season, league: league) }
     let!(:second_season) { create(:season, league: league, active: true) }
 
+    context '#current_season' do
+      subject { league.current_season }
+
+      it 'returns the last season' do
+        allow(league.seasons).to receive(:find_by).with(active: true).and_return(first_season)
+
+        expect(subject).to eq(first_season)
+      end
+
+      it 'returns the active season' do
+        expect(subject).to eq(second_season)
+      end
+    end
+
     context '#current_season_leader' do
       subject { league.current_season_leader }
 
