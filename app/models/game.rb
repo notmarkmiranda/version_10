@@ -10,6 +10,8 @@ class Game < ApplicationRecord
   end
 
   def score_game
-    players.each { |pl| pl.score_player }
+    return nil if players.empty?
+    score_players = lambda { |player| player.score_player }
+    players.each(&score_players)
   end
 end

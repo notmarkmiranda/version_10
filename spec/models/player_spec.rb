@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Player, type: :model do
-  context 'validations' do
-
-  end
+  context 'validations'
 
   context 'relationships' do
     it { should belong_to :game }
@@ -11,5 +9,9 @@ RSpec.describe Player, type: :model do
     it { should delegate_method(:full_name).to(:user).with_prefix(true) }
   end
 
-  context 'methods'
+  context 'methods' do
+    context '#calculate_score'
+    context 'score_player'
+    context 'self#rank_by_score'
+  end
 end
