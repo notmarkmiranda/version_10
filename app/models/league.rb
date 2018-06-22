@@ -3,6 +3,25 @@ class League < ApplicationRecord
   validates :name, presence: true
   belongs_to :user
   has_many :seasons
+  has_many :games, through: :seasons
+  has_many :players, through: :games
 
   delegate :count, to: :seasons, prefix: true
+  delegate :count, to: :games, prefix: true
+  delegate :count, to: :players, prefix: true
+
+  def current_season
+    seasons.find_by(active: true) || seasons.last
+  end
+
+  def current_season_leader
+    return 'No One' if no_one_qualifies?
+    current_season.leader_full_name
+  end
+
+ private
+
+  def no_one_qualifies?
+    games_count.zero? || players_count.zero?
+  end
 end
