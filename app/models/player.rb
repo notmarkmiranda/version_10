@@ -6,7 +6,6 @@ class Player < ApplicationRecord
   delegate :buy_in, to: :game, prefix: true
 
   def calculate_score
-    # place = finishing_place if place.nil?
     numerator = game_players_count * game_buy_in ** 2 / total_expense
     denominator = finishing_place + 1
     ((Math.sqrt(numerator) / denominator) * 100).floor / 100.0
