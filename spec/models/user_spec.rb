@@ -10,5 +10,14 @@ RSpec.describe User, type: :model do
     it { should have_many :players }
   end
 
-  context 'methods'
+  context 'methods' do
+    let(:user) { create(:user, first_name: 'Mark', last_name: 'Miranda') }
+    context '#full_name' do
+      subject { user.full_name }
+
+      it 'returns the full name' do
+        expect(subject).to eq('Mark Miranda')
+      end
+    end
+  end
 end

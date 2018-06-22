@@ -10,5 +10,13 @@ RSpec.describe Game, type: :model do
     it { should have_many :players }
   end
 
-  context 'methods'
+  context 'methods' do
+    let(:game) { create(:game, date: Date.new(2015, 5, 9)) }
+    context '#formatted_date' do
+      subject { game.formatted_date }
+      it 'returns the formatted truncated date' do
+        expect(subject).to eq('May 2015')
+      end
+    end
+  end
 end
