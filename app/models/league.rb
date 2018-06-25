@@ -14,14 +14,7 @@ class League < ApplicationRecord
     seasons.find_by(active: true) || seasons.last
   end
 
-  def current_season_leader
-    return 'No One' if no_one_qualifies?
-    current_season.leader_full_name
-  end
-
- private
-
-  def no_one_qualifies?
-    games_count.zero? || players_count.zero?
+  def current_season_number
+    (seasons.index(current_season) + 1).to_i
   end
 end

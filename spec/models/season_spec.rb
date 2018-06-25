@@ -36,5 +36,33 @@ RSpec.describe Season, type: :model do
         expect(subject).to eq('Mark Miranda')
       end
     end
+
+    context '#most_second_place_finishes' do
+      let!(:player) { create(:player, game: game, finishing_place: 2) }
+      subject { season.most_second_place_finishes }
+
+      it 'returns an empty array for none' do
+        player.update(finishing_place: 1)
+
+        expect(subject).to match([[], nil])
+      end
+
+      it 'returns array of full name and number for 1 player' do
+        expect(subject).to match([[player.user.full_name], 1])
+      end
+
+      it 'returns array for full name and number for multiple players' do
+        game_2 = create(:game, season: season)
+        player_2 = create(:player, game: game_2, finishing_place: 2)
+
+        player.user.update(first_name: 'Alan', last_name: 'Alda')
+        player_2.user.update(first_name: 'Zenith', last_name: 'TV')
+
+        expect(subject).to match([[player.user.full_name, player_2.user.full_name], 1])
+      end
+    end
+
+    context '#standings'
+    context '#ordered_rankings_full_names'
   end
 end
