@@ -12,15 +12,15 @@ RSpec.describe Season, type: :model do
   context 'methods' do
     let(:game)   { create(:game) }
     let(:season) { game.season }
+    let(:player_1) { double('player_1') }
+    let(:player_2) { double('player_2') }
+    let(:players) { [player_1, player_2] }
 
     context '#leader' do
       subject { season.leader }
-      let(:player_1) { double('player_1') }
-      let(:player_2) { double('player_2') }
-      let(:players) { [player_1, player_2] }
 
       it 'returns the player' do
-        allow(season).to receive(:player_rankings).and_return(players)
+        allow(season.players).to receive(:rank_by_score).with(season).and_return(players)
         expect(subject).to eq(player_1)
       end
     end
@@ -62,7 +62,32 @@ RSpec.describe Season, type: :model do
       end
     end
 
-    context '#standings'
-    context '#ordered_rankings_full_names'
+    context '#standings' do
+      subject { season.standings }
+      it 'returns an empty array for no players' do
+        expect(subject).to be_nil
+      end
+
+      it 'returns an array of players when players exist' do
+        allow(season.players).to receive(:rank_by_score).with(season).and_return(players)
+
+        expect(subject).to eq(players)
+      end
+    end
+
+    context '#ordered_rankings_full_names' do
+      subject { season.ordered_rankings_full_names }
+
+      it 'returns an empty array for no one qualifying' do
+        expect(subject).to eq([])
+      end
+
+      it 'returns standings when the players exist' do
+        allow(season).to receive(:standings).and_return(players)
+        create(:player, game: game)
+
+        expect(subject).to eq(players)
+      end
+    end
   end
 end
