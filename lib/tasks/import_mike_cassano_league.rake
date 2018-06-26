@@ -31,6 +31,8 @@ task import_mike_cassano: [:environment] do
   end
 
   seasons = league.seasons
+  seasons.update_all(active: false, completed: true)
+  seasons.last.update(active: true, completed: false)
 
   seasons.each_with_index do |season, x|
     parse_csv(season, @csvs[x])

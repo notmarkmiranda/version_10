@@ -1,0 +1,21 @@
+<p>League Name: <%= @league.name %></p>
+<p>Number of Seasons: <%= @league.seasons_count %></p>
+<p>Total Number of Games: <%= @league.games_count %></p>
+<p>League Leader:</p>
+
+<p>Stats for Season #<%= @league.current_season_number %></p>
+<p>Current Season Leader: <%= @current_season.leader_full_name %></p>
+<% unless @current_season.most_second_place_finishes[1].nil? %>
+<p>Most 2nd Place Finishes (<%= @current_season.most_second_place_finishes[1] %>):</p>
+<ul>
+  <% @current_season.most_second_place_finishes[0].each do |player_name| %>
+    <li><%= player_name %></li>
+  <% end %>
+</ul>
+<% end %>
+<p>Standings:</p>
+<ol>
+  <% @current_season.ordered_rankings_full_names.each do |player| %>
+    <li><%= player.user_full_name %> - <%= player.cumulative_score %></li>
+  <% end %>
+</ol>
