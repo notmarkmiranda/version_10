@@ -9,7 +9,7 @@ class Season < ApplicationRecord
   default_scope { order(id: :asc) }
 
   def leader
-    player_rankings.first
+    standings.first
   end
 
   def leader_full_name

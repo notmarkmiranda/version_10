@@ -32,5 +32,18 @@ RSpec.describe League, type: :model do
         expect(subject).to eq(second_season)
       end
     end
+
+    context '#current_season_number' do
+      subject { league.current_season_number }
+
+      it 'returns nil if there are no seasons' do
+        league.seasons.destroy_all
+        expect(subject).to eq(nil)
+      end
+
+      it 'returns the season index' do
+        expect(subject).to eq(2)
+      end
+    end
   end
 end
