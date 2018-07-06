@@ -1,9 +1,15 @@
 <p>League Name: <%= @league.name %></p>
+
 <p>Number of Seasons: <%= @league.seasons_count %></p>
 <p>Total Number of Games: <%= @league.games_count %></p>
+<p>Average Players per Game: <%= @league.average_players_per_game %></p>
 <p>League Leader:</p>
-
+<p>Most 2nd Place Finishes:</p>
+<p>Standings:</p>
+<hr>
 <p>Stats for Season #<%= @league.current_season_number %></p>
+<p>Total Number of Games for Season: <%= @current_season.games_count %></p>
+<p>Average Players per Game: <%= @current_season.average_players_per_game %></p>
 <p>Current Season Leader: <%= @current_season.leader_full_name %></p>
 <% unless @current_season.most_second_place_finishes[1].nil? %>
 <p>Most 2nd Place Finishes (<%= @current_season.most_second_place_finishes[1] %>):</p>

@@ -10,6 +10,10 @@ class League < ApplicationRecord
   delegate :count, to: :games, prefix: true
   delegate :count, to: :players, prefix: true
 
+  def average_players_per_game
+    players_count.to_f / games_count
+  end
+
   def current_season
     seasons.find_by(active: true) || seasons.last
   end
