@@ -8,6 +8,10 @@ class Season < ApplicationRecord
 
   default_scope { order(id: :asc) }
 
+  def average_players_per_game
+    players_count.to_f / games_count
+  end
+
   def leader
     standings.first
   end
