@@ -19,6 +19,20 @@ RSpec.describe League, type: :model do
     let!(:first_season) { create(:season, league: league) }
     let!(:second_season) { create(:season, league: league, active: true) }
 
+    context '#average_players_per_game' do
+      subject { league.average_players_per_game }
+      it 'returns 0.0 for no games' do
+        expect(subject).to eq(0.0)
+      end
+
+      it 'returns the average number of players' do
+        games = create_list(:game, 4, season: first_season)
+        create_list(:player, 9, game: games[1])
+
+        expect(subject).to eq(2.25)
+      end
+    end
+
     context '#current_season' do
       subject { league.current_season }
 

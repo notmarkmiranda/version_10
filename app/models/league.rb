@@ -11,7 +11,8 @@ class League < ApplicationRecord
   delegate :count, to: :players, prefix: true
 
   def average_players_per_game
-    players_count.to_f / games_count
+    return 0.0 if games_count.zero?
+    (players_count.to_f / games_count * 100).floor / 100.0
   end
 
   def current_season
