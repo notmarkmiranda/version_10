@@ -5,10 +5,17 @@ env:
   matrix:
   - DB=postgresql
 script:
-  - RAILS_ENV=test bundle exec rake db:create db:migrate --trace
-  - bundle exec rspec
+- RAILS_ENV=test bundle exec rake db:create db:migrate --trace
+- bundle exec rspec
 before_install:
-  - export TZ=US/Mountain
+- export TZ=US/Mountain
 before_script:
-  - cp config/database.travis.yml config/database.yml
-  - psql -c 'create database travis_ci_test;' -U postgres
+- cp config/database.travis.yml config/database.yml
+- psql -c 'create database travis_ci_test;' -U postgres
+deploy:
+  provider: heroku
+  api_key:
+    secure: pNVi6GuRyRxb/Vo9Rq0t9GFX9oHhZ8ej0GnGEMVlNdKYJqBNkGdcAzQmOtIGFmBswcCtTOKa+OxNEhfQlMR4BmA0vJMwbWFOGEqUsFhi4CnUAZWakP4qVApgmv7InfdcVOQjq3F85il7FLMLIuRjx1PobcvVoPSBi0N1lv5pxZjuQoGfCbA81l4KSaIBIbjhEFiz5BjlxZGC4jcd2KY5raLAbrQsU84wPdi66mqKeMNkCGxOFLycB3wSXZlRWNz2wosgqKKHIije9yxX3nKkWTZgusH8iyKe8Pu+JX6i8GTv8wrmUf8UNu/RnITA+faoSWALxNUVV27fv2oHNaxo8XGKv797q0+dsJgK2A99YLk83WdHeAiAbukOkCGsG75dya10gDx7Fek7P+SyeW/WBE8DII/em514a03yrk6Gnbfb2wo4gR+awhmIkUDMuGRYebxz1G/fCLE7yLvd2IC/HV0fStGglAA1TjMEVsPgGCQJyzLj4e/cuzlU1BC5LEpblli+UmmuZmWa6f97kH625mOUsZBnXLFicoRPX8jC+20dbOnPpq7TQBEGK3GbgGKNRT0NGVsLRPj0g9RQvbUUaHagXXLFdprtYCxUVNkuYFjfFr4r63Z0+NcEv4G2l6JYBkECJPRgLTs23J4Szq14YiT4Z5spQEBcuXjXaichrPc=
+  app: big-blind
+  on:
+    repo: notmarkmiranda/version_10
