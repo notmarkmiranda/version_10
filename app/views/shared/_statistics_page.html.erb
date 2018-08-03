@@ -18,7 +18,7 @@
       <div class="card text-white bg-primary mb-3 ml-3 mr-3 col-md-3 pl-0 pr-0">
         <% if seasons_show? %>
         <div class="card-body card-stat">
-            <div class="number-stat"><%= number_to_currency(league.current_season.total_pot, precision: 0) %></div>
+            <div class="number-stat"><%= number_to_currency(subject.total_pot, precision: 0) %></div>
         </div>
         <div class="card-footer stat-footer">
           <div class="stat-title">Season Pot Size</div>
