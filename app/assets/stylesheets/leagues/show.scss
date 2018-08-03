@@ -1,0 +1,45 @@
+div.card-header.league-name {
+  font-size: 18px;
+  font-weight:100;
+  text-transform: uppercase;
+}
+
+.header-text {
+  font-size: 16px;
+  text-transform: uppercase;
+  color: #aaa;
+  font-weight: 100;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.card-stat {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.number-stat {
+  font-size: 72px;
+  font-weight: bold;
+}
+
+.stat-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.stat-title {
+  text-transform: uppercase;
+  font-weight: 100;
+}
+
+.league-show-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
