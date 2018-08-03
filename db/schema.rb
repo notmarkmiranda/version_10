@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_22_015208) do
+ActiveRecord::Schema.define(version: 2018_08_03_161557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2018_06_22_015208) do
     t.bigint "season_id"
     t.datetime "date"
     t.boolean "completed", default: false
-    t.integer "buy_in"
+    t.integer "buy_in", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["season_id"], name: "index_games_on_season_id"

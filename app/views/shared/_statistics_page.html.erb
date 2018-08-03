@@ -1,0 +1,111 @@
+<div class="card">
+  <div class="card-header league-name">
+    <%= league.name %>
+  </div>
+  <div class="card-body">
+    <div class="league-show-header">
+      <% if seasons_show? %>
+        <h5 class="header-text">Season Statistics</h5>
+        <%= link_to 'View League Statistics', league_path(league), class: 'btn btn-outline-info btn-sm' %>
+      <% else %>
+        <h5 class="header-text">Overall League Statistics</h5>
+        <%= link_to 'View Current Season Statistics', season_path(league.current_season), class: 'btn btn-outline-info btn-sm' %>
+      <% end %>
+    </div>
+    <hr />
+    <div class="stats row justify-content-md-center">
+
+      <div class="card text-white bg-primary mb-3 ml-3 mr-3 col-md-3 pl-0 pr-0">
+        <% if seasons_show? %>
+        <div class="card-body card-stat">
+            <div class="number-stat"><%= number_to_currency(subject.total_pot, precision: 0) %></div>
+        </div>
+        <div class="card-footer stat-footer">
+          <div class="stat-title">Season Pot Size</div>
+        </div>
+        <% else %>
+        <div class="card-body card-stat">
+            <div class="number-stat"><%= league.seasons_count %></div>
+        </div>
+        <div class="card-footer stat-footer">
+          <div class="stat-title">Number of Seasons</div>
+        </div>
+        <% end %>
+      </div>
+
+      <div class="card text-white bg-secondary mb-3 col-md-3 ml-3 mr-3 pl-0 pr-0">
+        <div class="card-body card-stat">
+          <div class="number-stat"><%= subject.games_count %></div>
+        </div>
+        <div class="card-footer stat-footer">
+          <div class="stat-title">Total Number of Games</div>
+        </div>
+      </div>
+
+      <div class="card text-white bg-success mb-3 col-md-3 ml-3 mr-3 pl-0 pr-0">
+        <div class="card-body card-stat">
+          <div class="number-stat"><%= subject.average_players_per_game %></div>
+        </div>
+        <div class="card-footer stat-footer">
+          <div class="stat-title">Average Players / Game</div>
+        </div>
+      </div>
+
+    </div>
+    <% if seasons_show? %>
+    <hr />
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-4 mt-3">
+        <div class="card mb-4 border-primary">
+          <h5 class="card-header header-text">
+            <% if seasons_show? %>
+              Season Leader
+            <% else %>
+              League Leader
+            <% end %>
+          </h5>
+          <div class="card-body">
+            <%= subject.leader_full_name %>
+          </div>
+        </div>
+
+        <div class="card mb-4 border-danger">
+          <div class="card-header">
+            <h5 class="header-text">
+              Most 2nd Place Finishes
+            </h5>
+            <% unless subject.most_second_place_finishes.nil? %>
+              <small><%= pluralize(subject.most_second_place_finishes[1], 'game') %></small>
+            <% end %>
+          </div>
+          <ul class="list-group list-group-flush">
+            <% if subject.most_second_place_finishes.nil? %>
+              <li class="list-group-item">No one</li>
+            <% else %>
+              <% subject.most_second_place_finishes[0].each do |player_name| %>
+                <li class="list-group-item"><%= player_name %></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-3">
+        <div class="card mb-4 border-info">
+          <h5 class="card-header header-text">
+            Standings
+          </h5>
+            <ul class="list-group list-group-flush">
+              <% subject.ordered_rankings_full_names.each_with_index do |player, index| %>
+                <li class="list-group-item">
+                  <%= "#{(index + 1).to_i}. #{player.user_full_name} | #{player.cumulative_score}" %>
+                </li>
+              <% end %>
+            </ul>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+  </div>
+</div>
