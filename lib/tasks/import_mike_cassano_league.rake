@@ -55,7 +55,7 @@ def difference_in_seasons(seasons_count)
 end
 
 def parse_csv(season, csv)
-  CSV.parse(csv, { row_sep: :auto, headers: true, header_converters: :symbol }) do |row|
+  CSV.parse(csv, { row_sep: :auto, headers: :first_row, encoding: 'bom|utf-8', header_converters: :symbol }) do |row|
     first_name, last_name = row[:person].split
     date = Date.strptime(row[:date], '%m/%d/%Y')
 
