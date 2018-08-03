@@ -40,7 +40,7 @@ task import_mike_cassano: [:environment] do
 end
 
 def create_users(users)
-  CSV.parse(users, { row_sep: :auto, headers: true, header_converters: :symbol }) do |row|
+  CSV.parse(users, { row_sep: :auto, headers: :first_row, encoding: 'bom|utf-8', header_converters: :symbol }) do |row|
     first_name, last_name = row[:person].split
 
     user = User.find_or_initialize_by(email: row[:email], first_name: first_name, last_name: last_name)
