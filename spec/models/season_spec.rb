@@ -10,7 +10,7 @@ RSpec.describe Season, type: :model do
   end
 
   context 'methods' do
-    let(:game)   { create(:game) }
+    let(:game)   { create(:game, buy_in: 100) }
     let(:season) { game.season }
     let(:player_1) { double('player_1') }
     let(:player_2) { double('player_2') }
@@ -44,7 +44,7 @@ RSpec.describe Season, type: :model do
       it 'returns an empty array for none' do
         player.update(finishing_place: 1)
 
-        expect(subject).to match([[], nil])
+        expect(subject).to match(nil)
       end
 
       it 'returns array of full name and number for 1 player' do
@@ -62,6 +62,21 @@ RSpec.describe Season, type: :model do
       end
     end
 
+    context '#ordered_rankings_full_names' do
+      subject { season.ordered_rankings_full_names }
+
+      it 'returns an empty array for no one qualifying' do
+        expect(subject).to eq([])
+      end
+
+      it 'returns standings when the players exist' do
+        allow(season).to receive(:standings).and_return(players)
+        create(:player, game: game)
+
+        expect(subject).to eq(players)
+      end
+    end
+
     context '#standings' do
       subject { season.standings }
       it 'returns an empty array for no players' do
@@ -75,18 +90,17 @@ RSpec.describe Season, type: :model do
       end
     end
 
-    context '#ordered_rankings_full_names' do
-      subject { season.ordered_rankings_full_names }
+    context '#total_pot' do
+      subject { season.total_pot }
 
-      it 'returns an empty array for no one qualifying' do
-        expect(subject).to eq([])
+      let(:new_season) { create(:season) }
+      it 'returns 0 for a brand new season' do
+        expect(new_season.total_pot).to eq(0)
       end
 
-      it 'returns standings when the players exist' do
-        allow(season).to receive(:standings).and_return(players)
-        create(:player, game: game)
-
-        expect(subject).to eq(players)
+      it 'returns total pot for a season with games' do
+        create_list(:player, 2, game: game)
+        expect(subject).to eq(202)
       end
     end
   end

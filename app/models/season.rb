@@ -1,4 +1,6 @@
 class Season < ApplicationRecord
+  include StatisticsCompiler
+
   belongs_to :league
   has_many :games
   has_many :players, through: :games
@@ -7,10 +9,6 @@ class Season < ApplicationRecord
   delegate :count, to: :players, prefix: true
 
   default_scope { order(id: :asc) }
-
-  def average_players_per_game
-    players_count.to_f / games_count
-  end
 
   def leader
     standings.first
@@ -29,17 +27,23 @@ class Season < ApplicationRecord
       .count(:id)
     max_qty = max_hash.values.max
     max_ids = max_hash.select { |k, v| v == max_qty }.keys
-
+    return if max_ids.empty?
     [max_ids.map { |id| User.find(id).full_name }.sort, max_qty]
+  end
+
+  def ordered_rankings_full_names
+    return [] if no_one_qualifies?
+    standings
   end
 
   def standings
     players.rank_by_score(self)
   end
 
-  def ordered_rankings_full_names
-    return [] if no_one_qualifies?
-    standings
+  def total_pot
+    games.map do |game|
+      (game.buy_in * game.players_count) + game.players.sum(:additional_expense)
+    end.sum
   end
 
   private
