@@ -20,4 +20,9 @@ class League < ApplicationRecord
     return nil if seasons.empty?
     (seasons.index(current_season) + 1).to_i
   end
+
+  def season_number(season=nil)
+    return nil if seasons.empty?
+    (seasons.index(season || current_season) + 1).to_i
+  end
 end

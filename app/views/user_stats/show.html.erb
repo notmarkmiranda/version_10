@@ -1,0 +1,33 @@
+<div class="d-flex justify-content-center">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="header-text user-header-text"><%= @user.full_name %></h5>
+        <% if @season && !@players.empty? %>
+          <div class="caption-text">Season #<%= @players.first.season_number %></div>
+        <% end %>
+      </div>
+      <ul class="list-group list-group-flush">
+        <% @players.each do |player| %>
+          <li class="list-group-item">
+            <div class="caption-text text-danger">
+              <%= player.finishing_place.ordinalize %> place out of <%= pluralize(player.game_players_count, 'player') %>
+              | Score: <%= player.score %>
+            </div>
+            <div class="header-text">
+              <%= player.game_formatted_full_date %>
+              <% unless @season %>
+                - Season #<%= player.season_number %>
+              <% end %>
+            </div>
+            <div class="caption-text text-primary">
+              <% if player.additional_expense %>
+                Rebuy: <%= number_to_currency(player.additional_expense, precision: 0) %>
+              <% end %>
+						</div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
