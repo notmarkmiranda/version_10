@@ -20,6 +20,14 @@ RSpec.describe Game, type: :model do
       end
     end
 
+    context '#formatted_full_date' do
+      subject { game.formatted_full_date }
+
+      it 'returns the full formatted date' do
+        expect(subject).to eq('May 9, 2015')
+      end
+    end
+
     context '#score_game' do
       subject { game.score_game }
 
