@@ -4,6 +4,11 @@ class Player < ApplicationRecord
 
   delegate :full_name, to: :user, prefix: true
   delegate :buy_in, to: :game, prefix: true
+  delegate :formatted_full_date, to: :game, prefix: true
+  delegate :players_count, to: :game, prefix: true
+  delegate :season, to: :game
+  delegate :league, to: :season
+  delegate :season_number, to: :league, prefix: true
 
   def calculate_score
     numerator = game_players_count * game_buy_in ** 2 / total_expense
@@ -13,6 +18,10 @@ class Player < ApplicationRecord
 
   def score_player
     update(score: calculate_score)
+  end
+
+  def season_number
+    league_season_number(season)
   end
 
   def self.rank_by_score(season)
@@ -25,14 +34,10 @@ class Player < ApplicationRecord
 
   private
 
-  def game_players_count
-    game.players_count
-  end
-
   def self.query
-    "SELECT user_id, SUM(score) AS cumulative_score, COUNT(game_id) \
+    "SELECT user_id, SUM(score) AS cumulative_score, (SUM(score)/9) AS counted_score, COUNT(game_id) \
      AS games_count FROM (#{subquery}) AS c_players GROUP BY \
-     c_players.user_id ORDER BY cumulative_score DESC"
+     c_players.user_id ORDER BY counted_score DESC"
   end
 
   def self.subquery
@@ -40,7 +45,8 @@ class Player < ApplicationRecord
     @season_users.map do |user_id|
       "(SELECT players.* FROM players INNER JOIN games ON \
        players.game_id = games.id WHERE user_id = #{user_id} AND \
-       games.season_id = #{@active_season.id} ORDER BY score LIMIT 9)"
+       games.season_id = #{@active_season.id} \
+       ORDER BY score DESC LIMIT 9)"
     end.join("\nUNION ALL\n")
   end
 
