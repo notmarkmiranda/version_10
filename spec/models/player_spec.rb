@@ -27,7 +27,7 @@ RSpec.describe Player, type: :model do
       end
     end
 
-    context 'score_player' do
+    context '#score_player' do
       subject { player.score_player }
 
       it 'returns true' do
@@ -37,6 +37,20 @@ RSpec.describe Player, type: :model do
         expect(player.reload.score).to eq(1.0)
       end
     end
+
+    context '#season_number' do
+      it 'returns the season number' do
+        expect(player.season_number).to eq(1)
+      end
+
+      let(:new_season) { create(:season, league: game.season.league) }
+      let(:new_game) { create(:game, season: new_season) }
+      let(:new_player) { create(:player, game: new_game) }
+      it 'returns the season number' do
+        expect(new_player.season_number).to eq(2)
+      end
+    end
+
 
     context 'self#rank_by_score' do
       let(:season) { game.season }
