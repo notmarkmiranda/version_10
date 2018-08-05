@@ -11,6 +11,12 @@ div.card-header.league-name {
   font-weight: 100;
 }
 
+.smaller-header-text {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #333;
+}
+
 .stats {
   display: flex;
   justify-content: space-evenly;

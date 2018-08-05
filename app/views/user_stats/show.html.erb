@@ -1,15 +1,35 @@
 <div class="d-flex justify-content-center mb-4">
-  <div class="col-lg-6">
+
+  <div class="col-lg-4">
     <div class="card">
       <div class="card-header">
         <h5 class="header-text user-header-text"><%= @user.full_name %></h5>
+        <div class="caption-text">member of <%= pluralize(@user.number_of_leagues_played_in, 'league') %></div>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <div class="smaller-header-text">attendance: <%= decimal_to_percentage(@user.attendance(@season)[0] / @user.attendance(@season)[1].to_f, precision: 2) %></div>
+          <div class="caption-text"><%= "#{@players.count} / #{pluralize(@user.attendance(@season)[1], 'game')}" %></div>
+        </li>
+        <li class="list-group-item">
+          <div class="smaller-header-text">games won: <%= decimal_to_percentage(@user.winner_calculation(@season)[0] / @user.winner_calculation(@season)[1].to_f, precision: 2) %></div>
+          <div class="caption-text"><%= "#{@user.winner_calculation(@season)[0]} / #{pluralize(@user.winner_calculation(@season)[1], 'game')}" %></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="header-text user-header-text">Statistics</h5>
         <% if @season && !@players.empty? %>
           <div class="caption-text">Season #<%= @players.first.season_number %></div>
         <% end %>
       </div>
       <ul class="list-group list-group-flush">
         <% @players.each do |player| %>
-          <%= link_to game_path(player.game), class: 'list-group-item list-group-item-active' do %>
+          <%= link_to game_path(player.game), class: 'list-group-item list-group-item-action' do %>
             <div class="caption-text text-danger">
               <%= player.finishing_place.ordinalize %> place out of <%= pluralize(player.game_players_count, 'player') %>
               | Score: <%= player.score %>
@@ -21,7 +41,7 @@
               <% end %>
             </div>
             <div class="caption-text text-primary">
-              <% if player.additional_expense %>
+              <% if player.has_additional_expense? %>
                 Rebuy: <%= number_to_currency(player.additional_expense, precision: 0) %>
               <% end %>
 						</div>

@@ -18,6 +18,10 @@ class Player < ApplicationRecord
     ((Math.sqrt(numerator) / denominator) * 100).floor / 100.0
   end
 
+  def has_additional_expense?
+    additional_expense && !additional_expense.zero?
+  end
+
   def score_player
     update(score: calculate_score)
   end
