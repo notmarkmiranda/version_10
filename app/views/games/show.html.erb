@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-center">
+  <div class="col-lg-6">
+    <div class="card border-primary">
+      <div class="card-header header-text border-primary">
+        <h5 class="user-header-text">Date: <%= @game.formatted_full_date %></h5>
+        <div class="caption-text">Season #<%= @game.season_league_season_number %></div>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item header-text user-header-text">
+          Standings
+        </li>
+        <% @game.players.in_place.each do |player, index| %>
+          <%= link_to user_stats_path(user_id: player.user_id), class: 'list-group-item list-group-item-active stat-line' do %>
+            <%= "#{player.finishing_place}. #{player.user_full_name}" %>
+            <div class="caption-text text-info">
+              Score: <%= player.score %>
+              <% if player.additional_expense %>
+                | Rebuy or Add-on: <%= number_to_currency(player.additional_expense, precision: 0) %>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

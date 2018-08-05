@@ -4,5 +4,7 @@ Rails.application.routes.draw do
 
   resources :leagues
   resources :seasons
+  resources :games
+
   get '/user_stats/:user_id', to: 'user_stats#show', as: 'user_stats'
 end
