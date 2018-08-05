@@ -27,6 +27,27 @@ RSpec.describe Player, type: :model do
       end
     end
 
+    context '#hash_additional_expense' do
+      subject { player.has_additional_expense? }
+      it 'returns true' do
+        player.update(additional_expense: 15)
+
+        expect(subject).to be true
+      end
+
+      it 'returns false - additional_expense is nil' do
+        player.update(additional_expense: nil)
+
+        expect(subject).to be_falsy
+      end
+
+      it 'returns false - additional_expense is zero' do
+        player.update(additional_expense: 0)
+
+        expect(subject).to be_falsy
+      end
+    end
+
     context '#score_player' do
       subject { player.score_player }
 

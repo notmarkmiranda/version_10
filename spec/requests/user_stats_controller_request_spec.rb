@@ -12,7 +12,8 @@ describe 'User Stats Controller' do
     end
 
     it 'renders the show template with query params' do
-      get "/user_stats/#{user.id}?season_id=#{season.id}"
+      expect(Season).to receive(:find).with(season.id.to_s).and_return(season)
+      get "/user_stats/#{user.id}?season=#{season.id}"
 
       expect(response.status).to eq(200)
     end
