@@ -28,6 +28,24 @@ RSpec.describe Game, type: :model do
       end
     end
 
+    context '#player_in_place_full_name' do
+      let(:user) { create(:user, first_name: 'Mark', last_name: 'Miranda') }
+      let!(:player) { create(:player, user: user, game: game, finishing_place: 3) }
+
+      it 'returns the full name of a player' do
+        expect(game.player_in_place_full_name(3)).to eq('Mark Miranda')
+      end
+
+      let(:new_game) { create(:game) }
+      it 'returns nil for no players' do
+        expect(new_game.player_in_place_full_name(3)).to be_nil
+      end
+
+      it 'returns nil for no player in place' do
+        expect(game.player_in_place_full_name(5)).to be_nil
+      end
+    end
+
     context '#score_game' do
       subject { game.score_game }
 
@@ -45,6 +63,23 @@ RSpec.describe Game, type: :model do
         end
 
         expect(subject).to eq([game.players[0], game.players[1]])
+      end
+    end
+
+    context '#winner_full_name' do
+      it 'returns the winners full name' do
+        expect(game).to receive(:player_in_place_full_name).with(1)
+
+        game.winner_full_name
+      end
+    end
+
+    context '#season_league_season_number' do
+
+      it 'calls league#season_number' do
+        expect(game.league).to receive(:season_number).with(game.season)
+
+        game.season_league_season_number
       end
     end
   end

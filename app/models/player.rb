@@ -10,6 +10,8 @@ class Player < ApplicationRecord
   delegate :league, to: :season
   delegate :season_number, to: :league, prefix: true
 
+  scope :in_place, -> { order(finishing_place: :asc) }
+
   def calculate_score
     numerator = game_players_count * game_buy_in ** 2 / total_expense
     denominator = finishing_place + 1
