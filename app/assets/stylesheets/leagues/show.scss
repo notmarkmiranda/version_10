@@ -46,6 +46,7 @@ div.card-header.league-name {
 .league-show-header {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
 }
@@ -55,4 +56,11 @@ div.card-header.league-name {
   text-transform: uppercase;
   color: gray;
   letter-spacing: 1px;
+}
+
+.league-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
