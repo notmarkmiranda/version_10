@@ -10,6 +10,10 @@ class Season < ApplicationRecord
 
   default_scope { order(id: :asc) }
 
+  def self.except_for_current(season_id)
+    Season.all.map { |season| ["Season ##{season.id}", season.id] }
+  end
+
   def leader
     standings.first
   end
@@ -34,6 +38,18 @@ class Season < ApplicationRecord
   def ordered_rankings_full_names
     return [] if no_one_qualifies?
     standings
+  end
+
+  def self.for_select(league)
+    league.seasons.map { |season| ["Season ##{league.season_number(season)}", season.id] }
+  end
+
+  def self.for_select_except_current(league, season_id)
+    league.seasons.where.not(id: season_id).map{ |season| ["Season ##{league.season_number(season)}", season.id] }
+  end
+
+  def self.for_user_select_except_current(league, season_id)
+    for_select_except_current(league, season_id).push(["View All Seasons", "all"])
   end
 
   def standings

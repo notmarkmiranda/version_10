@@ -1,53 +1,64 @@
-<div class="d-flex justify-content-center mb-4">
+<div class="d-flex justify-content-center mb-4 flex-wrap">
 
-  <div class="col-lg-4">
-    <div class="card">
-      <div class="card-header">
-        <h5 class="header-text user-header-text"><%= @user.full_name %></h5>
-        <div class="caption-text">member of <%= pluralize(@user.number_of_leagues_played_in, 'league') %></div>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <div class="smaller-header-text">attendance: <%= decimal_to_percentage(@user.attendance(@season)[0] / @user.attendance(@season)[1].to_f, precision: 2) %></div>
-          <div class="caption-text"><%= "#{@players.count} / #{pluralize(@user.attendance(@season)[1], 'game')}" %></div>
-        </li>
-        <li class="list-group-item">
-          <div class="smaller-header-text">games won: <%= decimal_to_percentage(@user.winner_calculation(@season)[0] / @user.winner_calculation(@season)[1].to_f, precision: 2) %></div>
-          <div class="caption-text"><%= "#{@user.winner_calculation(@season)[0]} / #{pluralize(@user.winner_calculation(@season)[1], 'game')}" %></div>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="col-lg-6">
-    <div class="card">
-      <div class="card-header">
-        <h5 class="header-text user-header-text">Statistics</h5>
-        <% if @season && !@players.empty? %>
-          <div class="caption-text">Season #<%= @players.first.season_number %></div>
+    <div class="col-lg-4">
+      <div class="user-stat-actions">
+        <% if @season %>
+          <%= link_to 'Return to League', league_path(@season.league), class: 'btn btn-outline-primary btn-sm mb-2 mr-2' %>
+          <%= select_tag 'season', options_for_select(Season.for_user_select_except_current(@season.league, params[:season])), include_blank: 'Select a Season', class: 'form-control-sm mb-2', id: 'user-season-navigator' %>
         <% end %>
       </div>
-      <ul class="list-group list-group-flush">
-        <% @players.each do |player| %>
-          <%= link_to game_path(player.game), class: 'list-group-item list-group-item-action' do %>
-            <div class="caption-text text-danger">
-              <%= player.finishing_place.ordinalize %> place out of <%= pluralize(player.game_players_count, 'player') %>
-              | Score: <%= player.score %>
-            </div>
-            <div class="header-text">
-              <%= player.game_formatted_full_date %>
-              <% unless @season %>
-                - Season #<%= player.season_number %>
-              <% end %>
-            </div>
-            <div class="caption-text text-primary">
-              <% if player.has_additional_expense? %>
-                Rebuy: <%= number_to_currency(player.additional_expense, precision: 0) %>
-              <% end %>
-						</div>
+      <div class="card border-success">
+        <div class="card-header border-success">
+          <h5 class="header-text user-header-text"><%= @user.full_name %></h5>
+          <div class="caption-text text-success">member of <%= pluralize(@user.number_of_leagues_played_in, 'league') %></div>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <div class="smaller-header-text">attendance: <%= decimal_to_percentage(@user.attendance(@season)[0] / @user.attendance(@season)[1].to_f, precision: 2) %></div>
+            <div class="caption-text"><%= "#{@players.count} / #{pluralize(@user.attendance(@season)[1], 'game')}" %></div>
+          </li>
+          <li class="list-group-item">
+            <div class="smaller-header-text">games won: <%= decimal_to_percentage(@user.winner_calculation(@season)[0] / @user.winner_calculation(@season)[1].to_f, precision: 2) %></div>
+            <div class="caption-text"><%= "#{@user.winner_calculation(@season)[0]} / #{pluralize(@user.winner_calculation(@season)[1], 'game')}" %></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <% if @season %>
+    <div class="col-lg-6" style="margin-top: 38px;">
+    <% else %>
+    <div class="col-lg-6">
+    <% end %>
+      <div class="card border-primary">
+        <div class="card-header border-primary">
+          <h5 class="header-text user-header-text">Statistics</h5>
+          <% if @season && !@players.empty? %>
+            <div class="caption-text text-primary">Season #<%= @players.first.season_number %></div>
           <% end %>
-        <% end %>
-      </ul>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% @players.each do |player| %>
+            <%= link_to game_path(player.game), class: 'list-group-item list-group-item-action' do %>
+              <div class="caption-text text-danger">
+                <%= player.finishing_place.ordinalize %> place out of <%= pluralize(player.game_players_count, 'player') %>
+                | Score: <%= player.score %>
+              </div>
+              <div class="header-text">
+                <%= player.game_formatted_full_date %>
+                <% unless @season %>
+                  - Season #<%= player.season_number %>
+                <% end %>
+              </div>
+              <div class="caption-text text-primary">
+                <% if player.has_additional_expense? %>
+                  Rebuy: <%= number_to_currency(player.additional_expense, precision: 0) %>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </div>
+
 </div>
