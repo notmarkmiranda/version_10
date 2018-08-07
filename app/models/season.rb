@@ -36,6 +36,18 @@ class Season < ApplicationRecord
     standings
   end
 
+  def self.for_select(league)
+    league.seasons.map { |season| ["Season ##{league.season_number(season)}", season.id] }
+  end
+
+  def self.for_select_except_current(league, season_id)
+    league.seasons.where.not(id: season_id).map{ |season| ["Season ##{league.season_number(season)}", season.id] }
+  end
+
+  def self.for_user_select_except_current(league, season_id)
+    for_select_except_current(league, season_id).push(["View All Seasons", "all"])
+  end
+
   def standings
     players.rank_by_score(self)
   end
