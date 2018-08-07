@@ -77,6 +77,44 @@ RSpec.describe Season, type: :model do
       end
     end
 
+    context 'self#for_select' do
+      let(:league) { create(:league) }
+
+      it 'returns an empty array' do
+        expect(Season.for_select(league)).to eq([])
+      end
+
+      it 'returns an array for select' do
+        expect(Season.for_select(season.league)).to eq([["Season #1", season.id]])
+      end
+    end
+
+    context 'self#select_except_current' do
+      it 'returns an empty array' do
+        expect(Season.for_select_except_current(season.league, season.id)).to eq([])
+      end
+
+      it 'returns an array for select except the current season' do
+        other_season = create(:season, league: season.league)
+        expected_return = [["Season ##{season.league.season_number(other_season)}", other_season.id]]
+        expect(Season.for_select_except_current(season.league, season.id)).to eq(expected_return)
+      end
+    end
+    context 'self#for_user_select_except_current' do
+      it 'returns an empty array' do
+        expect(Season.for_user_select_except_current(season.league, season.id)).to eq([["View All Seasons", "all"]])
+      end
+
+      it 'returns an array for select except the current season' do
+        other_season = create(:season, league: season.league)
+        expected_return = [
+          [ "Season ##{season.league.season_number(other_season)}", other_season.id ],
+          [ "View All Seasons", "all" ]
+        ]
+        expect(Season.for_user_select_except_current(season.league, season.id)).to eq(expected_return)
+      end
+    end
+
     context '#standings' do
       subject { season.standings }
       it 'returns an empty array for no players' do
