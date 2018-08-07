@@ -10,10 +10,6 @@ class Season < ApplicationRecord
 
   default_scope { order(id: :asc) }
 
-  def self.except_for_current(season_id)
-    Season.all.map { |season| ["Season ##{season.id}", season.id] }
-  end
-
   def leader
     standings.first
   end
