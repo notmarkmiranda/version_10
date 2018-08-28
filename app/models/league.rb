@@ -5,7 +5,7 @@ class League < ApplicationRecord
   validates :name, presence: true
   belongs_to :user
   has_many :seasons
-  has_many :games, through: :seasons
+  has_many :games, -> { order('games.date') }, through: :seasons
   has_many :players, through: :games
 
   delegate :count, to: :seasons, prefix: true
@@ -21,8 +21,24 @@ class League < ApplicationRecord
     (seasons.index(current_season) + 1).to_i
   end
 
+  def leader_full_name
+  end
+
+  def most_second_place_finishes
+    return [['No One'], 0]
+  end
+
+  def ordered_rankings_full_names
+    league_standings
+  end
+
   def season_number(season=nil)
     return nil if seasons.empty?
     (seasons.index(season || current_season) + 1).to_i
   end
+
+  def league_standings
+    players.rank_league_by_score(current_season)
+  end
+
 end

@@ -5,7 +5,7 @@ class Game < ApplicationRecord
 
   delegate :count, to: :players, prefix: true
   delegate :league, to: :season
-  scope :descending_by_date, -> { order(date: :desc) }
+  scope :descending_by_date, -> { order('date') }
 
   def formatted_date
     date.strftime('%B %Y')
@@ -23,6 +23,12 @@ class Game < ApplicationRecord
     return nil if players.empty?
     score_players = lambda { |player| player.score_player }
     players.each(&score_players)
+  end
+
+  def total_pot
+    normal_pot = (buy_in * players_count)
+    additional_pot = players.map(&:additional_expense).compact.sum
+    normal_pot + additional_pot
   end
 
   def winner_full_name
