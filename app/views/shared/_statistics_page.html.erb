@@ -8,6 +8,7 @@
       <% if seasons_show? %>
         <div class="col-lg-6">
           <h5 class="header-text">Season Statistics</h5>
+          <div class="caption-text text-danger">Season #<%= @season.league.season_number(@season) %></div>
         </div>
         <div class="col-lg-6 league-actions">
           <%= select_tag 'season', options_for_select(Season.for_select_except_current(league, params[:id])), include_blank: 'Select a Season', class: 'form-control-sm mb-2', id: 'all-season-navigator' %>
@@ -23,90 +24,83 @@
       <% end %>
     </div>
     <hr />
+
     <%= render partial: 'shared/overall_statistics_row', locals: { subject: subject } %>
 
-    <% if seasons_show? %>
-      <hr />
-      <div class="row justify-content-center mt-3">
-        <div class="col-md-4 mt-3">
-          <div class="card mb-4 border-primary">
-            <h5 class="card-header header-text border-primary">
-              <% if seasons_show? %>
-                Season Leader
-              <% else %>
-                League Leader
-              <% end %>
-            </h5>
-            <div class="card-body stat-line">
-              <%= subject.leader_full_name %>
-            </div>
-          </div>
-
-          <div class="card mb-4 border-danger">
-            <div class="card-header border-danger">
-              <h5 class="header-text">
-                Most 2nd Place Finishes
-              </h5>
-              <% unless subject.most_second_place_finishes.nil? %>
-                <div class="caption-text text-danger"><%= pluralize(subject.most_second_place_finishes[1], 'game') %></div>
-              <% end %>
-            </div>
-            <ul class="list-group list-group-flush">
-              <% if subject.most_second_place_finishes.nil? %>
-                <li class="list-group-item">No one</li>
-              <% else %>
-                <% subject.most_second_place_finishes[0].each do |player_name| %>
-                  <li class="list-group-item stat-line"><%= player_name %></li>
-                <% end %>
-              <% end %>
-            </ul>
+    <hr />
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-4 mt-3">
+        <div class="card mb-4 border-primary">
+          <h5 class="card-header header-text border-primary">
+            <% if seasons_show? %>
+              Season Leader
+            <% else %>
+              League Leader
+            <% end %>
+          </h5>
+          <div class="card-body stat-line">
+            <%= subject.leader_full_name %>
           </div>
         </div>
 
-
-        <div class="col-md-4 mt-3">
-          <div class="card mb-4 border-info">
-            <h5 class="card-header header-text border-info">
-              Standings
+        <div class="card mb-4 border-danger">
+          <div class="card-header border-danger">
+            <h5 class="header-text">
+              Most 2nd Place Finishes
             </h5>
-              <ul class="list-group list-group-flush">
-                <% subject.ordered_rankings_full_names.each_with_index do |player, index| %>
-                  <%= link_to user_stats_path(user_id: player.user_id, season: subject&.id), class: 'list-group-item list-group-item-action stat-line' do %>
-                    <%= (index + 1).to_i %>.
-                    <%= player.user_full_name %>
-                    | Score: <%= number_with_precision(player.counted_score, precision: 3) %>
-                    <div class="caption-text text-info">
-                      Games: <%= player.games_count %> | Total Score: <%= number_with_precision(player.cumulative_score, precision: 3) %>
-                    </div>
-                  <% end %>
-                <% end %>
-              </ul>
+            <div class="caption-text text-danger"><%= pluralize(subject.most_second_place_finishes[1], 'game') %></div>
           </div>
-        </div>
-
-        <div class="col-md-4 mt-3">
-          <div class="card mb-4 border-success">
-            <h5 class="card-header header-text border-success">
-							Games
-            </h5>
-              <ul class="list-group list-group-flush">
-                <% subject.games.descending_by_date.each do |game| %>
-                  <%= link_to game_path(game), class: 'list-group-item list-group-item-action stat-line' do %>
-                    <div class="caption-text text-success">
-                      Winner: <%= game.winner_full_name %>
-                    </div>
-                    <%= game.formatted_full_date %>
-                    <div class="caption-text">
-                      <%= pluralize(game.players_count, 'player') %>
-                    </div>
-                  <% end %>
-                <% end %>
-              </ul>
-          </div>
+          <ul class="list-group list-group-flush">
+              <% subject.most_second_place_finishes[0].each do |player_name| %>
+                <li class="list-group-item stat-line"><%= player_name %></li>
+              <% end %>
+          </ul>
         </div>
       </div>
 
-    <% end %>
+
+      <div class="col-md-4 mt-3">
+        <div class="card mb-4 border-info">
+          <h5 class="card-header header-text border-info">
+            Standings
+          </h5>
+            <ul class="list-group list-group-flush">
+              <% subject.ordered_rankings_full_names.each_with_index do |player, index| %>
+                <%= link_to user_stats_path(user_id: player.user_id, season: subject&.id), class: 'list-group-item list-group-item-action stat-line' do %>
+                  <%= (index + 1).to_i %>.
+                  <%= player.user_full_name %>
+                  | Score: <%= number_with_precision(player.counted_score, precision: 3) %>
+                  <div class="caption-text text-info">
+                    Games: <%= player.games_count %> | Total Score: <%= number_with_precision(player.cumulative_score, precision: 3) %>
+                  </div>
+                <% end %>
+              <% end %>
+            </ul>
+        </div>
+      </div>
+
+      <div class="col-md-4 mt-3">
+        <div class="card mb-4 border-success">
+          <h5 class="card-header header-text border-success">
+            Games
+          </h5>
+            <ul class="list-group list-group-flush">
+              <% subject.games.descending_by_date.reverse.each do |game| %>
+                <%= link_to game_path(game), class: 'list-group-item list-group-item-action stat-line' do %>
+                  <div class="caption-text text-success">
+                    Winner: <%= game.winner_full_name %>
+                  </div>
+                  <%= game.formatted_full_date %>
+                  <div class="caption-text">
+                    <%= pluralize(game.players_count, 'player') %> | Total pot: <%= number_to_currency(game.total_pot, precision: 0) %>
+                  </div>
+                <% end %>
+              <% end %>
+            </ul>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 </div>

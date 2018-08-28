@@ -27,7 +27,7 @@ class Season < ApplicationRecord
       .count(:id)
     max_qty = max_hash.values.max
     max_ids = max_hash.select { |k, v| v == max_qty }.keys
-    return if max_ids.empty?
+    return ['No One', 0] if max_ids.empty?
     [max_ids.map { |id| User.find(id).full_name }.sort, max_qty]
   end
 
