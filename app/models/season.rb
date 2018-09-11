@@ -27,7 +27,7 @@ class Season < ApplicationRecord
       .count(:id)
     max_qty = max_hash.values.max
     max_ids = max_hash.select { |k, v| v == max_qty }.keys
-    return ['No One', 0] if max_ids.empty?
+    return [['No One'], 0] if max_ids.empty?
     [max_ids.map { |id| User.find(id).full_name }.sort, max_qty]
   end
 
@@ -56,11 +56,5 @@ class Season < ApplicationRecord
     games.map do |game|
       (game.buy_in * game.players_count) + game.players.sum(:additional_expense)
     end.sum
-  end
-
-  private
-
-  def no_one_qualifies?
-    games_count.zero? || players_count.zero?
   end
 end

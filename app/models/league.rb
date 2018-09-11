@@ -22,13 +22,25 @@ class League < ApplicationRecord
   end
 
   def leader_full_name
+    return 'No One' if no_one_qualifies?
+    league_standings.first.user_full_name
   end
 
   def most_second_place_finishes
-    return [['No One'], 0]
+    # max_hash = players.where(finishing_place: 2)
+      # .select(:user_id)
+      # .group(:user_id)
+      # .order('count_id DESC')
+      # .count(:id)
+    # max_qty  = max_hash.values.max
+    # max_ids  = max_hash.select { |k, v| v == max_qty }.keys
+    max_ids = []
+    return [['Stat not yet available.'], 0] if max_ids.empty?
+    # [max_ids.map { |id| User.find(id).full_name}.sort, max_qty]
   end
 
   def ordered_rankings_full_names
+    return [] if no_one_qualifies?
     league_standings
   end
 
@@ -40,5 +52,4 @@ class League < ApplicationRecord
   def league_standings
     players.rank_league_by_score(current_season)
   end
-
 end

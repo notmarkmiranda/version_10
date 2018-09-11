@@ -42,16 +42,14 @@ class Player < ApplicationRecord
   end
 
   def self.rank_league_by_score(current_season)
-    league = current_season.league
-
-    _x = league.seasons.map do |season|
-      multiplier = season == current_season ? 1 : 0.5
-      rank_by_score(season, multiplier)
-    end
-    require 'pry'; binding.pry
-
+    @league = current_season.league
     # get the league from the season
 
+    @league_users = @league.players.pluck(:user_id).uniq
+    @games_count = @league.games_count
+
+    return if @league_users.empty?
+    find_by_sql(league_query)
     # filter down users to users that have played in the league
 
     # get scores for user in this league
@@ -62,10 +60,25 @@ class Player < ApplicationRecord
     # what if we did it by season:
     # if the season is the current season passed in,
     # we would set the multiplier to 1, otherwise 0.5
-    []
   end
 
   private
+
+  def self.league_query
+    "SELECT user_id, SUM(score) AS cumulative_score, \
+    SUM(score) / #{@games_count} AS counted_score, \
+    COUNT(game_id) AS games_count FROM (#{league_sub_query}) AS c_players \
+    GROUP BY c_players.user_id ORDER BY counted_score DESC"
+  end
+
+  def self.league_sub_query
+    @league_users.map do |user_id|
+      "(SELECT players.* FROM players INNER JOIN games ON \
+      players.game_id = games.id WHERE user_id = #{user_id} AND \
+      games.season_id IN (#{@league.seasons.pluck(:id).join(',')}) \
+      ORDER BY score DESC LIMIT #{@games_count})"
+    end.join("\nUNION ALL\n")
+  end
 
   def self.query
     # TODO: (2018-04-26) markmiranda => LIMIT 9 needs to change to a season setting
