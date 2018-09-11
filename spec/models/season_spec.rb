@@ -44,7 +44,7 @@ RSpec.describe Season, type: :model do
       it 'returns an empty array for none' do
         player.update(finishing_place: 1)
 
-        expect(subject).to match(nil)
+        expect(subject).to match([["No One"], 0])
       end
 
       it 'returns array of full name and number for 1 player' do
