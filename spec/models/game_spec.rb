@@ -66,6 +66,26 @@ RSpec.describe Game, type: :model do
       end
     end
 
+    context '#total_pot' do
+      subject { game.total_pot }
+
+      it 'returns 0 with no pot' do
+        expect(subject).to eq 0
+      end
+
+      it 'returns a pot with players without additional expense' do
+        create_list(:player, 10, game: game, additional_expense: 0)
+
+        expect(subject).to eq 150
+      end
+
+      it 'returns a pot with players with additional expense' do
+        create_list(:player, 10, game: game, additional_expense: 10)
+
+        expect(subject).to eq 250
+      end
+    end
+
     context '#winner_full_name' do
       it 'returns the winners full name' do
         expect(game).to receive(:player_in_place_full_name).with(1)
