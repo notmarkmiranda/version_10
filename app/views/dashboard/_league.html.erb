@@ -1,0 +1,24 @@
+<div class="col-md-6">
+  <div class="card mb-4">
+    <h5 class="card-header">
+      <%= title %>
+    </h5>
+    <ul class="list-group list-group-flush">
+      <% if leagues.empty? %>
+        <li class="list-group-item">
+          <% if owned %>
+            You don't have any leagues, click <%= link_to 'here', '#' %> to create one!
+          <% else %>
+            You're not a participant in any leagues. Ask your friends to invite you to one!
+          <% end %>
+        </li>
+      <% else %>
+        <% leagues.each do |league| %>
+          <%= link_to season_path(league.current_season), class: 'list-group-item list-group-item-action' do %>
+            <%= league.name %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>

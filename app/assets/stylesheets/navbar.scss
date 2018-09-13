@@ -10,3 +10,13 @@ nav.navbar > div.container > a.navbar-brand {
   }
 }
 
+li.nav-item > a.nav-link, .dropdown-item {
+  color: goldenrod !important;
+  font-size: 12px;
+  font-weight: 300 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px !important;
+  &:active {
+    background: transparent !important;
+  }
+}
