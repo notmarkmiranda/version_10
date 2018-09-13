@@ -1,6 +1,6 @@
 <div class="col-md-6">
-  <div class="card mb-4">
-    <h5 class="card-header">
+  <div class="card <%= owned ? 'border-info' : 'border-danger' %> mb-4">
+    <h5 class="card-header <%= owned ? 'border-info' : 'border-danger' %> header-text">
       <%= title %>
     </h5>
     <ul class="list-group list-group-flush">
@@ -14,8 +14,16 @@
         </li>
       <% else %>
         <% leagues.each do |league| %>
-          <%= link_to season_path(league.current_season), class: 'list-group-item list-group-item-action' do %>
+          <%= link_to season_path(league.current_season), class: 'list-group-item list-group-item-action stat-line' do %>
             <%= league.name %>
+            <div class="caption-text <%= owned ? 'text-info' : 'text-danger' %>">
+              Next Game: <%= league.next_game %>
+            </div>
+            <div class="caption-text">
+              <%= league.average_players_per_game %> players per game |
+              <%= number_to_currency(league.average_pot_size, precision: 0) %> average pot |
+              <%= league.games_count %> total games
+            </div>
           <% end %>
         <% end %>
       <% end %>
