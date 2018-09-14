@@ -22,8 +22,8 @@ class League < ApplicationRecord
   end
 
   def games_every_x_weeks
-    return 'Nothing' if games_count.zero?
-    weeks / (games_count - 1)
+    return 'Nothing' if no_games? || games_count  == 1
+    (weeks - 1) / (games_count - 1)
   end
 
   def leader_full_name
