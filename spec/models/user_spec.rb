@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
   end
 
   context 'relationships' do
-    it { should have_many :leagues }
+    it { should have_many :owned_leagues }
     it { should have_many :players }
   end
 

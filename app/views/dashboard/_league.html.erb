@@ -1,0 +1,39 @@
+<div class="col-md-6">
+  <div class="card <%= owned ? 'border-info' : 'border-danger' %> mb-4">
+    <h5 class="card-header <%= owned ? 'border-info' : 'border-danger' %> header-text">
+      <%= title %>
+    </h5>
+    <ul class="list-group list-group-flush">
+      <% if leagues.empty? %>
+        <li class="list-group-item">
+          <% if owned %>
+            You don't have any leagues, click <%= link_to 'here', '#' %> to create one!
+          <% else %>
+            You're not a participant in any leagues. Ask your friends to invite you to one!
+          <% end %>
+        </li>
+      <% else %>
+        <% leagues.each do |league| %>
+          <%= link_to season_path(league.current_season), class: 'list-group-item list-group-item-action stat-line' do %>
+            <%= league.name %>
+            <div class="caption-text <%= owned ? 'text-info' : 'text-danger' %>">
+              Next Game: <%= league.next_game %>
+            </div>
+            <div class="caption-text">
+              <%= league.average_players_per_game %> players per game
+            </div>
+            <div class="caption-text">
+              <%= number_to_currency(league.average_pot_size, precision: 0) %> average pot
+            </div>
+            <div class="caption-text">
+              game frequency: <%= pluralize(number_with_precision(league.games_every_x_weeks, precision: 2), 'week') %>
+            </div>
+            <div class="caption-text">
+              <%= pluralize(league.games_count, 'total game') %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
