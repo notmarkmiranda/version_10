@@ -20,9 +20,16 @@
               Next Game: <%= league.next_game %>
             </div>
             <div class="caption-text">
-              <%= league.average_players_per_game %> players per game |
-              <%= number_to_currency(league.average_pot_size, precision: 0) %> average pot |
-              <%= league.games_count %> total games
+              <%= league.average_players_per_game %> players per game
+            </div>
+            <div class="caption-text">
+              <%= number_to_currency(league.average_pot_size, precision: 0) %> average pot
+            </div>
+            <div class="caption-text">
+              game frequency: <%= pluralize(number_with_precision(league.games_every_x_weeks, precision: 2), 'week') %>
+            </div>
+            <div class="caption-text">
+              <%= pluralize(league.games_count, 'total game') %>
             </div>
           <% end %>
         <% end %>

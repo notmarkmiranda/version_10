@@ -21,6 +21,11 @@ class League < ApplicationRecord
     (seasons.index(current_season) + 1).to_i
   end
 
+  def games_every_x_weeks
+    return 'Nothing' if games_count.zero?
+    weeks / (games_count - 1)
+  end
+
   def leader_full_name
     return 'No One' if no_one_qualifies?
     league_standings.first.user_full_name
@@ -61,5 +66,13 @@ class League < ApplicationRecord
 
   def league_standings
     players.rank_league_by_score(current_season)
+  end
+
+  private
+
+  def weeks
+    date_array = games.descending_by_date.pluck(:date)
+    seconds = date_array.last - date_array.first
+    seconds / 60.0 / 60 / 24 / 7
   end
 end
