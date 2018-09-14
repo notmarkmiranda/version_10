@@ -12,7 +12,15 @@ module StatisticsCompiler
     (total_pot / games_count * 100).floor / 100
   end
 
+  def no_games?
+    games_count.zero?
+  end
+
+  def no_players?
+    players_count.zero?
+  end
+
   def no_one_qualifies?
-    games_count.zero? || players_count.zero?
+    no_games? || no_players?
   end
 end
