@@ -14,6 +14,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
 gem 'bootstrap', '~>4.1.1'
 gem 'jquery-rails'
+gem 'pundit'
 
 group :development, :test do
   gem 'factory_bot_rails'

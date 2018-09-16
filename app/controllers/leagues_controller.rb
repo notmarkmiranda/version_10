@@ -1,6 +1,12 @@
 class LeaguesController < ApplicationController
   def show
-    @league = League.find(params[:id])
-    @current_season = @league.current_season
+    authorize league
+    @current_season = league.current_season
+  end
+
+  private
+
+  def league
+    @league ||= League.find(params[:id])
   end
 end
