@@ -4,6 +4,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   has_many :owned_leagues, foreign_key: 'user_id', class_name: 'League'
   has_many :players
+  has_many :memberships
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
