@@ -8,6 +8,7 @@ RSpec.describe User, type: :model do
   context 'relationships' do
     it { should have_many :owned_leagues }
     it { should have_many :players }
+    it { should have_many :memberships }
   end
 
   context 'methods' do

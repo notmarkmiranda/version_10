@@ -7,6 +7,7 @@ class League < ApplicationRecord
   has_many :seasons
   has_many :games, -> { order('games.date') }, through: :seasons
   has_many :players, through: :games
+  has_many :memberships
 
   delegate :count, to: :seasons, prefix: true
   delegate :count, to: :games, prefix: true
