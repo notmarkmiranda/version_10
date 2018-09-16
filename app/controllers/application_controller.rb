@@ -1,12 +1,14 @@
 class ApplicationController < ActionController::Base
   include Pundit
   helper_method :current_user
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def after_sign_in_path_for(resource)
     session[:user_id] = resource.id
     dashboard_path
   end
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   private
 
   def current_user
