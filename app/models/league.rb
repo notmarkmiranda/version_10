@@ -63,6 +63,10 @@ class League < ApplicationRecord
     league_standings
   end
 
+  def privated_text
+    privated ? 'Private league' : 'Public league'
+  end
+
   def season_number(season=nil)
     return nil if seasons.empty?
     (seasons.index(season || current_season) + 1).to_i
