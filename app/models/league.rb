@@ -13,8 +13,11 @@ class League < ApplicationRecord
   delegate :count, to: :games, prefix: true
   delegate :count, to: :players, prefix: true
 
+  after_create_commit :create_first_season
+  after_create_commit :create_adminship
+
   def current_season
-    seasons.find_by(active: true) || seasons.last
+    seasons.find_by(active: true, completed: false) || seasons.last
   end
 
   def current_season_number
@@ -70,6 +73,14 @@ class League < ApplicationRecord
   end
 
   private
+
+  def create_adminship
+    memberships.create!(user_id: user_id, role: 1)
+  end
+
+  def create_first_season
+    seasons.create!(active: true, completed: false)
+  end
 
   def weeks
     date_array = games.descending_by_date.pluck(:date)

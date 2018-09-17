@@ -32,7 +32,6 @@ describe 'League Controller', type: :request do
       context 'is the creator' do
         let(:user) { league.user }
         before do
-          create(:membership, user: user, league: league, role: 1)
           get league_path(league)
         end
 

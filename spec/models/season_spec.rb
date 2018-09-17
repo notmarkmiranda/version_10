@@ -10,8 +10,9 @@ RSpec.describe Season, type: :model do
   end
 
   context 'methods' do
-    let(:game)   { create(:game, buy_in: 100) }
-    let(:season) { game.season }
+    let(:league) { create(:league) }
+    let(:season) { league.current_season }
+    let(:game)   { create(:game, buy_in: 100, season: season) }
     let(:player_1) { double('player_1') }
     let(:player_2) { double('player_2') }
     let(:players) { [player_1, player_2] }
@@ -80,24 +81,22 @@ RSpec.describe Season, type: :model do
     context 'self#for_select' do
       let(:league) { create(:league) }
 
-      it 'returns an empty array' do
-        expect(Season.for_select(league)).to eq([])
-      end
-
       it 'returns an array for select' do
         expect(Season.for_select(season.league)).to eq([["Season #1", season.id]])
       end
     end
 
     context 'self#select_except_current' do
+      subject { Season.for_select_except_current(season.league, season.id) }
+
       it 'returns an empty array' do
-        expect(Season.for_select_except_current(season.league, season.id)).to eq([])
+        expect(subject).to_not include(["Season ##{season.league.season_number(season)}", season.id])
       end
 
       it 'returns an array for select except the current season' do
-        other_season = create(:season, league: season.league)
-        expected_return = [["Season ##{season.league.season_number(other_season)}", other_season.id]]
-        expect(Season.for_select_except_current(season.league, season.id)).to eq(expected_return)
+        other_season = create(:season, league: league)
+
+        expect(Season.for_select_except_current(season.league, season.id)).to eq([["Season ##{league.season_number(other_season)}", other_season.id]])
       end
     end
     context 'self#for_user_select_except_current' do

@@ -18,7 +18,7 @@ RSpec.describe League, type: :model do
 
   context 'methods' do
     let(:league) { create(:league) }
-    let!(:first_season) { create(:season, league: league) }
+    let!(:first_season) { league.current_season }
     let!(:second_season) { create(:season, league: league, active: true) }
 
     context '#average_players_per_game' do
@@ -38,14 +38,8 @@ RSpec.describe League, type: :model do
     context '#current_season' do
       subject { league.current_season }
 
-      it 'returns the last season' do
-        allow(league.seasons).to receive(:find_by).with(active: true).and_return(first_season)
-
-        expect(subject).to eq(first_season)
-      end
-
       it 'returns the active season' do
-        expect(subject).to eq(second_season)
+        expect(subject).to eq(first_season)
       end
     end
 
@@ -58,7 +52,7 @@ RSpec.describe League, type: :model do
       end
 
       it 'returns the season index' do
-        expect(subject).to eq(2)
+        expect(subject).to eq(1)
       end
     end
 
