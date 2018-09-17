@@ -19,16 +19,8 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def not_part_of_league?(league)
-    !part_of_league?(league)
-  end
-
   def number_of_leagues_played_in
     leagues_played_in.count
-  end
-
-  def part_of_league?(league)
-    participated_leagues.include?(league) || owned_leagues.include?(league)
   end
 
   def owned_leagues

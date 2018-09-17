@@ -1,10 +1,23 @@
-<%= form_for @league do |f| %>
-  <%= f.label :name, 'League Name' %>
-  <%= f.text_field :name %>
+<div class="row justify-content-center">
+  <div class="col-md-4">
+    <div class="card border-primary">
+      <h4 class="card-header border-primary">Create League</h4>
+      <div class="card-body">
+        <%= form_for @league do |f| %>
+          <div class="form-group">
+            <%= f.label :name, 'League Name' %>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
 
-  <%= f.label :privated, 'Private League' %>
-  <%= f.check_box :privated %>
+          <div class="form-group form-check">
+          <%= f.check_box :privated, class: 'form-check-input' %>
+          <%= f.label :privated, 'Private League', class: 'form-check-label' %>
+          </div>
 
-  <%= f.submit 'Create League' %>
+          <%= f.submit 'Create League', class: 'btn btn-outline-primary btn-block' %>
 
-<% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

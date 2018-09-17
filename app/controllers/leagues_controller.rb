@@ -13,7 +13,7 @@ class LeaguesController < ApplicationController
     authorize League
     @league = current_user.leagues.new(league_params)
     if @league.save
-      flash[:alert] = "#{@league.name} created!"
+      flash[:notice] = "#{@league.name} created!"
       redirect_to @league
     else
       flash[:alert] = 'Something went wrong'
