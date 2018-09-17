@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   validates :email, presence: true, uniqueness: true
-  has_many :owned_leagues, foreign_key: 'user_id', class_name: 'League'
+  has_many :leagues
   has_many :players
   has_many :memberships
 
@@ -19,22 +19,16 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def not_part_of_league?(league)
-    !part_of_league?(league)
-  end
-
   def number_of_leagues_played_in
     leagues_played_in.count
   end
 
-  def part_of_league?(league)
-    participated_leagues.include?(league) || owned_leagues.include?(league)
+  def owned_leagues
+    get_leagues(role: 1)
   end
 
   def participated_leagues
-    League.joins(:players)
-      .where.not('leagues.user_id = ?', id)
-      .where('players.user_id = ?', id).uniq
+    get_leagues
   end
 
   def winner_calculation(season=nil)
@@ -51,6 +45,12 @@ class User < ApplicationRecord
       season.games_count
     ] if season
     [players.count, leagues_played_in_count]
+  end
+
+  def get_leagues(role: 0)
+    League
+      .joins(:memberships)
+      .where('memberships.user_id = ? AND memberships.role = ?', id, role)
   end
 
   def get_winners(season=nil)

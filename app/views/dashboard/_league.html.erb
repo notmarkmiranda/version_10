@@ -5,11 +5,11 @@
     </h5>
     <ul class="list-group list-group-flush">
       <% if leagues.empty? %>
-        <li class="list-group-item">
+        <li class="list-group-item stat-line">
           <% if owned %>
             You don't have any leagues, click <%= link_to 'here', '#' %> to create one!
           <% else %>
-            You're not a participant in any leagues. Ask your friends to invite you to one!
+            You're not a participant in any leagues.
           <% end %>
         </li>
       <% else %>

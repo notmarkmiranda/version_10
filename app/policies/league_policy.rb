@@ -10,6 +10,14 @@ class LeaguePolicy < ApplicationPolicy
     !league.privated? || user_is_allowed?
   end
 
+  def new?
+    create?
+  end
+
+  def create?
+    user
+  end
+
   private
 
   def memberships
