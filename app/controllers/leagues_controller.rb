@@ -11,7 +11,7 @@ class LeaguesController < ApplicationController
 
   def create
     authorize League
-    @league = current_user.owned_leagues.new(league_params)
+    @league = current_user.leagues.new(league_params)
     if @league.save
       flash[:alert] = "#{@league.name} created!"
       redirect_to @league
