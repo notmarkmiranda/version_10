@@ -1,4 +1,7 @@
 <div class="row justify-content-center">
+  <div class="col-md-12 mb-3">
+    <%= link_to 'Create New League', new_league_path, class: 'btn btn-outline-primary' %>
+  </div>
   <%= render partial: 'league', locals: { leagues: @owned_leagues, title: 'Leagues You Run', owned: true } %>
   <%= render partial: 'league', locals: { leagues: @participated_leagues, title: 'Leagues You Participate In', owned: false } %>
 </div>

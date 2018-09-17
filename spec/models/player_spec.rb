@@ -61,14 +61,14 @@ RSpec.describe Player, type: :model do
 
     context '#season_number' do
       it 'returns the season number' do
-        expect(player.season_number).to eq(1)
+        expect(player.season_number).to eq(2)
       end
 
       let(:new_season) { create(:season, league: game.season.league) }
       let(:new_game) { create(:game, season: new_season) }
       let(:new_player) { create(:player, game: new_game) }
       it 'returns the season number' do
-        expect(new_player.season_number).to eq(2)
+        expect(new_player.season_number).to eq(3)
       end
     end
 
