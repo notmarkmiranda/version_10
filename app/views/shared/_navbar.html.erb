@@ -13,6 +13,28 @@
           <li class="nav-item">
             <%= link_to 'Dashboard', dashboard_path, class: 'nav-link' %>
           </li>
+
+          <li class="nav-item dropdown" data-behavior="notifications">
+            <a class="nav-link dropdown-toggle" href="#" id="notifications" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Notifications
+            </a>
+            <div class="dropdown-menu" id="notifications" aria-labelledby="notifications">
+              <ul data-behavior="notification-items">
+                <% if current_user.notifications.unread.empty? %>
+                  <li class="nav-item">
+                    <p class="text-center small">No new notifications</p>
+                  </li>
+                <% else %>
+                  <% current_user.notifications.unread.each do |n| %>
+                    <li class="dropdown-item">
+                      <%= n.notification_text %>
+                    </li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </div>
+          </li>
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%= current_user.email %>

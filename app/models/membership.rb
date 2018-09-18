@@ -7,4 +7,23 @@ class Membership < ApplicationRecord
   belongs_to :league
 
   enum role: [:member, :admin]
+
+  after_create :create_notifications
+
+  private
+
+  def recipients
+    league.admins.to_a << user
+  end
+
+  def create_notifications
+    recipients.each do |recipient|
+      Notification.create(
+        recipient: recipient,
+        actor: self.user,
+        action: 'posted',
+        notifiable: self
+      )
+    end
+  end
 end
