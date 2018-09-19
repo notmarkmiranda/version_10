@@ -55,6 +55,43 @@ RSpec.describe User, type: :model do
       end
     end
 
+    context '#leagues' do
+      let(:admin_membership) { create(:membership, user: user, role: 1) }
+      let(:reg_membership) { create(:membership, user: user, role: 0) }
+      let(:admin_league) { admin_membership.league }
+      let(:reg_league) { reg_membership.league }
+
+      context '#owned_leagues' do
+        subject { user.owned_leagues }
+
+        it 'returns an empty array' do
+          expect(subject).to eq([])
+        end
+
+        it 'returns the league' do
+          admin_membership; reg_membership
+
+          expect(subject).to eq([admin_league])
+          expect(subject).to_not include(reg_league)
+        end
+      end
+
+      context '#participated_leagues' do
+        subject { user.participated_leagues }
+
+        it 'returns an empty array' do
+          expect(subject).to eq([])
+        end
+
+        it 'returns the league' do
+          admin_membership; reg_membership
+
+          expect(subject).to eq([reg_league])
+          expect(subject).to_not include(admin_league)
+        end
+      end
+    end
+
     context '#winner_calculation' do
       it 'returns an array of numbers' do
         expect(user).to receive(:get_winners).with(season).and_return([1, 2])

@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :leagues
   has_many :players
   has_many :memberships
+  has_many :notifications, foreign_key: :recipient_id
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable

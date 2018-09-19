@@ -16,6 +16,10 @@ class League < ApplicationRecord
   after_create_commit :create_first_season
   after_create_commit :create_adminship
 
+  def admins
+    User.joins(:memberships).where('memberships.league_id = ? AND role = ?', id, 1)
+  end
+
   def current_season
     seasons.find_by(active: true, completed: false) || seasons.last
   end
