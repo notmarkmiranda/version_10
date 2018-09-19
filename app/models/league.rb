@@ -16,6 +16,12 @@ class League < ApplicationRecord
   after_create_commit :create_first_season
   after_create_commit :create_adminship
 
+  def admins
+    User
+      .joins(:memberships)
+      .where('memberships.league_id = ? AND memberships.role = ?', id, 1)
+  end
+
   def current_season
     seasons.find_by(active: true, completed: false) || seasons.last
   end
@@ -79,7 +85,7 @@ class League < ApplicationRecord
   private
 
   def create_adminship
-    memberships.create!(user_id: user_id, role: 1)
+    memberships.create!(user_id: user_id, role: 1, skip_notification: true)
   end
 
   def create_first_season
