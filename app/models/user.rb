@@ -32,6 +32,10 @@ class User < ApplicationRecord
     get_leagues
   end
 
+  def unread_notifications_count
+    notifications.unread.count
+  end
+
   def winner_calculation(season=nil)
     won, out_of = get_winners(season)
     return [0, 0] if won&.zero? || out_of&.zero?
