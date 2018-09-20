@@ -22,7 +22,7 @@ class Membership < ApplicationRecord
     recipients.each do |rec|
       Notification.create(recipient: rec,
                           actor: self.requestor,
-                          action: 'membership',
+                          action: 'membership.requested',
                           notifiable: self)
     end
   end

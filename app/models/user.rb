@@ -20,6 +20,10 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def last_five_notifications
+    notifications.unread.last(5)
+  end
+
   def number_of_leagues_played_in
     leagues_played_in.count
   end

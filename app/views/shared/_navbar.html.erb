@@ -28,7 +28,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <h6>
-                <span class="badge badge-danger">
+                <span class="badge badge-danger dropdown-toggle">
                   <%= current_user.unread_notifications_count %>
                 </span>
               </h6>
@@ -39,7 +39,12 @@
                   There are no unread notifications!
                 </div>
               <% else %>
-                <%= link_to 'Create League', new_league_path, class: 'dropdown-item' %>
+                <% current_user.last_five_notifications.each do |note| %>
+                  <div class="dropdown-item">
+                    <%= note.dropdown_text %>
+                    <div><%= link_to 'mark as read', '#', class: 'muted-text caption-text' %></div>
+                  </div>
+                <% end %>
                 <div class="dropdown-divider"></div>
                 <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
               <% end %>
