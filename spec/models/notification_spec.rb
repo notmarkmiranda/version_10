@@ -83,14 +83,26 @@ describe Notification, type: :model do
       end
     end
 
+    let(:notification) { create(:notification, read_at: nil) }
+    let(:notification_2) { create(:notification, read_at: nil) }
+    let(:read_notification) { create(:notification, read_at: DateTime.now) }
+    let(:read_notification_2) { create(:notification, read_at: DateTime.now) }
     context 'scope#unread' do
-      let(:notification) { create(:notification, read_at: nil) }
 
       it 'returns only unread notifications' do
-        read_notification = create(:notification, read_at: DateTime.now)
-
         expect(Notification.unread).to include(notification)
         expect(Notification.unread).to_not include(read_notification)
+      end
+    end
+
+    context 'scope#ordered' do
+      it 'returns unread notifications before read notifications' do
+        notification; read_notification;
+        read_notification_2
+        notification_2
+
+        ordered_array = [notification_2, notification, read_notification_2, read_notification]
+        expect(Notification.ordered.to_a).to eq(ordered_array)
       end
     end
   end
