@@ -4,6 +4,7 @@ class Notification < ApplicationRecord
   belongs_to :notifiable, polymorphic: true
 
   scope :unread, -> { where(read_at: nil) }
+  scope :ordered, -> { order('read_at DESC').order('created_at DESC') }
 
   def dropdown_text
     case notifiable.class.name
@@ -12,6 +13,10 @@ class Notification < ApplicationRecord
     else
       nil
     end
+  end
+
+  def read_at_class
+    read_at.nil? ? 'notification-unread' : 'notification-read'
   end
 
   private
