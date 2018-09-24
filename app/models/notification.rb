@@ -15,6 +15,10 @@ class Notification < ApplicationRecord
     end
   end
 
+  def mark_as_read!
+    update(read_at: Time.now) if read_at.nil?
+  end
+
   def read_at_class
     read_at.nil? ? 'notification-unread' : 'notification-read'
   end

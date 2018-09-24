@@ -12,10 +12,18 @@ class Membership < ApplicationRecord
 
   after_create :create_notifications, unless: :skip_notification
 
+  def users
+    league_admins.push(user).uniq
+  end
+
   private
 
   def recipients
-    league.admins.to_a.push(user).uniq.reject { |u| u == requestor }
+    users.reject { |u| u == requestor }
+  end
+
+  def league_admins
+    league.admins.to_a
   end
 
   def create_notifications

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :leagues
   resources :seasons
   resources :games
+  resources :memberships, only: [:show]
 
   resources :notifications, only: [:index]
 
