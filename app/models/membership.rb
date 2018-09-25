@@ -9,6 +9,7 @@ class Membership < ApplicationRecord
   belongs_to :requestor, class_name: 'User', optional: true
 
   enum role: [:member, :admin]
+  enum status: [:pending, :approved, :rejected]
 
   after_create :create_notifications, unless: :skip_notification
 
