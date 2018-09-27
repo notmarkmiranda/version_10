@@ -1,10 +1,10 @@
 <li class="list-group-item <%= notification.read_at_class %>">
   <div class="stat-line">
-    <%= notification.dropdown_text %>
+    <%= notification.notification_text %>
   </div>
   <div class="caption-text">
     <%= time_ago_in_words(notification.created_at) %> ago |
-    <%= link_to 'view notification', polymorphic_path(notification.notifiable, notification_id: notification.id) %>
+    <%= link_to 'view notification', notification %>
     <% unless notification.read_at %>
       | <%= link_to 'mark as read', '#' %>
     <% end %>

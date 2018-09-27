@@ -1,7 +1,7 @@
 <li class="nav-item dropdown">
   <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <h6>
-      <span class="badge badge-danger dropdown-toggle">
+      <span class="badge <%= current_user.unread_notifications_count.zero? ? 'badge-info' : 'badge-danger' %> dropdown-toggle">
         <%= current_user.unread_notifications_count %>
       </span>
     </h6>
@@ -14,7 +14,7 @@
     <% else %>
       <% current_user.last_five_notifications.each do |note| %>
         <div class="dropdown-item">
-          <%= note.dropdown_text %>
+          <%= note.notification_text %>
           <div><%= link_to 'mark as read', '#', class: 'muted-text caption-text' %></div>
         </div>
       <% end %>
