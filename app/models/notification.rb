@@ -6,10 +6,10 @@ class Notification < ApplicationRecord
   scope :unread, -> { where(read_at: nil) }
   scope :ordered, -> { order('read_at DESC').order('created_at DESC') }
 
-  def dropdown_text
+  def notification_text
     case notifiable.class.name
     when "Membership"
-      membership_dropdown_text
+      membership_text
     else
       nil
     end
@@ -23,13 +23,17 @@ class Notification < ApplicationRecord
     read_at.nil? ? 'notification-unread' : 'notification-read'
   end
 
+  def users
+    [recipient, actor].compact
+  end
+
   private
 
   def league_admins
     @admins ||= notifiable.league.admins
   end
 
-  def membership_dropdown_text
+  def membership_text
     if admin_requested_and_recipient?
       "#{actor.full_name} is adding #{notifiable.user.full_name} to #{notifiable.league.name}"
     elsif admin_requested?

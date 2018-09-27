@@ -8,7 +8,7 @@ describe Notification, type: :model do
   end
   context 'validations'
   context 'methods' do
-    context '#dropdown_text' do
+    context '#notification_text' do
       let(:league) { create(:league) }
       let(:admin) { league.user }
       let(:user) { create(:user) }
@@ -29,7 +29,7 @@ describe Notification, type: :model do
           }.to change(Notification, :count).by(1)
 
           notification = Notification.last
-          expect(notification.dropdown_text).to eq(expected)
+          expect(notification.notification_text).to eq(expected)
         end
 
         it 'to multiple admins' do
@@ -44,8 +44,8 @@ describe Notification, type: :model do
           }.to change(Notification, :count).by(2)
 
           first, second = Notification.all
-          expect(first.dropdown_text).to eq(expected)
-          expect(second.dropdown_text).to eq(expected)
+          expect(first.notification_text).to eq(expected)
+          expect(second.notification_text).to eq(expected)
         end
       end
 
@@ -61,7 +61,7 @@ describe Notification, type: :model do
           }.to change(Notification, :count).by(1)
 
           notification = Notification.last
-          expect(notification.dropdown_text).to eq(user_expected)
+          expect(notification.notification_text).to eq(user_expected)
         end
 
         it 'to another admin' do
@@ -77,8 +77,8 @@ describe Notification, type: :model do
           first, second = Notification.last(2)
 
           admin_expected = "#{admin.full_name} is adding #{user.full_name} to #{league.name}"
-          expect(first.dropdown_text).to eq(admin_expected)
-          expect(second.dropdown_text).to eq(user_expected)
+          expect(first.notification_text).to eq(admin_expected)
+          expect(second.notification_text).to eq(user_expected)
         end
       end
     end

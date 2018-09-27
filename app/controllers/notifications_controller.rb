@@ -3,4 +3,9 @@ class NotificationsController < ApplicationController
     authorize Notification
     @notifications = current_user.notifications.ordered
   end
+
+  def show
+    @notification = Notification.find(params[:id])
+    authorize @notification
+  end
 end

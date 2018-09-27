@@ -9,4 +9,15 @@ class NotificationPolicy < ApplicationPolicy
   def index?
     user.present?
   end
+
+  def show?
+    user_is_involved?
+  end
+
+  private
+
+  def user_is_involved?
+    !user.nil? && @notification.users.include?(user)
+  end
+
 end

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :games
   resources :memberships, only: [:show]
 
-  resources :notifications, only: [:index]
+  resources :notifications, only: [:index, :show]
 
   get '/user_stats/:user_id', to: 'user_stats#show', as: 'user_stats'
   get '/dashboard', to: 'dashboard#show', as: 'dashboard'

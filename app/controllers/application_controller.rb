@@ -12,8 +12,9 @@ class ApplicationController < ActionController::Base
   private
 
   def check_and_mark_notification_as_read
-    notification = Notification.find(params[:notification_id].to_i)
-    notification&.mark_as_read!
+    @notification = Notification.find(params[:notification_id].to_i) if params[:notification_id]
+    return user_not_authorized unless @notification.present?
+    @notification&.mark_as_read!
   end
 
   def current_user
