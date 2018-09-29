@@ -10,6 +10,8 @@ class MembershipPolicy < ApplicationPolicy
     user_is_involved?
   end
 
+  private
+
   def user_is_involved?
     !user.nil? && membership.users.include?(user)
   end
