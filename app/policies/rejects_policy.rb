@@ -1,4 +1,4 @@
-class ApprovesPolicy < ApplicationPolicy
+class RejectsPolicy < ApplicationPolicy
   attr_accessor :user, :membership
 
   def initialize(user, membership)

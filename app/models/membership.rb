@@ -26,6 +26,14 @@ class Membership < ApplicationRecord
     approver.nil? && pending?
   end
 
+  def can_be_rejected?
+    approver.nil? && pending?
+  end
+
+  def reject!(user)
+    update(approver: user, status: 2)
+  end
+
   def users
     league_admins.push(user).uniq
   end
