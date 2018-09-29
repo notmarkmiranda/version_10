@@ -13,6 +13,7 @@ describe Membership, type: :model do
     it { should belong_to :user }
     it { should belong_to :league }
     it { should belong_to(:requestor) }
+    it { should belong_to(:approver) }
   end
 
   context 'methods' do
