@@ -87,10 +87,33 @@ describe RejectsController, type: :request do
           .and not_change { membership.status }
       end
 
-      it 'does not allow the requestor to reject the request'
-      it 'does not allow a league member to reject the request'
-      it 'does not allow a random user to reject the request'
+      it 'does not allow the requestor to reject the request' do
+        stub_current_user(admin)
+
+        expect { subject }
+          .to not_change { membership.approver }
+          .and not_change { membership.status }
+      end
+
+      it 'does not allow a league member to reject the request' do
+        m = create(:membership,
+                   role: 0,
+                   league: league)
+        other_member = m.user
+        stub_current_user(other_member)
+
+        expect { subject }
+          .to not_change { membership.approver }
+          .and not_change { membership.status }
+      end
+
+      it 'does not allow a random user to reject the request' do
+        stub_current_user
+
+        expect { subject }
+          .to not_change { membership.approver }
+          .and not_change { membership.status }
+      end
     end
   end
-
 end
