@@ -1,4 +1,5 @@
 class MembershipPolicy < ApplicationPolicy
+  include MembershipApproval
   attr_accessor :user, :membership
 
   def initialize(user, membership)
@@ -8,11 +9,5 @@ class MembershipPolicy < ApplicationPolicy
 
   def show?
     user_is_involved?
-  end
-
-  private
-
-  def user_is_involved?
-    !user.nil? && membership.users.include?(user)
   end
 end
