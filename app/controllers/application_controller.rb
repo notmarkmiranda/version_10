@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    flash[:alert] = "You are not authorized to perform this action."
+    flash[:alert] = "Oops, something went wrong."
     return redirect_to dashboard_path if current_user
     redirect_to root_path
   end
