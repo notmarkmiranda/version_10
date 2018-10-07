@@ -19,16 +19,16 @@ describe ApprovesController, type: :request do
         stub_current_user(admin)
 
         expect { subject }
-          .to change { membership.approver }.to(admin)
+          .to change { membership.decider }.to(admin)
           .and change { membership.status }.to('approved')
       end
 
-      it 'does not change the approver on an already approved membership request' do
-        membership.update(approver: create(:user))
+      it 'does not change the decider on an already approved membership request' do
+        membership.update(decider: create(:user))
         stub_current_user(admin)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
 
@@ -40,7 +40,7 @@ describe ApprovesController, type: :request do
         stub_current_user(user)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
 
@@ -48,7 +48,7 @@ describe ApprovesController, type: :request do
         stub_current_user(membership.requestor)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
     end
@@ -60,16 +60,16 @@ describe ApprovesController, type: :request do
         stub_current_user(membership.user)
 
         expect { subject }
-          .to change { membership.approver }.to(membership.user)
+          .to change { membership.decider }.to(membership.user)
           .and change { membership.status }.to('approved')
       end
 
-      it 'does not change the approver on an already approved membership request' do
-        membership.update(approver: admin, status: 1)
+      it 'does not change the decider on an already approved membership request' do
+        membership.update(decider: admin, status: 1)
         stub_current_user(membership.user)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
 
@@ -81,7 +81,7 @@ describe ApprovesController, type: :request do
         stub_current_user(other_admin)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
 
@@ -89,7 +89,7 @@ describe ApprovesController, type: :request do
         stub_current_user(admin)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
 
@@ -101,7 +101,7 @@ describe ApprovesController, type: :request do
         stub_current_user(other_user)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
 
@@ -109,7 +109,7 @@ describe ApprovesController, type: :request do
         stub_current_user
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
     end

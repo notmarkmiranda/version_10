@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2018_09_27_161634) do
     t.integer "role", default: 0
     t.integer "requestor_id"
     t.integer "status", default: 0
-    t.integer "approver_id"
+    t.integer "decider_id"
     t.index ["league_id"], name: "index_memberships_on_league_id"
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
