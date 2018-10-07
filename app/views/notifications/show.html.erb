@@ -1,1 +1,13 @@
-<%= @notification.notification_text %>
+<div class="row justify-content-center">
+  <div class="card border-primary">
+    <h5 class="card-header header-text border-primary text-primary">
+      Membership
+    </h5>
+    <div class="card-body stat-line">
+        <%= @notification.notification_text %>
+        <div class="caption-text">
+          <%= time_ago_in_words(@notification.created_at) %> ago
+        </div>
+    </div>
+  </div>
+</div>
