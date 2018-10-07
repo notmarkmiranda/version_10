@@ -7,7 +7,7 @@ class Membership < ApplicationRecord
   belongs_to :user
   belongs_to :league
   belongs_to :requestor, class_name: 'User', optional: true
-  belongs_to :approver, class_name: 'User', optional: true
+  belongs_to :decider, class_name: 'User', optional: true
 
   enum role: [:member, :admin]
   enum status: [:pending, :approved, :rejected]
@@ -15,23 +15,23 @@ class Membership < ApplicationRecord
   after_create :create_notifications, unless: :skip_notification
 
   def approve!(user)
-    update(approver: user, status: 1)
+    update(decider: user, status: 1)
   end
 
   def approved?
-    approver.present?
+    decider.present?
   end
 
   def can_be_approved?
-    approver.nil? && pending?
+    decider.nil? && pending?
   end
 
   def can_be_rejected?
-    approver.nil? && pending?
+    decider.nil? && pending?
   end
 
   def reject!(user)
-    update(approver: user, status: 2)
+    update(decider: user, status: 2)
   end
 
   def users

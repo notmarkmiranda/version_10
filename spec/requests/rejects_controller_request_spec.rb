@@ -21,15 +21,15 @@ describe RejectsController, type: :request do
         stub_current_user(admin)
 
         expect { subject }
-          .to change { membership.approver }.to(admin)
+          .to change { membership.decider }.to(admin)
           .and change { membership.status }.to('rejected')
       end
 
-      it 'does not change the approver on an already rejected membership request' do
-        membership.update(approver: create(:user))
+      it 'does not change the decider on an already rejected membership request' do
+        membership.update(decider: create(:user))
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
 
@@ -41,14 +41,14 @@ describe RejectsController, type: :request do
         stub_current_user(user)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
       it 'does not allow a requestor to approve a membership request' do
         stub_current_user(user)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
     end
@@ -62,16 +62,16 @@ describe RejectsController, type: :request do
         stub_current_user(user)
 
         expect { subject }
-          .to change { membership.approver }.to(user)
+          .to change { membership.decider }.to(user)
           .and change { membership.status }.to('rejected')
       end
 
-      it 'does not change the approver on an already rejected membership request' do
-        membership.update(approver: create(:user))
+      it 'does not change the decider on an already rejected membership request' do
+        membership.update(decider: create(:user))
         stub_current_user(user)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
 
@@ -83,7 +83,7 @@ describe RejectsController, type: :request do
         stub_current_user(other_admin)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
 
@@ -91,7 +91,7 @@ describe RejectsController, type: :request do
         stub_current_user(admin)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
 
@@ -103,7 +103,7 @@ describe RejectsController, type: :request do
         stub_current_user(other_member)
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
 
@@ -111,7 +111,7 @@ describe RejectsController, type: :request do
         stub_current_user
 
         expect { subject }
-          .to not_change { membership.approver }
+          .to not_change { membership.decider }
           .and not_change { membership.status }
       end
     end
