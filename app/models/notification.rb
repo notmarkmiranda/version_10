@@ -6,6 +6,14 @@ class Notification < ApplicationRecord
   scope :unread, -> { where(read_at: nil) }
   scope :ordered, -> { order('read_at DESC').order('created_at DESC') }
 
+  def can_be_read?
+    read_at.nil?
+  end
+
+  def mark_as_read!
+    update(read_at: Time.now)
+  end
+
   def notification_text
     case notifiable.class.name
     when "Membership"

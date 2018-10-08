@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 2018_09_27_161634) do
     t.bigint "user_id"
     t.bigint "league_id"
     t.integer "role", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "requestor_id"
     t.integer "status", default: 0
     t.integer "decider_id"
