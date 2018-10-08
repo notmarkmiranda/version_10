@@ -8,7 +8,7 @@ class CreateNotifications < ActiveRecord::Migration[5.2]
       t.integer :notifiable_id
       t.string :notifiable_type
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

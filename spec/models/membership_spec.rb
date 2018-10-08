@@ -6,7 +6,6 @@ describe Membership, type: :model do
     it { should validate_presence_of :user_id }
     it { should validate_presence_of :league_id }
     it { should validate_uniqueness_of(:user_id).scoped_to(:league_id) }
-    xit { should validate_numericality_of(:role).only_integer }
   end
 
   context 'relationships' do

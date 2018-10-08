@@ -4,10 +4,20 @@
       Membership
     </h5>
     <div class="card-body stat-line">
-        <%= @notification.notification_text %>
-        <div class="caption-text">
+      <%= @notification.notification_text %>
+      <div class="caption-text">
+        <% if @notification.notifiable.approved? %>
+          <%= "#{@notification.notifiable.status} #{time_ago_in_words(@notification.notifiable.updated_at)}" %> ago
+        <% else %>
           <%= time_ago_in_words(@notification.created_at) %> ago
+        <% end %>
+      </div>
+      <% unless @notification.notifiable.approved? %>
+        <div class="notification-actions mt-3">
+          <%= button_to 'Approve', membership_approve_path(@notification.notifiable, notification_id: @notification.id),  method: :patch, class:'btn btn-outline-primary btn-sm mr-2' %>
+          <%= button_to 'Reject', '#', class:'btn btn-outline-danger btn-sm' %>
         </div>
+      <% end %>
     </div>
   </div>
 </div>
