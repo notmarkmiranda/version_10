@@ -8,11 +8,7 @@ class MembershipAndNotificationUpdater
   end
 
   def update
-    if notification.can_be_read? && membership.can_be_approved?
-      notification.mark_as_read!
-      membership.approve!(user)
-      true
-    end
-    false
+    notification.mark_as_read! if notification&.can_be_read?
+    membership.approve!(user) if membership&.can_be_approved?
   end
 end
