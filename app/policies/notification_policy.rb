@@ -19,5 +19,4 @@ class NotificationPolicy < ApplicationPolicy
   def user_is_involved?
     !user.nil? && @notification.users.include?(user)
   end
-
 end

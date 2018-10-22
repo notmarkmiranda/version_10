@@ -40,6 +40,15 @@ class Notification < ApplicationRecord
     read_at.nil? ? 'notification-unread' : 'notification-read'
   end
 
+  def user_is_allowed?(user)
+    case notifiable.class.name
+    when "Membership"
+      notifiable.requestor != user
+    else
+      nil
+    end
+  end
+
   def users
     [recipient, actor].compact
   end
