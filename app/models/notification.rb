@@ -10,6 +10,15 @@ class Notification < ApplicationRecord
     read_at.nil?
   end
 
+  def has_decision?
+    case notifiable.class.name
+    when "Membership"
+      !notifiable.pending?
+    else
+      nil
+    end
+  end
+
   def mark_as_read!
     update(read_at: Time.now)
   end

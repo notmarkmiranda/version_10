@@ -6,30 +6,40 @@ describe 'when a user views a notification' do
 
     before do
       stub_current_user(notification.recipient)
-      visit notification_path(notification)
     end
 
     context 'and it has not been approved or rejected' do
       it 'has a button to approve or reject' do
+        visit notification_path(notification)
 
         expect(page).to have_button('Approve')
         expect(page).to have_button('Reject')
       end
     end
-    context 'and it has already been approved' do
+    context 'and it has a decision'
       let(:admin_membership) { create(:membership, role: 1) }
       let(:other_admin) { admin_membership.user }
       let(:membership) { notification.notifiable }
 
-      before do
-        membership.update(status: 1, decider: other_admin)
+      context 'approved' do
+        before { membership.update(status: 1, decider: other_admin) }
+
+        it 'has a disabled buttons for approve or reject' do
+          visit notification_path(notification)
+
+          expect(page).to have_button('Approve', disabled: true)
+          expect(page).to have_button('Reject', disabled: true)
+        end
       end
 
-      it 'has a disabled buttons for approve or reject' do
-        expect(page).to have_button('Approve', disabled: true)
-        expect(page).to have_button('Reject', disabled: true)
+      context 'rejected' do
+        before { membership.update(status: 2, decider: other_admin) }
+        it 'has a disabled buttons for approve or reject' do
+          visit notification_path(notification)
+
+          expect(page).to have_button('Approve', disabled: true)
+          expect(page).to have_button('Reject', disabled: true)
+        end
       end
-    end
-    context 'and it has already been rejected'
   end
 end
