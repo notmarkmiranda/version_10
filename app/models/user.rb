@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :leagues
   has_many :players
   has_many :memberships
+  has_many :notifications, foreign_key: :recipient_id
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -19,6 +20,10 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def last_five_notifications
+    notifications.unread.last(5)
+  end
+
   def number_of_leagues_played_in
     leagues_played_in.count
   end
@@ -29,6 +34,10 @@ class User < ApplicationRecord
 
   def participated_leagues
     get_leagues
+  end
+
+  def unread_notifications_count
+    notifications.unread.count
   end
 
   def winner_calculation(season=nil)
