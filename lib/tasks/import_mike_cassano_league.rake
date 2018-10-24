@@ -19,7 +19,7 @@ task import_mike_cassano: [:environment] do
   user.update(password: 'password')
 
   league = League.find_or_create_by(name: "Mike Cassano's Super Fun League")
-  league.update(user_id: user.id)
+  league.update(user_id: user.id, privated: false)
   puts "Created #{league.name}!"
 
   seasons_to_create = difference_in_seasons(league.seasons_count)
@@ -66,4 +66,3 @@ def parse_csv(season, csv)
     puts "#{player.user_full_name} finished #{player.finishing_place.ordinalize} in game ##{game.id} on #{game.formatted_date}"
   end
 end
-
