@@ -22,7 +22,9 @@ describe NotificationsController, type: :request do
       stub_current_user(notification.actor)
 
       expect(notification.read_at).to be_nil
+
       get notification_path(notification)
+
       notification.reload
       expect(notification.read_at).to_not be_nil
       expect(response.status).to eq(200)
