@@ -17,11 +17,14 @@ describe NotificationsController, type: :request do
   end
 
   context 'GET#show' do
-    let(:notification) { create(:notification) }
+    let(:notification) { create(:notification, read_at: nil) }
     it 'renders the show template - user' do
       stub_current_user(notification.actor)
 
+      expect(notification.read_at).to be_nil
       get notification_path(notification)
+      notification.reload
+      expect(notification.read_at).to_not be_nil
       expect(response.status).to eq(200)
     end
 
