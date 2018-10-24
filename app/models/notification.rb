@@ -20,7 +20,7 @@ class Notification < ApplicationRecord
   end
 
   def mark_as_read!
-    update(read_at: Time.now)
+    update(read_at: Time.now) if can_be_read?
   end
 
   def notification_text
