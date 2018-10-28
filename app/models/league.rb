@@ -32,7 +32,7 @@ class League < ApplicationRecord
   end
 
   def games_every_x_weeks
-    return 'Nothing' if no_games? || games_count  == 1
+    return nil if no_games? || games_count  == 1
     (weeks - 1) / (games_count - 1)
   end
 
