@@ -60,13 +60,13 @@ RSpec.describe League, type: :model do
       subject { league.games_every_x_weeks }
 
       it 'returns Nothing for no games' do
-        expect(subject).to eq('Nothing')
+        expect(subject).to be_nil
       end
 
       it 'returns Nothing for one game' do
         first_season.games.create!(date: Date.new(2015, 5, 9))
 
-        expect(subject).to eq('Nothing')
+        expect(subject).to be_nil
       end
 
       it 'returns a float' do
