@@ -5,6 +5,7 @@
     <div class="card border-primary">
       <div class="card-header header-text border-primary text-primary">
         <h5 class="user-header-text">Date: <%= @game.formatted_full_date %></h5>
+        <div class="caption-text">Buy In: <%= number_to_currency(@game.buy_in) %></div>
         <div class="caption-text">Season #<%= @game.season_league_season_number %></div>
       </div>
       <ul class="list-group list-group-flush">

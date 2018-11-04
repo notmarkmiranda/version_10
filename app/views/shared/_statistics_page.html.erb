@@ -4,6 +4,9 @@
     <div class="caption-text text-primary">
       <%= league.privated_text %>
     </div>
+    <% if policy(league).admin? %>
+      <%= link_to 'Schedule Game', new_game_path(league_id: league.id) %>
+    <% end %>
   </div>
 
   <div class="card-body">
