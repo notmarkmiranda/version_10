@@ -64,6 +64,10 @@ class League < ApplicationRecord
     date_of_next_game
   end
 
+  def new_game
+    current_season.games.new
+  end
+
   def ordered_rankings_full_names
     return [] if no_one_qualifies?
     league_standings

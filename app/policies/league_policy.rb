@@ -18,6 +18,10 @@ class LeaguePolicy < ApplicationPolicy
     user
   end
 
+  def admin?
+    user_is_admin?
+  end
+
   private
 
   def memberships
