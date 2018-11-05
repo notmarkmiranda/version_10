@@ -1,11 +1,14 @@
 <div class="card">
-  <div class="card-header league-name">
-    <%= league.name %>
-    <div class="caption-text text-primary">
-      <%= league.privated_text %>
+
+  <div class="card-header league-name league-show-header">
+    <div>
+      <%= league.name %>
+      <div class="caption-text text-primary">
+        <%= league.privated_text %>
+      </div>
     </div>
     <% if policy(league).admin? %>
-      <%= link_to 'Schedule Game', new_game_path(league_id: league.id) %>
+      <%= link_to 'Schedule Game', new_game_path(league_id: league.id), class: 'btn btn-sm btn-outline-primary'%>
     <% end %>
   </div>
 
