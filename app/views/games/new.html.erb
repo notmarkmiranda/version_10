@@ -1,8 +1,23 @@
-<%= form_for @game do |f| %>
-  <%= f.label :date, 'Date' %>
-  <%= f.date_field :date %>
-  <%= f.label :buy_in, 'Buy In Amount' %>
-  <%= f.number_field :buy_in %>
-  <%= f.hidden_field 'season_id', value: @game.season.id %>
-  <%= f.submit 'Create Game' %>
-<% end %>
+<div class="row justify-content-center">
+  <div class="col-md-4">
+    <div class="card border-primary">
+      <h4 class="card-header border-primary">Schedule Game</h4>
+      <div class="card-body">
+        <%= form_for @game do |f| %>
+          <div class="form-group">
+            <%= f.label :date, 'Date' %>
+            <%= f.date_field :date, class: 'form-control' %>
+          </div>
+
+
+          <div class="form-group">
+            <%= f.label :buy_in, 'Buy In Amount' %>
+            <%= f.number_field :buy_in, class: 'form-control' %>
+          </div>
+          <%= f.hidden_field 'season_id', value: @game.season.id %>
+          <%= f.submit 'Create Game', class: 'btn btn-outline-primary btn-block' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
