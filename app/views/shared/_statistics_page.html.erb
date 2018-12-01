@@ -1,9 +1,15 @@
 <div class="card">
-  <div class="card-header league-name">
-    <%= league.name %>
-    <div class="caption-text text-primary">
-      <%= league.privated_text %>
+
+  <div class="card-header league-name league-show-header">
+    <div>
+      <%= league.name %>
+      <div class="caption-text text-primary">
+        <%= league.privated_text %>
+      </div>
     </div>
+    <% if policy(league).admin? %>
+      <%= link_to 'Schedule Game', new_game_path(league_id: league.id), class: 'btn btn-sm btn-outline-primary'%>
+    <% end %>
   </div>
 
   <div class="card-body">
@@ -102,7 +108,9 @@
                 <% subject.games.descending_by_date.reverse.each do |game| %>
                   <%= link_to game_path(game), class: 'list-group-item list-group-item-action stat-line' do %>
                     <div class="caption-text text-success">
-                      Winner: <%= game.winner_full_name %>
+                      <% if game.completed? %>
+                        Winner: <%= game.winner_full_name %>
+                      <% end %>
                     </div>
                     <%= game.formatted_full_date %>
                     <div class="caption-text">
