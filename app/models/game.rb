@@ -16,7 +16,11 @@ class Game < ApplicationRecord
   end
 
   def in_the_future?
-    date.future? || !completed?
+    date.future? || not_completed?
+  end
+
+  def not_completed?
+    !completed?
   end
 
   def player_in_place_full_name(place)
