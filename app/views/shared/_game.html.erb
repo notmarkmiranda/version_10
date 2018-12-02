@@ -8,4 +8,8 @@
   <div class="caption-text">
     <%= pluralize(game.players_count, 'player') %> | Total pot: <%= number_to_currency(game.total_pot, precision: 0) %>
   </div>
+  <% if game.not_completed? && policy(game.league).admin? %>
+    <%= button_to 'Complete Game', '#' %>
+    <%= link_to 'Score Game', '#' %>
+  <% end %>
 <% end %>
