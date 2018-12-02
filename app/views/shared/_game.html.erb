@@ -1,0 +1,11 @@
+<%= link_to game_path(game), class: "list-group-item list-group-item-action stat-line #{'incomplete-or-future-game' if game.in_the_future?}" do %>
+  <div class="caption-text text-success">
+    <% if game.completed? %>
+      Winner: <%= game.winner_full_name %>
+    <% end %>
+  </div>
+  <%= game.formatted_full_date %>
+  <div class="caption-text">
+    <%= pluralize(game.players_count, 'player') %> | Total pot: <%= number_to_currency(game.total_pot, precision: 0) %>
+  </div>
+<% end %>

@@ -28,6 +28,28 @@ RSpec.describe Game, type: :model do
       end
     end
 
+    context '#in_the_future?' do
+      subject { game.in_the_future? }
+
+      it 'returns true - in the future' do
+        game.update(date: Date.tomorrow, completed: true)
+
+        expect(subject).to be true
+      end
+
+      it 'returns true - incomplete' do
+        game.update(date: Date.yesterday, completed: false)
+
+        expect(subject).to be true
+      end
+
+      it 'returns false' do
+        game.update(date: Date.yesterday, completed: true)
+
+        expect(subject).to be false
+      end
+    end
+
     context '#player_in_place_full_name' do
       let(:user) { create(:user, first_name: 'Mark', last_name: 'Miranda') }
       let!(:player) { create(:player, user: user, game: game, finishing_place: 3) }
