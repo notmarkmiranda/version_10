@@ -54,18 +54,18 @@ class League < ApplicationRecord
     # [max_ids.map { |id| User.find(id).full_name}.sort, max_qty]
   end
 
-  def next_game
-    date_of_next_game = games
-      .where('games.completed = ? AND games.date >= ?', false, Date.today)
-      .order('games.date ASC')
-      .first
-      &.formatted_full_date
-    return 'No Scheduled Game' if date_of_next_game.nil?
-    date_of_next_game
-  end
-
   def new_game
     current_season.games.new
+  end
+
+  def next_game
+    date_of_next_game = games
+    .where('games.completed = ? AND games.date >= ?', false, Date.today)
+    .order('games.date ASC')
+    .first
+    &.formatted_full_date
+    return 'No Scheduled Game' if date_of_next_game.nil?
+    date_of_next_game
   end
 
   def ordered_rankings_full_names

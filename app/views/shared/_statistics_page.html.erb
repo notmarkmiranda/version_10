@@ -101,23 +101,9 @@
           </h5>
             <ul class="list-group list-group-flush">
               <% if subject.no_one_qualifies? %>
-                <li class="list-group-item stat-line">
-                  No games
-                </li>
+                <%= render partial: 'shared/no_game' %>
               <% else %>
-                <% subject.games.descending_by_date.reverse.each do |game| %>
-                  <%= link_to game_path(game), class: 'list-group-item list-group-item-action stat-line' do %>
-                    <div class="caption-text text-success">
-                      <% if game.completed? %>
-                        Winner: <%= game.winner_full_name %>
-                      <% end %>
-                    </div>
-                    <%= game.formatted_full_date %>
-                    <div class="caption-text">
-                      <%= pluralize(game.players_count, 'player') %> | Total pot: <%= number_to_currency(game.total_pot, precision: 0) %>
-                    </div>
-                  <% end %>
-                <% end %>
+                <%= render partial: 'shared/game', collection: subject.games.descending_by_date.reverse %>
               <% end %>
             </ul>
         </div>

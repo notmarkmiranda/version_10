@@ -15,6 +15,10 @@ class Game < ApplicationRecord
     date.strftime('%B %-e, %Y')
   end
 
+  def in_the_future?
+    date.future? || !completed?
+  end
+
   def player_in_place_full_name(place)
     players.find_by(finishing_place: place)&.user_full_name
   end
