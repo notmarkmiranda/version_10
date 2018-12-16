@@ -1,15 +1,17 @@
 <%= link_to game_path(game), class: "list-group-item list-group-item-action stat-line #{'incomplete-or-future-game' if game.in_the_future?}" do %>
-  <div class="caption-text text-success">
-    <% if game.completed? %>
-      Winner: <%= game.winner_full_name %>
+  <div class="game-details">
+    <div class="caption-text text-success">
+      <% if game.completed? %>
+        Winner: <%= game.winner_full_name %>
+      <% end %>
+    </div>
+    <%= game.formatted_full_date %>
+    <div class="caption-text">
+      <%= pluralize(game.players_count, 'player') %> | Total pot: <%= number_to_currency(game.total_pot, precision: 0) %>
+    </div>
+    <% if game.not_completed? && policy(game.league).admin? %>
+      <%= button_to 'Complete Game', '#', class: 'btn btn-secondary btn-sm' %>
+      <%= link_to 'Score Game', '#', class: 'btn btn-secondary' %>
     <% end %>
   </div>
-  <%= game.formatted_full_date %>
-  <div class="caption-text">
-    <%= pluralize(game.players_count, 'player') %> | Total pot: <%= number_to_currency(game.total_pot, precision: 0) %>
-  </div>
-  <% if game.not_completed? && policy(game.league).admin? %>
-    <%= button_to 'Complete Game', '#' %>
-    <%= link_to 'Score Game', '#' %>
-  <% end %>
 <% end %>
