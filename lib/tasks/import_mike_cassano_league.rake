@@ -4,16 +4,27 @@ require 'uri'
 
 desc "import mike cassano's league"
 task import_mike_cassano: [:environment] do
-  NUMBER_OF_SEASONS = 3
   first_season  = URI.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQsxani6LWbWj1o1LzK8U--98RnBOP5QhIfhSxdkls-8vzUhkPyGlT36prttjrm9dykS2U1680k_QOA/pub?gid=0&single=true&output=csv')
   second_season = URI.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQsxani6LWbWj1o1LzK8U--98RnBOP5QhIfhSxdkls-8vzUhkPyGlT36prttjrm9dykS2U1680k_QOA/pub?gid=842704448&single=true&output=csv')
   third_season  = URI.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQsxani6LWbWj1o1LzK8U--98RnBOP5QhIfhSxdkls-8vzUhkPyGlT36prttjrm9dykS2U1680k_QOA/pub?gid=446497304&single=true&output=csv')
+  fourth_season = URI.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQsxani6LWbWj1o1LzK8U--98RnBOP5QhIfhSxdkls-8vzUhkPyGlT36prttjrm9dykS2U1680k_QOA/pub?gid=1132691613&single=true&output=csv')
+
+  all_seasons_csvs = [
+    first_season,
+    second_season,
+    third_season,
+    fourth_season
+  ]
+
+  NUMBER_OF_SEASONS = all_seasons_csvs.count
 
   users = URI.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQsxani6LWbWj1o1LzK8U--98RnBOP5QhIfhSxdkls-8vzUhkPyGlT36prttjrm9dykS2U1680k_QOA/pub?gid=607317098&single=true&output=csv')
 
   create_users(Net::HTTP.get(users))
 
-  @csvs ||= [Net::HTTP.get(first_season), Net::HTTP.get(second_season), Net::HTTP.get(third_season)]
+  @csvs = all_seasons_csvs.map do |season|
+    Net::HTTP.get(season)
+  end
 
   user = User.find_or_create_by(email: 'markmiranda51@gmail.com')
   user.update(password: 'password')
