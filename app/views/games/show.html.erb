@@ -1,6 +1,13 @@
 <div class="d-flex justify-content-center">
   <div class="col-lg-6">
-    <%= link_to 'Return to League', league_path(@game.league), class: 'btn btn-outline-primary btn-sm mb-2' %>
+    <div class="game-actions">
+      <%= link_to 'Return to League', league_path(@game.league), class: 'btn btn-outline-primary btn-sm mb-2 mr-2' %>
+      <% if @game.completed? %>
+        <%= button_to 'Uncomplete Game', '#', class: 'btn btn-outline-info btn-sm mb-2' %>
+      <% else %>
+        <%= button_to 'Complete Game', '#', class: 'btn btn-outline-danger btn-sm mb-2', disabled: @game.not_enough_players? %>
+      <% end %>
+    </div>
     <div class="card border-primary">
       <div class="card-header header-text border-primary text-primary">
         <h5 class="user-header-text">Date: <%= @game.formatted_full_date %></h5>

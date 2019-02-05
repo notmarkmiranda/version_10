@@ -23,6 +23,10 @@ class Game < ApplicationRecord
     !completed?
   end
 
+  def not_enough_players?
+    players_count < 2
+  end
+
   def player_in_place_full_name(place)
     players.find_by(finishing_place: place)&.user_full_name
   end
