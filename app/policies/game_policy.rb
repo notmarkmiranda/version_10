@@ -10,6 +10,10 @@ class GamePolicy < ApplicationPolicy
     user_is_admin?
   end
 
+  def user_is_admin?
+    memberships.where(role: 1, user: user).any?
+  end
+
   private
 
   def league
@@ -18,9 +22,5 @@ class GamePolicy < ApplicationPolicy
 
   def memberships
     @memberships ||= Membership.where(league: league, user: user)
-  end
-
-  def user_is_admin?
-    memberships.where(role: 1).any?
   end
 end
