@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :leagues
   resources :seasons
   resources :games
+  resources :players, only: [:index]
   resources :memberships, only: [:show] do
     resource :approve, only: [:update]
     resource :reject, only: [:update]
