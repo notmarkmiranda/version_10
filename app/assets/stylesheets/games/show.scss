@@ -1,0 +1,6 @@
+.game-actions {
+  display: flex;
+  & > form.button_to > input {
+    cursor: not-allowed;
+  }
+}
