@@ -13,6 +13,11 @@ class Game < ApplicationRecord
     available_users.collect { |user| [user.full_name, user.id] }
   end
 
+  def complete!
+    return if completed
+    update(completed: true)
+  end
+
   def formatted_date
     date.strftime('%B %Y')
   end
