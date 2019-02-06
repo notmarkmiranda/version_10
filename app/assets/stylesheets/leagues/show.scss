@@ -65,6 +65,14 @@ div.card-header.league-name {
   justify-content: flex-end;
 }
 
-.list-group-item.list-group-item-action.stat-line.incomplete-or-future-game {
+a.list-group-item.list-group-item-action.stat-line.incomplete-or-future-game {
   background-color: lightgreen;
+  display: flex;
+  flex-direction: row;
+}
+
+.game-details {
+}
+
+.btn.btn-secondary.btn-inline {
 }
