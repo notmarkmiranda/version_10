@@ -7,6 +7,12 @@ class Game < ApplicationRecord
   delegate :league, to: :season
   scope :descending_by_date, -> { order('date') }
 
+  def available_players
+    all_users = User.joins(:memberships).where('memberships.league_id = ?', league.id)
+    available_users = all_users.except(players.map(&:user))
+    available_users.collect { |user| [user.full_name, user.id] }
+  end
+
   def formatted_date
     date.strftime('%B %Y')
   end
