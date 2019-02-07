@@ -16,6 +16,20 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
   end
 
+  def complete
+    @game = Game.find(params[:id])
+    authorize @game
+    @game.complete! if @game.can_be_completed?
+    redirect_to game_path(@game)
+  end
+
+  def uncomplete
+    @game = Game.find(params[:id])
+    authorize @game
+    @game.uncomplete! if @game.can_be_uncompleted?
+    redirect_to game_path(@game)
+  end
+
   private
 
   def game_params
