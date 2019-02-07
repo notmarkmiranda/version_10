@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :games do
     member do
       post 'complete'
+      post 'uncomplete'
     end
   end
   resources :players, only: [:index]

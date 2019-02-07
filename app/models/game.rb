@@ -17,6 +17,10 @@ class Game < ApplicationRecord
     not_completed? && has_enough_players?
   end
 
+  def can_be_uncompleted?
+    completed? && has_enough_players?
+  end
+
   def complete!
     return if completed
     update(completed: true)
@@ -56,6 +60,11 @@ class Game < ApplicationRecord
     normal_pot = (buy_in * players_count)
     additional_pot = players.map(&:additional_expense).compact.sum
     normal_pot + additional_pot
+  end
+
+  def uncomplete!
+    return if not_completed?
+    update(completed: false)
   end
 
   def winner_full_name

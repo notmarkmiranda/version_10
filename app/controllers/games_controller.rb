@@ -23,6 +23,13 @@ class GamesController < ApplicationController
     redirect_to game_path(@game)
   end
 
+  def uncomplete
+    @game = Game.find(params[:id])
+    authorize @game
+    @game.uncomplete! if @game.can_be_uncompleted?
+    redirect_to game_path(@game)
+  end
+
   private
 
   def game_params

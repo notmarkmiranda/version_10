@@ -14,6 +14,10 @@ class GamePolicy < ApplicationPolicy
     user_is_admin?
   end
 
+  def uncomplete?
+    user_is_admin?
+  end
+
   def user_is_admin?
     memberships.where(role: 1, user: user).any?
   end
