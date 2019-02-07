@@ -13,6 +13,10 @@ class Game < ApplicationRecord
     available_users.collect { |user| [user.full_name, user.id] }
   end
 
+  def can_be_completed?
+    not_completed? && has_enough_players?
+  end
+
   def complete!
     return if completed
     update(completed: true)
@@ -60,5 +64,11 @@ class Game < ApplicationRecord
 
   def season_league_season_number
     league.season_number(season)
+  end
+
+  private
+
+  def has_enough_players?
+    players_count > 1
   end
 end

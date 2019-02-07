@@ -6,6 +6,10 @@ class GamePolicy < ApplicationPolicy
     @game = game
   end
 
+  def complete?
+    user_is_admin?
+  end
+
   def new?
     user_is_admin?
   end
