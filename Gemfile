@@ -15,6 +15,7 @@ gem 'devise'
 gem 'bootstrap', '~>4.1.1'
 gem 'jquery-rails'
 gem 'pundit'
+gem 'draper'
 
 group :development, :test do
   gem 'factory_bot_rails'
