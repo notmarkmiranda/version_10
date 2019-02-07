@@ -4,7 +4,12 @@ Rails.application.routes.draw do
 
   resources :leagues
   resources :seasons
-  resources :games
+  resources :games do
+    member do
+      post 'complete'
+      post 'uncomplete'
+    end
+  end
   resources :players, only: [:index]
   resources :memberships, only: [:show] do
     resource :approve, only: [:update]
