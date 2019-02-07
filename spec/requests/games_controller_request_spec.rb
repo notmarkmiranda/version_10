@@ -113,4 +113,42 @@ describe 'Games Controller', type: :request do
       end
     end
   end
+
+  context 'POST#uncomplete' do
+    subject(:uncomplete_game) do
+      post "/games/#{game.id}/uncomplete"
+    end
+
+    before { game.complete! }
+    
+    context 'as an admin' do
+      before { stub_current_user(user) }
+
+      context 'with at least 2 players finished' do
+        before { create_list(:player, 2, game: game) }
+
+        it 'redirects back to game_path' do
+          expect {
+            uncomplete_game
+          }.to change { game.reload.completed }.from(true).to(false)
+        end
+      end
+    end
+
+    context 'as a non-admin' do
+      let(:membership) { create(:membership, role: 0) }
+      let(:regular_user) { membership.user }
+
+      before do
+        create_list(:player, 3, game: game)
+        stub_current_user(regular_user)
+      end
+
+      it 'redirects back to game_path and does not complete a game' do
+        expect {
+          uncomplete_game
+        }.not_to change { game.reload.completed }.from(true)
+      end
+    end
+  end
 end
