@@ -6,11 +6,7 @@
     <div class="card-body stat-line">
       <%= @notification.notification_text %>
       <div class="caption-text">
-        <% if @notification.notifiable.approved? %>
-          <%= "#{@notification.notifiable.status} #{time_ago_in_words(@notification.notifiable.updated_at)}" %> ago
-        <% else %>
-          <%= time_ago_in_words(@notification.created_at) %> ago
-        <% end %>
+        <%= @notification.notification_status %>
       </div>
       <% if @notification.user_is_allowed?(current_user) %>
         <div class="notification-actions mt-3">
