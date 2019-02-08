@@ -99,6 +99,7 @@ RSpec.describe Season, type: :model do
         expect(Season.for_select_except_current(season.league, season.id)).to eq([["Season ##{league.season_number(other_season)}", other_season.id]])
       end
     end
+
     context 'self#for_user_select_except_current' do
       it 'returns an empty array' do
         expect(Season.for_user_select_except_current(season.league, season.id)).to eq([["View All Seasons", "all"]])

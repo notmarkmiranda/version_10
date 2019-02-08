@@ -5,7 +5,7 @@ class NotificationsController < ApplicationController
   end
 
   def show
-    @notification = Notification.find(params[:id])
+    @notification = Notification.find(params[:id]).decorate
     @notification.mark_as_read!
     authorize @notification
   end
