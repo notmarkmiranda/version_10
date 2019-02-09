@@ -14,12 +14,14 @@ describe LeagueDecorator, type: :decorator do
     context 'with games scheduled' do
       before do
         season = league.current_season
-        create(:game, season: season, date: Date.today)
-        create(:game, season: season, date: 21.days.from_now)
+        travel_to Time.zone.local(2015, 5, 9, 17, 30, 00) do
+          create(:game, season: season, date: Date.today)
+          create(:game, season: season, date: Date.new(2015, 6, 9))
+        end
       end
 
       it 'returns the frequency text' do
-        expect(subject).to eq('2.15 weeks')
+        expect(subject).to eq('3.43 weeks')
       end
     end
   end
