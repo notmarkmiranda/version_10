@@ -2,6 +2,9 @@ require 'rails_helper'
 
 describe PlayerDecorator, type: :decorator do
   let(:player) { create(:player).decorate }
+
+  before { player.game.complete! }
+
   context '#additional_expense_text' do
     subject { player.additional_expense_text }
 
@@ -16,6 +19,10 @@ describe PlayerDecorator, type: :decorator do
 
       expect(subject).to eq('| Rebuy or Add-on: $1')
     end
+  end
+
+  context '#name_with_place' do
+    it 'does a thing'
   end
 
   context '#score_text' do
