@@ -1,11 +1,9 @@
 class PlayersController < ApplicationController
   def create
     @game = Game.find(game_id)
-    # @player = @game.players.new(player_params)
     @player_creator = PlayerCreator.new(merged_player_params, params[:commit])
     if @player_creator.save
       redirect_to @game
-    else
     end
   end
 
