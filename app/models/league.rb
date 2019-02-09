@@ -99,6 +99,6 @@ class League < ApplicationRecord
   def weeks
     date_array = games.descending_by_date.pluck(:date)
     seconds = date_array.last - date_array.first
-    seconds / 60.0 / 60 / 24 / 7
+    seconds.round / 60.0 / 60 / 24 / 7
   end
 end

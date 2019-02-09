@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       post 'uncomplete'
     end
   end
-  resources :players, only: [:index]
+  resources :players, only: [:index, :create]
   resources :memberships, only: [:show] do
     resource :approve, only: [:update]
     resource :reject, only: [:update]
