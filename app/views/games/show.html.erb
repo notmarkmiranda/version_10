@@ -10,13 +10,13 @@
         <div class="caption-text">Buy In: <%= number_to_currency(@game.buy_in) %></div>
         <div class="caption-text">Season #<%= @game.season_league_season_number %></div>
       </div>
-      <ul class="list-group list-group-flush">
+      <ul class="list-group list-group-flush standings-list">
         <li class="list-group-item header-text user-header-text">
           Standings
         </li>
         <% @game.players.in_place.decorate.each do |player, index| %>
           <%= link_to user_stats_path(user_id: player.user_id, season: @game.season_id), class: 'list-group-item list-group-item-action stat-line' do %>
-            <%= "#{player.finishing_place}. #{player.user_full_name}" %>
+            <%= player.name_with_place %>
             <div class="caption-text text-info">
               <%= player.score_text %>
             </div>
@@ -26,6 +26,7 @@
           <div class="list-group-item list-group-item-action stat-line">
           <%= form_for Player.new(game: @game) do |f| %>
             <%= f.select :user_id, @game.available_players, { prompt: 'Choose a Player' }, { class: 'form-control user-select' } %>
+            <%= f.submit 'Score Player' %>
           <% end%>
           </div>
         <% end%>
