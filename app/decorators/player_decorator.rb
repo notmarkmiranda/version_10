@@ -20,7 +20,7 @@ class PlayerDecorator < ApplicationDecorator
     additional_expense = object.has_additional_expense?
     if game_object.completed?
       "Score: #{object.score} #{additional_expense_text(true)}"
-    elsif object.finished_at && additional_expense
+    elsif object.finished_at
       "Finished: #{object.finished_at.strftime('%b %-e, %l:%M %p')} #{additional_expense_text(true)}"
     elsif object.has_additional_expense?
       additional_expense_text

@@ -4,3 +4,9 @@
     cursor: not-allowed;
   }
 }
+
+.list-group-item.standing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
