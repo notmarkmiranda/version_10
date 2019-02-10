@@ -17,7 +17,7 @@ describe PlayerDecorator, type: :decorator do
     it 'returns the text' do
       player.update(additional_expense: 1)
 
-      expect(subject).to eq('| Rebuy or Add-on: $1')
+      expect(subject).to eq('Rebuy or Add-on: $1')
     end
   end
 
