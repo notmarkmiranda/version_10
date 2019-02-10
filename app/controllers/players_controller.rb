@@ -10,7 +10,7 @@ class PlayersController < ApplicationController
   private
 
   def player_params
-    params.require(:player).permit(:user_id)
+    params.require(:player).permit(:user_id, :additional_expense)
   end
 
   def game_id

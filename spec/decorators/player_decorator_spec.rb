@@ -2,8 +2,9 @@ require 'rails_helper'
 
 describe PlayerDecorator, type: :decorator do
   let(:player) { create(:player).decorate }
+  let(:game) { player.game }
 
-  before { player.game.complete! }
+  before { game.complete! }
 
   context '#additional_expense_text' do
     subject { player.additional_expense_text }
@@ -17,14 +18,13 @@ describe PlayerDecorator, type: :decorator do
     it 'returns the text' do
       player.update(additional_expense: 1)
 
-      expect(subject).to eq('| Rebuy or Add-on: $1')
+      expect(subject).to eq('Rebuy or Add-on: $1')
     end
   end
 
   context '#name_with_place' do
     subject(:name_with_place) { player.name_with_place }
 
-    let(:game) { player.game }
     context 'when a game is completed' do
       before do
         game.complete!
@@ -58,6 +58,15 @@ describe PlayerDecorator, type: :decorator do
       player.update(additional_expense: 1)
 
       expect(subject).to eq('Score: 1.5 | Rebuy or Add-on: $1')
+    end
+
+    it 'returns the finished_at time for an incomplete game + finished player' do
+      game.uncomplete!
+      travel_to Time.zone.local(2015, 5, 9, 17, 30, 00) do
+        player.update(finished_at: Time.now)
+
+        expect(subject).to eq('Finished: May 9,  5:30 PM | Rebuy or Add-on: $1')
+      end
     end
   end
 end
