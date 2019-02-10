@@ -1,9 +1,16 @@
 class PlayersController < ApplicationController
   def create
-    @game = Game.find(game_id)
-    @player_creator = PlayerCreator.new(merged_player_params, params[:commit])
-    if @player_creator.save
-      redirect_to @game
+    player_creator = PlayerCreator.new(merged_player_params, params[:commit])
+    if player_creator.save
+      redirect_to game
+    end
+  end
+
+  def update
+    @player = Player.find(params[:id])
+    player_updater = PlayerUpdater.new(@player, params[:commit])
+    if player_updater.update
+      redirect_to game
     end
   end
 
@@ -11,6 +18,10 @@ class PlayersController < ApplicationController
 
   def player_params
     params.require(:player).permit(:user_id, :additional_expense)
+  end
+
+  def game
+    @game ||= Game.find(game_id)
   end
 
   def game_id
