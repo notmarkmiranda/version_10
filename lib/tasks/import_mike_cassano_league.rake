@@ -20,18 +20,20 @@ task import_mike_cassano: [:environment] do
 
   users = URI.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQsxani6LWbWj1o1LzK8U--98RnBOP5QhIfhSxdkls-8vzUhkPyGlT36prttjrm9dykS2U1680k_QOA/pub?gid=607317098&single=true&output=csv')
 
-  create_users(Net::HTTP.get(users))
+  users = create_users(Net::HTTP.get(users))
 
   @csvs = all_seasons_csvs.map do |season|
     Net::HTTP.get(season)
   end
 
-  user = User.find_or_create_by(email: 'markmiranda51@gmail.com')
-  user.update(password: 'password')
+  admin_user = User.find_or_create_by(email: 'markmiranda51@gmail.com')
+  admin_user.update(password: 'password')
 
   league = League.find_or_create_by(name: "Mike Cassano's Super Fun League")
-  league.update(user_id: user.id, privated: false)
+  league.update(user_id: admin_user.id, privated: false)
   puts "Created #{league.name}!"
+
+  create_memberships(users.reject { |user| user == admin_user }, league)
 
   seasons_to_create = difference_in_seasons(league.seasons_count)
 
@@ -51,13 +53,23 @@ task import_mike_cassano: [:environment] do
 end
 
 def create_users(users)
+  all_users = []
   CSV.parse(users, { row_sep: :auto, headers: :first_row, encoding: 'bom|utf-8', header_converters: :symbol }) do |row|
     first_name, last_name = row[:person].split
 
     user = User.find_or_initialize_by(email: row[:email], first_name: first_name, last_name: last_name)
     user.password = SecureRandom.hex
     user.save!
+    all_users << user
     puts "#{user.full_name} created!"
+  end
+  all_users
+end
+
+def create_memberships(users, league)
+  users.each do |user|
+    user.memberships.create!(league: league, role: 0)
+    puts "Created membership for #{user.full_name} as non-admin!"
   end
 end
 
