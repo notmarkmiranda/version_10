@@ -12,6 +12,35 @@ RSpec.describe Game, type: :model do
 
   context 'methods' do
     let(:game) { create(:game, date: Date.new(2015, 5, 9), buy_in: 15) }
+    context '#available_players' do
+      let(:league) { game.league }
+      let(:memberships) { create_list(:membership, 3, league: league) }
+      let(:excluded_user) { memberships.last.user }
+      let(:excluded_user_collected) { [excluded_user.full_name, excluded_user.id] }
+
+      subject { game.available_players }
+
+      context 'returns all players that are not finished' do
+        before do
+          create(:player, game: game, user: excluded_user, finished_at: Time.now)
+        end
+
+        it 'excludes a finished player' do
+          expect(subject).not_to include(excluded_user_collected)
+        end
+      end
+
+      context 'returns players that are do not have an additional expense' do
+        before do
+          create(:player, game: game, user: excluded_user, additional_expense: 100)
+        end
+
+        it 'excludes a player with an additional_expense' do
+          expect(subject).not_to include(excluded_user_collected)
+        end
+      end
+    end
+
     context '#formatted_date' do
       subject { game.formatted_date }
 
