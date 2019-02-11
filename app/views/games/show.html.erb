@@ -15,11 +15,16 @@
           Standings
         </li>
         <% @game.players.in_place.decorate.each do |player, index| %>
-          <%= link_to user_stats_path(user_id: player.user_id, season: @game.season_id), class: 'list-group-item list-group-item-action stat-line' do %>
-            <%= player.name_with_place %>
-            <div class="caption-text text-info">
-              <%= player.score_text %>
+          <%= link_to user_stats_path(user_id: player.user_id, season: @game.season_id), class: 'list-group-item list-group-item-action stat-line standing' do %>
+            <div>
+              <%= player.name_with_place %>
+              <div class="caption-text text-info">
+                <%= player.score_text %>
+              </div>
             </div>
+            <% unless player.finished_at %>
+              <%= button_to 'Score Player', player_path(player, commit: 'Score Player'), method: :patch, class: 'btn btn-outline-info btn-sm' %>
+            <% end %>
           <% end %>
         <% end %>
         <% if @game.not_completed? %>
