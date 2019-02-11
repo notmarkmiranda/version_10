@@ -36,7 +36,21 @@ describe 'Admin can delete a player from an uncomplete game', type: :feature do
         end
       end
     end
+
+    context 'when the game is completed' do
+      let!(:player) { create :player, game: game, additional_expense: 100, finished_at: Time.now }
+
+      before { game.complete! }
+
+      it 'should not show the buttons to delete a player' do
+        visit game_path game
+
+        expect(page).to have_content deleted_user.full_name
+        expect(page).not_to have_button 'Delete Player'
+      end
+    end
   end
+
   context 'As a non-admin' do
     let(:membership) { create :membership, role: 0, league: game.league }
     let(:non_admin) { membership.user }
