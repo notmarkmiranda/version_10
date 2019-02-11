@@ -11,8 +11,8 @@ class PlayerDecorator < ApplicationDecorator
   def delete_and_score_buttons
     return unless h.policy(game_object).user_is_admin?
     button_elements = []
-    button_elements.push(score_button(object)) unless object.finished_at
-    button_elements.push(delete_button(object)) if game_object.not_completed?
+    button_elements.push(score_button) if (object.finished_at.nil? && game_object.not_completed?)
+    button_elements.push(delete_button) if game_object.not_completed?
 
     h.content_tag(:div, class: 'game-player-actions') do
       button_elements.join.html_safe
@@ -44,11 +44,11 @@ class PlayerDecorator < ApplicationDecorator
     object.game
   end
 
-  def score_button(object)
+  def score_button
     h.button_to 'Score Player', h.player_path(object, commit: 'Score Player'), method: :patch, class: 'btn btn-outline-info btn-sm mr-2'
   end
 
-  def delete_button(object)
+  def delete_button
     h.button_to 'Delete Player', h.player_path(object), method: :delete, class: 'btn btn-danger btn-sm'
   end
 end
