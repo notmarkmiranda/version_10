@@ -22,16 +22,7 @@
                 <%= player.score_text %>
               </div>
             </div>
-            <% if policy(@game).user_is_admin? %>
-              <div class='game-player-actions'>
-                <% unless player.finished_at %>
-                  <%= button_to 'Score Player', player_path(player, commit: 'Score Player'), method: :patch, class: 'btn btn-outline-info btn-sm mr-2' %>
-                <% end %>
-                <% if @game.not_completed? %>
-                  <%= button_to 'Delete Player', player_path(player), method: :delete, class: 'btn btn-danger btn-sm' %>
-                <% end %>
-              </div>
-            <% end %>
+            <%= player.delete_and_score_buttons %>
           <% end %>
         <% end %>
         <% if @game.not_completed? %>
