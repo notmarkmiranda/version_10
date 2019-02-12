@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Admin can score a user', type: :feature do
-  let(:game) { create(:game) }
+  let(:game) { create(:game, date: DateTime.new(2015, 5, 9, 17, 30, 00)) }
   let(:league) { game.league }
   let(:admin) { league.user }
 
@@ -24,4 +24,16 @@ describe 'Admin can score a user', type: :feature do
   end
 
   context 'As a user'
+  context 'As a visitor' do
+    before do
+      create_list(:membership, 2, league: league)
+    end
+
+    it 'does not show the dropdown for selecting users' do
+      visit game_path game
+
+      expect(page).to have_content 'Date: May 9, 2015'
+      expect(page).not_to have_css 'select#player_user_id'
+    end
+  end
 end
