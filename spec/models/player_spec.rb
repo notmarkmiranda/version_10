@@ -17,13 +17,13 @@ RSpec.describe Player, type: :model do
       subject { player.calculate_score }
 
       it 'scores a single player' do
-        expect(subject).to eq(4.97)
+        expect(subject).to eq(4.974)
       end
 
       it 'scores with 2 players' do
         create(:player, game: game)
 
-        expect(subject).to eq(7.03)
+        expect(subject).to eq(7.035)
       end
     end
 
