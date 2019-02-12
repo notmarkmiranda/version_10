@@ -27,6 +27,13 @@ class PlayerDecorator < ApplicationDecorator
     end
   end
 
+  def place_and_score
+    return unless object.finishing_place && object.score
+    h.content_tag(:div, class: 'caption-text text-danger') do
+      "#{object.finishing_place.ordinalize} place out of #{h.pluralize(object.game_players_count, 'player')} | Score: #{object.score}"
+    end
+  end
+
   def score_text
     additional_expense = object.has_additional_expense?
     if game_object.completed?

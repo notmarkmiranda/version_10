@@ -6,10 +6,12 @@ class UserStatsController < ApplicationController
       @players = @user.players.joins(:game)
         .where('games.season_id = ?', params[:season])
         .order('games.date DESC')
+        .decorate
     else
       @season = nil
       @players = @user.players.joins(:game)
         .order('games.date DESC')
+        .decorate
     end
   end
 end
