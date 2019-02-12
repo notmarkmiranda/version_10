@@ -14,7 +14,7 @@ class Game < ApplicationRecord
   end
 
   def can_be_completed?
-    not_completed? && has_enough_players?
+    not_completed? && has_enough_players? && all_players_finished?
   end
 
   def can_be_uncompleted?
@@ -23,6 +23,7 @@ class Game < ApplicationRecord
 
   def complete!
     return if completed
+    finish_all_players
     update(completed: true)
   end
 
@@ -76,6 +77,16 @@ class Game < ApplicationRecord
   end
 
   private
+
+  def all_players_finished?
+    players.map(&:finished_at).all?
+  end
+
+  def finish_all_players
+    players.in_finishing_order.each_with_index do |player, index|
+      player.finish_player_and_calculate_score(index + 1)
+    end
+  end
 
   def has_enough_players?
     players_count > 1

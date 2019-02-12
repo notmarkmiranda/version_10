@@ -11,11 +11,17 @@ class Player < ApplicationRecord
   delegate :season_number, to: :league, prefix: true
 
   scope :in_place, -> { order(finishing_place: :asc) }
+  scope :in_finishing_order, -> { order(finished_at: :desc) }
 
   def calculate_score
     numerator = game_players_count * game_buy_in ** 2 / total_expense
     denominator = finishing_place + 1
-    ((Math.sqrt(numerator) / denominator) * 100).floor / 100.0
+    ((Math.sqrt(numerator) / denominator) * 1000).floor / 1000.0
+  end
+
+  def finish_player_and_calculate_score(place)
+    update(finishing_place: place)
+    update_score
   end
 
   def has_additional_expense?
@@ -100,5 +106,9 @@ class Player < ApplicationRecord
 
   def total_expense
     game_buy_in + additional_expense
+  end
+
+  def update_score
+    update(score: calculate_score)
   end
 end
