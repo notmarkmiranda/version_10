@@ -9,7 +9,7 @@ class Game < ApplicationRecord
 
   def available_players
     all_users = User.joins(:memberships).where('memberships.league_id = ?', league.id)
-    available_users = all_users - players.map(&:user)
+    available_users = (all_users - players.map(&:user)).sort_by(&:full_name)
     available_users.collect { |user| [user.full_name, user.id] }
   end
 
