@@ -40,10 +40,9 @@
         <ul class="list-group list-group-flush">
           <% @players.each do |player| %>
             <%= link_to game_path(player.game), class: 'list-group-item list-group-item-action' do %>
-              <div class="caption-text text-danger">
-                <%= player.finishing_place.ordinalize %> place out of <%= pluralize(player.game_players_count, 'player') %>
-                | Score: <%= player.score %>
-              </div>
+
+              <%= player.place_and_score %>
+
               <div class="header-text">
                 <%= player.game_formatted_full_date %>
                 <% unless @season %>
