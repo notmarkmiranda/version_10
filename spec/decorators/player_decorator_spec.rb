@@ -45,6 +45,21 @@ describe PlayerDecorator, type: :decorator do
     end
   end
 
+  context '#place_and_score' do
+    subject(:place_and_score) { player.place_and_score }
+
+    it 'returns nil' do
+      player.update(finishing_place: nil)
+
+      expect(place_and_score).to be nil
+    end
+
+    it 'returns the correct text' do
+      expected_return = "<div class=\"caption-text text-danger\">1st place out of 1 player | Score: 1.5</div>"
+      expect(place_and_score).to eq(expected_return)
+    end
+  end
+
   context '#score_text' do
     subject { player.score_text }
 
