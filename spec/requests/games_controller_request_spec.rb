@@ -69,7 +69,7 @@ describe 'Games Controller', type: :request do
       before { stub_current_user(user) }
 
       context 'with at least 2 players finished' do
-        before { create_list(:player, 2, game: game) }
+        before { create_list(:player, 2, game: game, finished_at: Time.now) }
 
         it 'redirects back to game_path' do
           expect {
@@ -120,7 +120,7 @@ describe 'Games Controller', type: :request do
     end
 
     before { game.complete! }
-    
+
     context 'as an admin' do
       before { stub_current_user(user) }
 
