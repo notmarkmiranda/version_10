@@ -55,9 +55,24 @@ describe GameDecorator, type: :decorator do
 
       it 'returns a partial' do
         expect(helper).to receive(:render).with(partial: 'player_form')
-        
+
         subject
       end
+    end
+  end
+
+  context '#standings_title' do
+    let(:user) { game.league.user }
+    subject { game.standings_title }
+
+    it 'should return Standings' do
+      create(:player, game: game)
+
+      expect(subject).to eq("Standings")
+    end
+
+    it 'should return There are no players yet.' do
+      expect(subject).to eq("There are no players yet.")
     end
   end
 end
