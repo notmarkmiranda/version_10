@@ -6,13 +6,12 @@ RSpec.describe Season, type: :model do
   context 'relationships' do
     it { should belong_to :league }
     it { should have_many :games }
-    it { should delegate_method(:count).to(:games).with_prefix(true) }
   end
 
   context 'methods' do
     let(:league) { create(:league) }
     let(:season) { league.current_season }
-    let(:game)   { create(:game, buy_in: 100, season: season) }
+    let(:game)   { create(:game, buy_in: 100, season: season, completed: true) }
     let(:player_1) { double('player_1') }
     let(:player_2) { double('player_2') }
     let(:players) { [player_1, player_2] }
