@@ -10,7 +10,6 @@ class League < ApplicationRecord
   has_many :memberships
 
   delegate :count, to: :seasons, prefix: true
-  delegate :count, to: :games, prefix: true
   delegate :count, to: :players, prefix: true
 
   after_create_commit :create_first_season
