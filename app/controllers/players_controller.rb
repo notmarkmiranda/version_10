@@ -1,5 +1,6 @@
 class PlayersController < ApplicationController
   def create
+    authorize game
     player_creator = PlayerCreator.new(merged_player_params, params[:commit])
     if player_creator.save
       redirect_to game
