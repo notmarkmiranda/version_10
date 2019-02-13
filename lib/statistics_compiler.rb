@@ -12,6 +12,10 @@ module StatisticsCompiler
     (total_pot / games_count * 100).floor / 100
   end
 
+  def games_count
+    games.where(completed: true).count
+  end
+
   def no_games?
     games_count.zero?
   end
