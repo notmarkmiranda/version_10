@@ -35,6 +35,10 @@ class Game < ApplicationRecord
     date.strftime('%B %-e, %Y')
   end
 
+  def has_players?
+    players.any?
+  end
+
   def in_the_future?
     date.future? || not_completed?
   end
