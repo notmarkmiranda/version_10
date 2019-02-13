@@ -16,4 +16,12 @@ class GameDecorator < ApplicationDecorator
       h.render partial: 'player_form'
     end
   end
+
+    def standings_title
+      if object.has_players?
+        "Standings"
+      else
+        "There are no players yet."
+      end
+    end
 end

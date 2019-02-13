@@ -12,7 +12,7 @@
       </div>
       <ul class="list-group list-group-flush standings-list">
         <li class="list-group-item header-text user-header-text">
-          Standings
+          <%= @game.standings_title %>
         </li>
         <% @game.players.in_place.decorate.each do |player, index| %>
           <%= link_to user_stats_path(user_id: player.user_id, season: @game.season_id), class: 'list-group-item list-group-item-action stat-line standing' do %>
