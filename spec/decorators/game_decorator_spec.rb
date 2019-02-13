@@ -27,4 +27,37 @@ describe GameDecorator, type: :decorator do
       end
     end
   end
+
+  context '#new_player_form' do
+    subject { game.new_player_form }
+
+    context 'game not completed' do
+      let(:user) { game.league.user }
+      before { game.complete! }
+
+      it 'returns nil' do
+        expect(subject).to be nil
+      end
+    end
+
+    context 'user is not admin' do
+      let(:user) { create(:membership, league: game.league).user }
+      before { game.uncomplete! }
+
+      it 'returns nil' do
+        expect(subject).to be nil
+      end
+    end
+
+    context 'game is completed and user is admin' do
+      let(:user) { game.league.user }
+      before { game.uncomplete! }
+
+      it 'returns a partial' do
+        expect(helper).to receive(:render).with(partial: 'player_form')
+        
+        subject
+      end
+    end
+  end
 end
