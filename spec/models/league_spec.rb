@@ -12,7 +12,6 @@ RSpec.describe League, type: :model do
     it { should have_many :players }
     it { should have_many :memberships }
     it { should delegate_method(:count).to(:seasons).with_prefix(true) }
-    it { should delegate_method(:count).to(:games).with_prefix(true) }
     it { should delegate_method(:count).to(:players).with_prefix(true) }
   end
 
@@ -28,7 +27,7 @@ RSpec.describe League, type: :model do
       end
 
       it 'returns the average number of players' do
-        games = create_list(:game, 4, season: first_season)
+        games = create_list(:game, 4, season: first_season, completed: true)
         create_list(:player, 9, game: games[1])
 
         expect(subject).to eq(2.25)

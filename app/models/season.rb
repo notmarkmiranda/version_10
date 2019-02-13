@@ -5,7 +5,6 @@ class Season < ApplicationRecord
   has_many :games
   has_many :players, through: :games
 
-  delegate :count, to: :games, prefix: true
   delegate :count, to: :players, prefix: true
 
   default_scope { order(id: :asc) }

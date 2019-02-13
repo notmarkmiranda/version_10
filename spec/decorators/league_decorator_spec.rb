@@ -15,8 +15,8 @@ describe LeagueDecorator, type: :decorator do
       before do
         season = league.current_season
         travel_to Time.zone.local(2015, 5, 9, 17, 30, 00) do
-          create(:game, season: season, date: Date.today)
-          create(:game, season: season, date: Date.new(2015, 6, 9))
+          create(:game, season: season, date: Date.today, completed: true)
+          create(:game, season: season, date: Date.new(2015, 6, 9), completed: true)
         end
       end
 
