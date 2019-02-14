@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :leagues
   resources :seasons
+  resources :game_users, only: [:create]
   resources :games do
     member do
       post 'complete'

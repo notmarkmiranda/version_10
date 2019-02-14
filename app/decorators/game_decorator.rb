@@ -12,7 +12,7 @@ class GameDecorator < ApplicationDecorator
 
   def new_player_form
     return unless object.not_completed? && h.policy(object).user_is_admin?
-    h.content_tag(:div, class: 'list-group-item list-group-item-action stat-line') do
+    h.content_tag(:div, class: 'list-group-item stat-line new-player-form') do
       h.render partial: 'player_form'
     end
   end
