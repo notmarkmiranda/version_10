@@ -16,3 +16,11 @@
 .game-player-actions {
   display: flex
 }
+
+a.new-user-link {
+  padding-top: 10px;
+  color: goldenrod;
+  &:hover {
+    text-decoration: none;
+  }
+}
