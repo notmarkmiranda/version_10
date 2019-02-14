@@ -1,5 +1,6 @@
 class GameUsersController < ApplicationController
   def create
+    authorize game
     user_creator = UserCreator.new(user_params, game_id)
     user = user_creator.save
     if user
