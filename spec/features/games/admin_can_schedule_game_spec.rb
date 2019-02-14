@@ -8,7 +8,7 @@ describe 'Admin can schedule a game', type: :feature do
       stub_current_user(admin)
     end
 
-    context 'and there is an active season' do
+    describe 'and there is an active season' do
       it 'allows them to schedule a game' do
         visit league_path(league)
         click_link 'Schedule Game'
@@ -22,7 +22,7 @@ describe 'Admin can schedule a game', type: :feature do
       end
     end
 
-    context 'and there is not an active season'
+    describe 'and there is not an active season'
   end
 
   describe 'when a member is logged in' do
@@ -33,7 +33,7 @@ describe 'Admin can schedule a game', type: :feature do
       stub_current_user(member)
     end
 
-    context 'and there is an active season' do
+    describe 'and there is an active season' do
       it 'does not allow them to schedule a game' do
         visit league_path(league)
 
@@ -41,6 +41,6 @@ describe 'Admin can schedule a game', type: :feature do
         expect(page).to_not have_content('Schedule Game')
       end
     end
-    context 'and there is not an active season'
+    describe 'and there is not an active season'
   end
 end

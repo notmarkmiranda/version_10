@@ -5,7 +5,7 @@ describe 'Admin can score a user', type: :feature do
   let(:league) { game.league }
   let(:admin) { league.user }
 
-  context 'As an admin' do
+  describe 'As an admin' do
     before do
       stub_current_user(admin)
       @users = create_list(:membership, 2, league: league).map(&:user)
@@ -23,8 +23,8 @@ describe 'Admin can score a user', type: :feature do
     end
   end
 
-  context 'As a user'
-  context 'As a visitor' do
+  describe 'As a user'
+  describe 'As a visitor' do
     before do
       create_list(:membership, 2, league: league)
     end

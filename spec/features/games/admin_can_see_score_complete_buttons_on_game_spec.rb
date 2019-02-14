@@ -18,7 +18,7 @@ describe 'as a logged in user on a game#show page' do
     before { stub_current_user(admin) }
 
     describe 'and a game is not complete' do
-      context 'when there are not enough players to score a game' do
+      describe 'when there are not enough players to score a game' do
         before do
           visit game_path(new_game)
         end
@@ -29,7 +29,7 @@ describe 'as a logged in user on a game#show page' do
         end
       end
 
-      context 'when there are just enough players to score a game' do
+      describe 'when there are just enough players to score a game' do
         before do
           2.times { create(:player, game: new_game) }
           visit game_path(new_game)

@@ -6,7 +6,7 @@ describe PlayerDecorator, type: :decorator do
 
   before { game.complete! }
 
-  context '#additional_expense_text' do
+  describe '#additional_expense_text' do
     subject { player.additional_expense_text }
 
     it 'returns nil' do
@@ -22,10 +22,10 @@ describe PlayerDecorator, type: :decorator do
     end
   end
 
-  context '#name_with_place' do
+  describe '#name_with_place' do
     subject(:name_with_place) { player.name_with_place }
 
-    context 'when a game is completed' do
+    describe 'when a game is completed' do
       before do
         game.complete!
         player.update(finishing_place: 2)
@@ -36,7 +36,7 @@ describe PlayerDecorator, type: :decorator do
       end
     end
 
-    context 'when a game is not completed' do
+    describe 'when a game is not completed' do
       before { game.uncomplete! }
 
       it 'it returns the player\'s full name' do
@@ -45,7 +45,7 @@ describe PlayerDecorator, type: :decorator do
     end
   end
 
-  context '#place_and_score' do
+  describe '#place_and_score' do
     subject(:place_and_score) { player.place_and_score }
 
     it 'returns nil' do
@@ -60,7 +60,7 @@ describe PlayerDecorator, type: :decorator do
     end
   end
 
-  context '#score_text' do
+  describe '#score_text' do
     subject { player.score_text }
 
     it 'returns the score' do

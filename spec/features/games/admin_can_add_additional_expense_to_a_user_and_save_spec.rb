@@ -8,8 +8,8 @@ describe 'As an admin' do
     stub_current_user(admin)
   end
 
-  context 'when they visit the game_path' do
-    context 'they are able to select a player from the dropdown and give them an additional expense' do
+  describe 'when they visit the game_path' do
+    describe 'they are able to select a player from the dropdown and give them an additional expense' do
       it 'adds the additional expense to the player' do
         visit game_path(game)
 

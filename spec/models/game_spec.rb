@@ -1,18 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
-  context 'validations' do
+  describe 'validations' do
     it { should validate_presence_of :date }
   end
 
-  context 'relationships' do
+  describe 'relationships' do
     it { should belong_to :season }
     it { should have_many :players }
   end
 
-  context 'methods' do
+  describe 'methods' do
     let(:game) { create(:game, date: Date.new(2015, 5, 9), buy_in: 15) }
-    context '#available_players' do
+    describe '#available_players' do
       let(:league) { game.league }
       let(:memberships) { create_list(:membership, 3, league: league) }
       let(:excluded_user) { memberships.last.user }
@@ -20,7 +20,7 @@ RSpec.describe Game, type: :model do
 
       subject { game.available_players }
 
-      context 'returns all players that are not finished' do
+      describe 'returns all players that are not finished' do
         before do
           create(:player, game: game, user: excluded_user, finished_at: Time.now)
         end
@@ -30,7 +30,7 @@ RSpec.describe Game, type: :model do
         end
       end
 
-      context 'returns players that are do not have an additional expense' do
+      describe 'returns players that are do not have an additional expense' do
         before do
           create(:player, game: game, user: excluded_user, additional_expense: 100)
         end
@@ -41,7 +41,7 @@ RSpec.describe Game, type: :model do
       end
     end
 
-    context '#formatted_date' do
+    describe '#formatted_date' do
       subject { game.formatted_date }
 
       it 'returns the formatted truncated date' do
@@ -49,7 +49,7 @@ RSpec.describe Game, type: :model do
       end
     end
 
-    context '#formatted_full_date' do
+    describe '#formatted_full_date' do
       subject { game.formatted_full_date }
 
       it 'returns the full formatted date' do
@@ -57,7 +57,7 @@ RSpec.describe Game, type: :model do
       end
     end
 
-    context '#in_the_future?' do
+    describe '#in_the_future?' do
       subject { game.in_the_future? }
 
       it 'returns true - in the future' do
@@ -79,7 +79,7 @@ RSpec.describe Game, type: :model do
       end
     end
 
-    context '#player_in_place_full_name' do
+    describe '#player_in_place_full_name' do
       let(:user) { create(:user, first_name: 'Mark', last_name: 'Miranda') }
       let!(:player) { create(:player, user: user, game: game, finishing_place: 3) }
 
@@ -97,7 +97,7 @@ RSpec.describe Game, type: :model do
       end
     end
 
-    context '#score_game' do
+    describe '#score_game' do
       subject { game.score_game }
 
       it 'returns because players is empty' do
@@ -117,7 +117,7 @@ RSpec.describe Game, type: :model do
       end
     end
 
-    context '#total_pot' do
+    describe '#total_pot' do
       subject { game.total_pot }
 
       it 'returns 0 with no pot' do
@@ -137,7 +137,7 @@ RSpec.describe Game, type: :model do
       end
     end
 
-    context '#winner_full_name' do
+    describe '#winner_full_name' do
       it 'returns the winners full name' do
         expect(game).to receive(:player_in_place_full_name).with(1)
 
@@ -145,7 +145,7 @@ RSpec.describe Game, type: :model do
       end
     end
 
-    context '#season_league_season_number' do
+    describe '#season_league_season_number' do
 
       it 'calls league#season_number' do
         expect(game.league).to receive(:season_number).with(game.season)
