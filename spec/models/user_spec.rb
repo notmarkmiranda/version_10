@@ -1,21 +1,21 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
-  context 'validations' do
+describe User, type: :model do
+  describe 'validations' do
     it { should validate_presence_of :email }
   end
 
-  context 'relationships' do
+  describe 'relationships' do
     it { should have_many :leagues }
     it { should have_many :players }
     it { should have_many :memberships }
   end
 
-  context 'methods' do
+  describe 'methods' do
     let(:user) { create(:user, first_name: 'Mark', last_name: 'Miranda') }
     let(:season) { double('season') }
 
-    context '#attendance' do
+    describe '#attendance' do
       it 'returns an array of numbers' do
         expect(user).to receive(:get_attendance).with(season).and_return([1, 2])
         expect(user.attendance(season)).to eq([1, 2])
@@ -27,7 +27,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context '#full_name' do
+    describe '#full_name' do
       subject { user.full_name }
 
       it 'returns the full name' do
@@ -35,7 +35,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context '#number_of_leagues_played_in' do
+    describe '#number_of_leagues_played_in' do
       subject { user.number_of_leagues_played_in }
       it 'returns 0' do
         expect(subject).to eq(0)
@@ -55,7 +55,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context '#winner_calculation' do
+    describe '#winner_calculation' do
       it 'returns an array of numbers' do
         expect(user).to receive(:get_winners).with(season).and_return([1, 2])
         expect(user.winner_calculation(season)).to eq([1, 2])

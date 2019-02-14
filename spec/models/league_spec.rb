@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe League, type: :model do
-  context 'validations' do
+  describe 'validations' do
     it { should validate_presence_of :user }
     it { should validate_presence_of :name }
   end
 
-  context 'relationships' do
+  describe 'relationships' do
     it { should belong_to :user }
     it { should have_many :seasons }
     it { should have_many :players }
@@ -15,12 +15,12 @@ RSpec.describe League, type: :model do
     it { should delegate_method(:count).to(:players).with_prefix(true) }
   end
 
-  context 'methods' do
+  describe 'methods' do
     let(:league) { create(:league) }
     let!(:first_season) { league.current_season }
     let!(:second_season) { create(:season, league: league, active: true) }
 
-    context '#average_players_per_game' do
+    describe '#average_players_per_game' do
       subject { league.average_players_per_game }
       it 'returns 0.0 for no games' do
         expect(subject).to eq(0.0)
@@ -34,7 +34,7 @@ RSpec.describe League, type: :model do
       end
     end
 
-    context '#current_season' do
+    describe '#current_season' do
       subject { league.current_season }
 
       it 'returns the active season' do
@@ -42,7 +42,7 @@ RSpec.describe League, type: :model do
       end
     end
 
-    context '#current_season_number' do
+    describe '#current_season_number' do
       subject { league.current_season_number }
 
       it 'returns nil if there are no seasons' do
@@ -55,7 +55,7 @@ RSpec.describe League, type: :model do
       end
     end
 
-    context '#game_every_x_weeks' do
+    describe '#game_every_x_weeks' do
       subject { league.games_every_x_weeks }
 
       it 'returns Nothing for no games' do

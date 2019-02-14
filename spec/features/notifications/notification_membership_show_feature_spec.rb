@@ -11,7 +11,7 @@ describe 'when a user views a notification' do
       stub_current_user(notification.recipient)
     end
 
-    context 'and it has not been approved or rejected' do
+    describe 'and it has not been approved or rejected' do
       it 'has a button to approve or reject' do
         visit notification_path(notification)
 
@@ -20,11 +20,11 @@ describe 'when a user views a notification' do
       end
     end
 
-    context 'and it has a decision'
+    describe 'and it has a decision'
     let(:admin_membership) { create(:membership, role: 1) }
     let(:other_admin) { admin_membership.user }
 
-    context 'approved' do
+    describe 'approved' do
       before { membership.update(status: 1, decider: other_admin) }
 
       it 'has a disabled buttons for approve or reject' do
@@ -35,7 +35,7 @@ describe 'when a user views a notification' do
       end
     end
 
-    context 'rejected' do
+    describe 'rejected' do
       before { membership.update(status: 2, decider: other_admin) }
       it 'has a disabled buttons for approve or reject' do
         visit notification_path(notification)

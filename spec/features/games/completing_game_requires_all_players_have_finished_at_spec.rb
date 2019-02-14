@@ -8,7 +8,7 @@ describe 'Completing a game requires all players have finished_at' do
     stub_current_user(admin)
   end
 
-  context 'with all players finished' do
+  describe 'with all players finished' do
     let!(:second_place_player) do
       create(
         :player,
@@ -43,7 +43,7 @@ describe 'Completing a game requires all players have finished_at' do
     end
   end
 
-  context 'if one of the players is not finished' do
+  describe 'if one of the players is not finished' do
     let!(:unfinished_player) do
       create(
         :player,

@@ -5,9 +5,9 @@ describe 'as a logged in user on a game#show page' do
   let(:league) { game.league }
   let(:admin) { league.user }
 
-  context 'as an admin' do
+  describe 'as an admin' do
     before { stub_current_user(admin) }
-    context 'with at least 2 finished players' do
+    describe 'with at least 2 finished players' do
       before do
         create_list(:player, 2, game: game, finished_at: Time.now)
       end
