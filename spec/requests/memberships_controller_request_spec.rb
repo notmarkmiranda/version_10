@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe MembershipsController, type: :request do
-  context 'GET#show' do
+  describe 'GET#show' do
     let(:league) { create(:league) }
     let(:membership) { create(:membership, requestor: requestor, league: league) }
     let(:notification) { create(:notification, notifiable: membership) }
     let(:admin) { league.user }
 
     subject { get membership_path(membership, notification_id: notification.id) }
-    context 'request from user' do
+    describe 'request from user' do
       let(:requestor) { create(:user) }
 
       it 'renders the show template - admin' do
@@ -39,7 +39,7 @@ describe MembershipsController, type: :request do
       end
     end
 
-    context 'request from admin' do
+    describe 'request from admin' do
       let(:requestor) { admin }
 
       it 'renders the show template - membership_user' do

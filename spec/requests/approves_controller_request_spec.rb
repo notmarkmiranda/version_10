@@ -11,8 +11,8 @@ describe ApprovesController, type: :request do
 
   subject { patch membership_approve_path(membership_id: membership.id); membership.reload }
 
-  context 'PATCH#update' do
-    context 'When the user is the requestor' do
+  describe 'PATCH#update' do
+    describe 'When the user is the requestor' do
       let(:requestor) { create(:user) }
 
       it 'approves the membership - success' do
@@ -53,7 +53,7 @@ describe ApprovesController, type: :request do
       end
     end
 
-    context 'when the admin is the requestor' do
+    describe 'when the admin is the requestor' do
       let(:requestor) { admin }
 
       it 'approves the membership - success' do

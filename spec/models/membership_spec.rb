@@ -1,23 +1,23 @@
 require 'rails_helper'
 
 describe Membership, type: :model do
-  context 'validations' do
+  describe 'validations' do
     before { create(:membership, role: 1) }
     it { should validate_presence_of :user_id }
     it { should validate_presence_of :league_id }
     it { should validate_uniqueness_of(:user_id).scoped_to(:league_id) }
   end
 
-  context 'relationships' do
+  describe 'relationships' do
     it { should belong_to :user }
     it { should belong_to :league }
     it { should belong_to(:requestor) }
     it { should belong_to(:decider) }
   end
 
-  context 'methods' do
+  describe 'methods' do
     let(:membership) { create(:membership) }
-    context 'enums' do
+    describe 'enums' do
       it '#member' do
         membership.update!(role: 0)
 
@@ -35,7 +35,7 @@ describe Membership, type: :model do
       end
     end
 
-    context 'after_create#recipients' do
+    describe 'after_create#recipients' do
       let!(:league) { create(:league) }
       let(:admin) { league.user }
       let(:user) { create(:user) }
@@ -50,14 +50,14 @@ describe Membership, type: :model do
       end
 
       subject { membership.send('recipients') }
-      context 'no current_user' do
+      describe 'no current_user' do
         let(:current_user) { nil }
         it 'creates 2 notifications' do
           expect(subject.count).to eq(2)
         end
       end
 
-      context 'current_user: admin' do
+      describe 'current_user: admin' do
         let(:current_user) { admin }
         it 'creates 1 notification' do
           expect(subject.count).to eq(1)
@@ -65,7 +65,7 @@ describe Membership, type: :model do
         end
       end
 
-      context 'current_user: user' do
+      describe 'current_user: user' do
         let(:current_user) { user }
         it 'creates 1 notification' do
           expect(subject.count).to eq(1)
@@ -74,7 +74,7 @@ describe Membership, type: :model do
       end
     end
 
-    context 'after_create#create_notifications' do
+    describe 'after_create#create_notifications' do
       let(:league) { create(:league) }
       let(:admin) { league.user }
       let(:user) { create(:user) }
@@ -87,7 +87,7 @@ describe Membership, type: :model do
                requestor: current_user)
       end
 
-      context 'skipped' do
+      describe 'skipped' do
         let(:role) { 1 }
         let(:skip) { true }
         let(:current_user) { nil }
@@ -97,7 +97,7 @@ describe Membership, type: :model do
         end
       end
 
-      context 'sent from admin' do
+      describe 'sent from admin' do
         let(:role) { 0 }
         let(:skip) { false }
         let(:current_user) { admin }
@@ -121,7 +121,7 @@ describe Membership, type: :model do
         end
       end
 
-      context 'sent from user' do
+      describe 'sent from user' do
         let(:current_user) { user }
         let(:role) { 1 }
         let(:skip) { false }

@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Season, type: :model do
-  context 'validations'
+  describe 'validations'
 
-  context 'relationships' do
+  describe 'relationships' do
     it { should belong_to :league }
     it { should have_many :games }
   end
 
-  context 'methods' do
+  describe 'methods' do
     let(:league) { create(:league) }
     let(:season) { league.current_season }
     let(:game)   { create(:game, buy_in: 100, season: season, completed: true) }
@@ -16,7 +16,7 @@ RSpec.describe Season, type: :model do
     let(:player_2) { double('player_2') }
     let(:players) { [player_1, player_2] }
 
-    context '#leader' do
+    describe '#leader' do
       subject { season.leader }
 
       it 'returns the player' do
@@ -25,7 +25,7 @@ RSpec.describe Season, type: :model do
       end
     end
 
-    context '#leader_full_name' do
+    describe '#leader_full_name' do
       let(:player) { create(:player, game: game) }
       subject { season.leader_full_name }
 
@@ -37,7 +37,7 @@ RSpec.describe Season, type: :model do
       end
     end
 
-    context '#most_second_place_finishes' do
+    describe '#most_second_place_finishes' do
       let!(:player) { create(:player, game: game, finishing_place: 2) }
       subject { season.most_second_place_finishes }
 
@@ -62,7 +62,7 @@ RSpec.describe Season, type: :model do
       end
     end
 
-    context '#ordered_rankings_full_names' do
+    describe '#ordered_rankings_full_names' do
       subject { season.ordered_rankings_full_names }
 
       it 'returns an empty array for no one qualifying' do
@@ -77,7 +77,7 @@ RSpec.describe Season, type: :model do
       end
     end
 
-    context 'self#for_select' do
+    describe 'self#for_select' do
       let(:league) { create(:league) }
 
       it 'returns an array for select' do
@@ -85,7 +85,7 @@ RSpec.describe Season, type: :model do
       end
     end
 
-    context 'self#select_except_current' do
+    describe 'self#select_except_current' do
       subject { Season.for_select_except_current(season.league, season.id) }
 
       it 'returns an empty array' do
@@ -99,7 +99,7 @@ RSpec.describe Season, type: :model do
       end
     end
 
-    context 'self#for_user_select_except_current' do
+    describe 'self#for_user_select_except_current' do
       it 'returns an empty array' do
         expect(Season.for_user_select_except_current(season.league, season.id)).to eq([["View All Seasons", "all"]])
       end
@@ -114,7 +114,7 @@ RSpec.describe Season, type: :model do
       end
     end
 
-    context '#standings' do
+    describe '#standings' do
       subject { season.standings }
       it 'returns an empty array for no players' do
         expect(subject).to be_nil
@@ -127,7 +127,7 @@ RSpec.describe Season, type: :model do
       end
     end
 
-    context '#total_pot' do
+    describe '#total_pot' do
       subject { season.total_pot }
 
       let(:new_season) { create(:season) }

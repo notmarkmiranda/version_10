@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Player, type: :model do
-  context 'validations'
+  describe 'validations'
 
-  context 'relationships' do
+  describe 'relationships' do
     it { should belong_to :game }
     it { should belong_to :user }
     it { should delegate_method(:full_name).to(:user).with_prefix(true) }
   end
 
-  context 'methods' do
+  describe 'methods' do
     let(:game)   { create(:game, buy_in: 100) }
     let(:player) { create(:player, game: game) }
 
-    context '#calculate_score' do
+    describe '#calculate_score' do
       subject { player.calculate_score }
 
       it 'scores a single player' do
@@ -27,7 +27,7 @@ RSpec.describe Player, type: :model do
       end
     end
 
-    context '#hash_additional_expense' do
+    describe '#hash_additional_expense' do
       subject { player.has_additional_expense? }
       it 'returns true' do
         player.update(additional_expense: 15)
@@ -48,7 +48,7 @@ RSpec.describe Player, type: :model do
       end
     end
 
-    context '#score_player' do
+    describe '#score_player' do
       subject { player.score_player }
 
       it 'returns true' do
@@ -59,7 +59,7 @@ RSpec.describe Player, type: :model do
       end
     end
 
-    context '#season_number' do
+    describe '#season_number' do
       it 'returns the season number' do
         expect(player.season_number).to eq(2)
       end
@@ -73,7 +73,7 @@ RSpec.describe Player, type: :model do
     end
 
 
-    context 'self#rank_by_score' do
+    describe 'self#rank_by_score' do
       let(:season) { game.season }
 
       it 'returns an nil for no players' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'DashboardController', type: :request do
-  context 'GET#show' do
+  describe 'GET#show' do
     it 'renders the show template' do
       stub_current_user
       get dashboard_path

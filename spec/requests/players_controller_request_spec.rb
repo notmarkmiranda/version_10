@@ -7,12 +7,12 @@ describe 'PlayersController', type: :request do
   let(:membership) { create(:membership, league: game.league) }
   let(:user) { membership.user }
 
-  context 'POST#create' do
+  describe 'POST#create' do
     before do
       allow_any_instance_of(PlayersController).to receive(:game_id).and_return(game.id)
     end
-    
-    context 'as an admin' do
+
+    describe 'as an admin' do
       before do
         stub_current_user(admin)
       end
@@ -25,7 +25,7 @@ describe 'PlayersController', type: :request do
       end
     end
 
-    context 'as a non-admin' do
+    describe 'as a non-admin' do
       it 'does not create a player' do
         expect {
           post players_path, params: { commit: 'Score Player', player: { user_id: user.id } }

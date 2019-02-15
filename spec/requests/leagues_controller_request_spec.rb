@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe 'League Controller', type: :request do
-  context 'GET#show' do
+  describe 'GET#show' do
     let(:league) { create(:league, privated: false) }
 
     before do
       create(:season, league: league)
     end
 
-    context 'visitor' do
+    describe 'visitor' do
       it 'renders the show template on a public league' do
         get league_path(league)
 
@@ -23,13 +23,13 @@ describe 'League Controller', type: :request do
       end
     end
 
-    context 'logged-in user' do
+    describe 'logged-in user' do
       before do
         stub_current_user(user)
         league.update(privated: true)
       end
 
-      context 'is the creator' do
+      describe 'is the creator' do
         let(:user) { league.user }
         before do
           get league_path(league)
@@ -40,7 +40,7 @@ describe 'League Controller', type: :request do
         end
       end
 
-      context 'is a member' do
+      describe 'is a member' do
         let(:game) { create(:game, season: league.current_season) }
         let(:player) { create(:player, game: game) }
         let(:user) { player.user }
@@ -55,7 +55,7 @@ describe 'League Controller', type: :request do
         end
       end
 
-      context 'is not a member or an owner' do
+      describe 'is not a member or an owner' do
         let(:user) { create(:user) }
 
         before do
@@ -69,9 +69,9 @@ describe 'League Controller', type: :request do
     end
   end
 
-  context 'GET#new' do
+  describe 'GET#new' do
     subject { get new_league_path }
-    context 'visitor' do
+    describe 'visitor' do
       it 'redirects to root path' do
         subject
 
@@ -79,7 +79,7 @@ describe 'League Controller', type: :request do
       end
     end
 
-    context 'logged-in user' do
+    describe 'logged-in user' do
       before do
         stub_current_user
       end
@@ -92,9 +92,9 @@ describe 'League Controller', type: :request do
     end
   end
 
-  context 'POST#create' do
+  describe 'POST#create' do
     let(:attrs) { attributes_for(:league) }
-    context 'visitor' do
+    describe 'visitor' do
       it 'redirects to root path' do
         expect {
           post leagues_path, params: { league: attrs }
@@ -104,7 +104,7 @@ describe 'League Controller', type: :request do
       end
     end
 
-    context 'logged-in user' do
+    describe 'logged-in user' do
       before do
         stub_current_user
       end

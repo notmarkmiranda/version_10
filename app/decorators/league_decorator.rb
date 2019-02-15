@@ -8,4 +8,10 @@ class LeagueDecorator < ApplicationDecorator
       h.pluralize(h.number_with_precision(object.games_every_x_weeks, precision: 2), 'week')
     end
   end
+
+  def public_league_stats
+    "# of Games: #{object.games_count} | \
+    Average Players per Game: #{object.average_players_per_game} | \
+    Average Pot: #{h.number_to_currency(object.average_pot_size, precision: 0) }"
+  end
 end

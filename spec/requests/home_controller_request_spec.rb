@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'HomeController', type: :request do
-  context 'GET#index' do
+  describe 'GET#index' do
     it 'renders the index template' do
       get root_path
 
