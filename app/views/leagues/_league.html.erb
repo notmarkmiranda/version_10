@@ -1,0 +1,16 @@
+<li class="list-group-item public-league">
+  <div>
+    <div class="caption-text text-primary">
+      Denver, Colorado
+    </div>
+    <span class="stat-line">
+      <%= league.name %>
+    </span>
+    <div class="caption-text text-info">
+      <%= league.public_league_stats %>
+    </div>
+  </div>
+  <% unless league.memberships.where(user: current_user, league: league).any? || current_user.nil?  %>
+    <%= button_to 'Request Membership', memberships_path, params: { membership: { user_id: current_user.id, league_id: league.id } }, class: 'btn btn-outline-primary btn-sm' %>
+  <% end %>
+</li>

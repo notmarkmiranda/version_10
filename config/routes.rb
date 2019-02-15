@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
   end
   resources :players, only: [:index, :create, :update, :destroy]
-  resources :memberships, only: [:show] do
+  resources :memberships, only: [:show, :create] do
     resource :approve, only: [:update]
     resource :reject, only: [:update]
   end
