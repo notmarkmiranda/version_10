@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe NotificationDecorator, type: :decorator do
   let(:notification) { create(:notification).decorate }
-  context '#mark_as_read_link' do
+  describe '#mark_as_read_link' do
     subject { notification.mark_as_read_link }
     it 'returns nil' do
       notification.update(read_at: Time.now)
@@ -18,7 +18,7 @@ describe NotificationDecorator, type: :decorator do
     end
   end
 
-  context '#notification_status' do
+  describe '#notification_status' do
     subject { notification.notification_status }
 
     it 'returns the approved half' do

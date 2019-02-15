@@ -5,7 +5,7 @@ describe 'Admin can finish a player who had an additional expense added prior' d
   let(:game) { player.game }
   let(:admin) { game.league.user }
 
-  context 'as an admin' do
+  describe 'as an admin' do
     before do
       player.update(additional_expense: 100)
       stub_current_user(admin)

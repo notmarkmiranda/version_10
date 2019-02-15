@@ -7,9 +7,9 @@ describe GameDecorator, type: :decorator do
     stub_current_user(user)
   end
 
-  context '#complete_or_uncomplete_buttons' do
+  describe '#complete_or_uncomplete_buttons' do
     let(:user) { game.league.user }
-    context 'completed game' do
+    describe 'completed game' do
       before { game.update(completed: true) }
 
       it 'returns an uncomplete button' do
@@ -18,7 +18,7 @@ describe GameDecorator, type: :decorator do
       end
     end
 
-    context 'uncomplete game' do
+    describe 'uncomplete game' do
       before { game.update(completed: false) }
 
       it 'returns a complete button' do
@@ -28,10 +28,10 @@ describe GameDecorator, type: :decorator do
     end
   end
 
-  context '#new_player_form' do
+  describe '#new_player_form' do
     subject { game.new_player_form }
 
-    context 'game not completed' do
+    describe 'game not completed' do
       let(:user) { game.league.user }
       before { game.complete! }
 
@@ -40,7 +40,7 @@ describe GameDecorator, type: :decorator do
       end
     end
 
-    context 'user is not admin' do
+    describe 'user is not admin' do
       let(:user) { create(:membership, league: game.league).user }
       before { game.uncomplete! }
 
@@ -49,7 +49,7 @@ describe GameDecorator, type: :decorator do
       end
     end
 
-    context 'game is completed and user is admin' do
+    describe 'game is completed and user is admin' do
       let(:user) { game.league.user }
       before { game.uncomplete! }
 
@@ -61,7 +61,7 @@ describe GameDecorator, type: :decorator do
     end
   end
 
-  context '#standings_title' do
+  describe '#standings_title' do
     let(:user) { game.league.user }
     subject { game.standings_title }
 

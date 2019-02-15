@@ -6,7 +6,7 @@ describe 'League Creation', type: :feature do
     visit '/leagues/new'
   end
 
-  context 'successful create' do
+  describe 'successful create' do
     before do
       fill_in 'League Name', with: "Mark Miranda's New League"
     end

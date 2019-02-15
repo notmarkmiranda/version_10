@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe RejectsController, type: :request do
-  context 'PATCH#update' do
+  describe 'PATCH#update' do
     let(:league) { create(:league) }
     let(:admin) { league.user }
     let(:membership) do
@@ -12,7 +12,7 @@ describe RejectsController, type: :request do
 
     subject { patch membership_reject_path(membership_id: membership.id); membership.reload }
 
-    context 'When the user is the requestor' do
+    describe 'When the user is the requestor' do
       before do
         membership.update(requestor: user)
       end
@@ -53,7 +53,7 @@ describe RejectsController, type: :request do
       end
     end
 
-    context 'When the admin is the requestor' do
+    describe 'When the admin is the requestor' do
       before do
         membership.update(requestor: admin)
       end

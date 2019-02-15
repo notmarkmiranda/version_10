@@ -4,7 +4,7 @@ describe 'User Stats Controller' do
   let(:user) { create(:user) }
   let(:season) { create(:season) }
 
-  context 'GET#show' do
+  describe 'GET#show' do
     it 'renders the show template without query params' do
       get "/user_stats/#{user.id}"
 

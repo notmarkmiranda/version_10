@@ -1,4 +1,8 @@
 class LeaguesController < ApplicationController
+  def index
+    @leagues = League.non_private.decorate
+  end
+
   def show
     authorize league
     @current_season = league.current_season

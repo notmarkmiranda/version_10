@@ -4,12 +4,12 @@ describe 'Admin can delete a player from an uncomplete game', type: :feature do
   let(:game) { create :game }
   let(:admin) { game.league.user }
 
-  context 'As an admin' do
+  describe 'As an admin' do
     before { stub_current_user admin }
 
     let(:deleted_user) { player.user }
 
-    context 'for a finished player' do
+    describe 'for a finished player' do
       let!(:player) { create :player, game: game, finished_at: Time.now }
 
       it 'should allow to remove a player from the standings' do
@@ -23,7 +23,7 @@ describe 'Admin can delete a player from an uncomplete game', type: :feature do
       end
     end
 
-    context 'for a player with an additional_expense' do
+    describe 'for a player with an additional_expense' do
       let!(:player) { create :player, game: game, additional_expense: 100 }
 
       it 'should allow to remove a player from the standings' do
@@ -37,7 +37,7 @@ describe 'Admin can delete a player from an uncomplete game', type: :feature do
       end
     end
 
-    context 'when the game is completed' do
+    describe 'when the game is completed' do
       let!(:player) { create :player, game: game, additional_expense: 100, finished_at: Time.now }
 
       before { game.complete! }
@@ -51,7 +51,7 @@ describe 'Admin can delete a player from an uncomplete game', type: :feature do
     end
   end
 
-  context 'As a non-admin' do
+  describe 'As a non-admin' do
     let(:membership) { create :membership, role: 0, league: game.league }
     let(:non_admin) { membership.user }
     before { stub_current_user non_admin }
