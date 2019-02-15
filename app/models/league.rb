@@ -15,6 +15,8 @@ class League < ApplicationRecord
   after_create_commit :create_first_season
   after_create_commit :create_adminship
 
+  scope :non_private, -> { where(privated: false) }
+
   def admins
     User
       .joins(:memberships)
