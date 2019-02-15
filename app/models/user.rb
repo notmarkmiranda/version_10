@@ -59,7 +59,7 @@ class User < ApplicationRecord
   def get_leagues(role: 0)
     League
       .joins(:memberships)
-      .where('memberships.user_id = ? AND memberships.role = ?', id, role)
+      .where('memberships.user_id = ? AND memberships.role = ? AND memberships.status = ?', id, role, 1)
   end
 
   def get_winners(season=nil)
