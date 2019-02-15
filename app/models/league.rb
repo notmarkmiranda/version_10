@@ -90,7 +90,7 @@ class League < ApplicationRecord
   private
 
   def create_adminship
-    memberships.create!(user_id: user_id, role: 1, skip_notification: true)
+    memberships.create!(user_id: user_id, role: 1, status: :approved, skip_notification: true)
   end
 
   def create_first_season
