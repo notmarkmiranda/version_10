@@ -5,19 +5,7 @@
         Public Leagues
       </div>
       <ul class="list-group list-group-flush leagues-list">
-        <% @leagues.each do |league| %>
-          <li class="list-group-item public-league">
-            <div class="caption-text text-primary">
-              Denver, Colorado
-            </div>
-            <span class="stat-line">
-              <%= league.name %>
-            </span>
-            <div class="caption-text text-info">
-              <%= league.public_league_stats %>
-            </div>
-          </li>
-        <% end %>
+        <%= render partial: 'league', collection: @leagues %>
       </ul>
     </div>
   </div>
