@@ -1,8 +1,6 @@
-<li class="list-group-item public-league">
+<%= link_to season_path(league.current_season), class: 'list-group-item public-league' do %>
   <div>
-    <div class="caption-text text-primary">
-      Denver, Colorado
-    </div>
+    <%= league.location_text %>
     <span class="stat-line">
       <%= league.name %>
     </span>
@@ -13,4 +11,4 @@
   <% unless league.memberships.where(user: current_user, league: league).any? || current_user.nil?  %>
     <%= button_to 'Request Membership', memberships_path, params: { membership: { user_id: current_user.id, league_id: league.id } }, class: 'btn btn-outline-primary btn-sm' %>
   <% end %>
-</li>
+<% end %>

@@ -14,7 +14,9 @@
         </li>
       <% else %>
         <% leagues.each do |league| %>
+          
           <%= link_to season_path(league.current_season), class: 'list-group-item list-group-item-action stat-line' do %>
+            <%= league.location_text %>
             <%= league.name %>
             <div class="caption-text <%= owned ? 'text-info' : 'text-danger' %>">
               Next Game: <%= league.next_game %>
@@ -34,6 +36,7 @@
             </div>
           <% end %>
         <% end %>
+
       <% end %>
     </ul>
   </div>
