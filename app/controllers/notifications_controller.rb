@@ -1,7 +1,7 @@
 class NotificationsController < ApplicationController
   def index
     authorize Notification
-    @notifications = current_user.notifications.ordered
+    @notifications = current_user.notifications.ordered.decorate
   end
 
   def show
