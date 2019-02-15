@@ -76,7 +76,9 @@ describe MembershipsController, type: :request do
     let(:user) { create(:user) }
     let(:membership_params) { { league_id: league.id, user_id: user.id } }
     subject(:post_new_membership) do
-      post memberships_path, params: { membership: membership_params }, headers: { 'HTTP_REFERER' => leagues_path}
+      post memberships_path,
+        params: { membership: membership_params },
+        headers: { 'HTTP_REFERER' => leagues_path}
     end
 
     before { stub_current_user(user) }
