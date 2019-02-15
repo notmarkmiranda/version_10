@@ -5,7 +5,15 @@
         Notifications
       </h5>
       <ul class="list-group list-group-flush">
-        <%= render partial: 'notification', collection: @notifications %>
+        <% if @notifications.any? %>
+          <%= render partial: 'notification', collection: @notifications %>
+        <% else %>
+          <li class="list-group-item">
+            <div class="stat-line">
+              No notifications
+            </div>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>
