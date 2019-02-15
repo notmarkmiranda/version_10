@@ -39,6 +39,26 @@ RSpec.describe Game, type: :model do
           expect(subject).not_to include(excluded_user_collected)
         end
       end
+
+      describe 'does not include pending or rejected memberships' do
+        let!(:pending_member) do
+          user = create(:membership, league: league, role: 0, status: :pending).user
+          [user.full_name, user.id]
+        end
+
+        let!(:rejected_member) do
+          user = create(:membership, league: league, role: 0, status: :rejected).user
+          [user.full_name, user.id]
+        end
+
+        it 'does not include a pending member' do
+          expect(subject).not_to include pending_member
+        end
+
+        it 'does not include a rejected member' do
+          expect(subject).not_to include rejected_member
+        end
+      end
     end
 
     describe '#formatted_date' do

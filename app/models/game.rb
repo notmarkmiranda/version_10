@@ -8,7 +8,7 @@ class Game < ApplicationRecord
   scope :descending_by_date, -> { order('date') }
 
   def available_players
-    all_users = User.joins(:memberships).where('memberships.league_id = ?', league.id)
+    all_users = league.memberships.where(status: :approved).map(&:user)
     available_users = (all_users - players.map(&:user)).sort_by(&:full_name)
     available_users.collect { |user| [user.full_name, user.id] }
   end
