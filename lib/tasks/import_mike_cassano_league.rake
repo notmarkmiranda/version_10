@@ -29,7 +29,7 @@ task import_mike_cassano: [:environment] do
   admin_user = User.find_or_create_by(email: 'markmiranda51@gmail.com')
   admin_user.update(password: 'password')
 
-  league = League.find_or_create_by(name: "Mike Cassano's Super Fun League")
+  league = League.find_or_create_by(name: 'Mike Cassano\'s Super Fun League', location: 'Denver, Colorado')
   league.update(user_id: admin_user.id, privated: false)
   puts "Created #{league.name}!"
 
