@@ -9,6 +9,14 @@ class LeagueDecorator < ApplicationDecorator
     end
   end
 
+  def location_text
+    if object.location.present?
+      h.content_tag :div, class: 'caption-text text-warning' do
+        league.location
+      end
+    end
+  end
+
   def public_league_stats
     "# of Games: #{object.games_count} | \
     Average Players per Game: #{object.average_players_per_game} | \

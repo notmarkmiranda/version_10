@@ -32,6 +32,6 @@ class LeaguesController < ApplicationController
   end
 
   def league
-    @league ||= League.find(params[:id])
+    @league ||= League.find(params[:id]).decorate
   end
 end
