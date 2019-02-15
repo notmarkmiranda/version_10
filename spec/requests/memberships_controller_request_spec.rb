@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 describe MembershipsController, type: :request do
+  let!(:league) { create(:league) }
+
   describe 'GET#show' do
-    let(:league) { create(:league) }
     let(:membership) { create(:membership, requestor: requestor, league: league) }
     let(:notification) { create(:notification, notifiable: membership) }
     let(:admin) { league.user }
@@ -68,6 +69,31 @@ describe MembershipsController, type: :request do
 
         expect(response.status).to eq(302)
       end
+    end
+  end
+
+  describe 'POST#create' do
+    let(:user) { create(:user) }
+    let(:membership_params) { { league_id: league.id, user_id: user.id } }
+    subject(:post_new_membership) do
+      post memberships_path, params: { membership: membership_params }, headers: { 'HTTP_REFERER' => leagues_path}
+    end
+
+    before { stub_current_user(user) }
+
+    it 'should create a new membership' do
+      expect {
+        post_new_membership
+      }.to change(Membership, :count).by 1
+      expect(response).to redirect_to leagues_path
+    end
+
+    it 'should not create a new membership if one already exists for a league for a user' do
+      create(:membership, league: league, user: user)
+      expect {
+        post_new_membership
+      }.not_to change(Membership, :count)
+      expect(response).to redirect_to leagues_path
     end
   end
 end
