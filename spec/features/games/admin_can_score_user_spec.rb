@@ -8,7 +8,7 @@ describe 'Admin can score a user', type: :feature do
   describe 'As an admin' do
     before do
       stub_current_user(admin)
-      @users = create_list(:membership, 2, league: league).map(&:user)
+      @users = create_list(:membership, 2, league: league, status: :approved).map(&:user)
     end
 
     it 'allows a user to be scored' do
