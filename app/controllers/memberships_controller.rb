@@ -8,6 +8,7 @@ class MembershipsController < ApplicationController
   def create
     membership = league.memberships.new(membership_requestor_params)
     if membership.save
+      flash[:notice] = "Your request to join #{league.name} has been sent to the admin!"
     else
     end
     redirect_to request.referer
