@@ -1,1 +1,1 @@
-<%= render partial: 'shared/statistics_page', locals: { league: @season.league, subject: @season } %>
+<%= render partial: 'shared/statistics_page', locals: { league: @season.league.decorate, subject: @season } %>
