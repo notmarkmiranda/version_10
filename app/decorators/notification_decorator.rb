@@ -7,6 +7,14 @@ class NotificationDecorator < ApplicationDecorator
     end
   end
 
+  def navbar_mark_as_read_link
+    unless object.read_at
+      h.content_tag :div do
+        h.link_to 'mark as read', '#', class: 'muted-text caption-text'
+      end
+    end
+  end
+
   def notification_status
     notifiable_object = object.notifiable
     if notifiable_object.approved?
