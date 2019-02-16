@@ -61,7 +61,8 @@ class Notification < ApplicationRecord
     elsif admin_requested?
       "#{actor.full_name} would like to add you to #{notifiable.league.name}"
     else
-      "#{actor.full_name} requested to join #{notifiable.league.name}"
+      actor_name = actor.full_name.blank? ? actor.email : actor.full_name
+      "#{actor_name} requested to join #{notifiable.league.name}"
     end
   end
 

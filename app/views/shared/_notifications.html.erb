@@ -7,20 +7,14 @@
     </h6>
   </a>
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-    <% if current_user.unread_notifications_count.zero? %>
+    <% current_user.last_five_notifications.each do |note| %>
       <div class="dropdown-item">
-        There are no unread notifications!
+        <%= note.notification_text %>
+        <%= note.navbar_mark_as_read_link %>
       </div>
-    <% else %>
-      <% current_user.last_five_notifications.each do |note| %>
-        <div class="dropdown-item">
-          <%= note.notification_text %>
-          <div><%= link_to 'mark as read', '#', class: 'muted-text caption-text' %></div>
-        </div>
-      <% end %>
-      <div class="dropdown-divider"></div>
-      <%= link_to 'view all notifications', notifications_path, class: 'dropdown-item' %>
-      <%= link_to 'mark all as read', '#', class: 'dropdown-item' %>
     <% end %>
+    <div class="dropdown-divider"></div>
+    <%= link_to 'view all notifications', notifications_path, class: 'dropdown-item' %>
+    <%= link_to 'mark all as read', '#', class: 'dropdown-item' %>
   </div>
 </li>
