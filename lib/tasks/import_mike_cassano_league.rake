@@ -68,7 +68,7 @@ end
 
 def create_memberships(users, league)
   users.each do |user|
-    user.memberships.create!(league: league, role: 0)
+    user.memberships.create!(league: league, role: 0, status: :approved)
     puts "Created membership for #{user.full_name} as non-admin!"
   end
 end
