@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 import UserNav from './UserNav'
 
 class NavBar extends Component {
+  constructor
   render () {
     const { isLoggedIn, userAttributes, routes } = this.props.attributes
     const { rootPath } = routes
-    console.log(userAttributes);
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
