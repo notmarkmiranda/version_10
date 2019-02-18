@@ -10,7 +10,7 @@
     <% current_user.last_five_notifications.each do |note| %>
       <div class="dropdown-item">
         <%= note.notification_text %>
-        <%= note.navbar_mark_as_read_link %>
+        <%= note.decorate.navbar_mark_as_read_link %>
       </div>
     <% end %>
     <div class="dropdown-divider"></div>
