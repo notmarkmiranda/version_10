@@ -13,8 +13,8 @@ class ApplicationController < ActionController::Base
       },
       userAttributes: {
         currentUserEmail: current_user&.email,
-        notificationCount: current_user.unread_notifications_count,
-        lastFiveNotifications: current_user.last_five_notifications.as_json
+        notificationCount: current_user&.unread_notifications_count,
+        lastFiveNotifications: current_user&.last_five_notifications.as_json || 0
       },
       isLoggedIn: current_user.present?
     }
