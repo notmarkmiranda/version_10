@@ -1,6 +1,24 @@
 class ApplicationController < ActionController::Base
   include Pundit
-  helper_method :current_user, :check_and_mark_notification_as_read
+  helper_method :current_user, :navbar_props, :check_and_mark_notification_as_read
+
+  def navbar_props
+    {
+      routes: {
+        rootPath: root_path,
+        leaguesPath: leagues_path,
+        dashboardPath: dashboard_path,
+        newLeaguePath: new_league_path,
+        destroyUserSessionPath: destroy_user_session_path
+      },
+      userAttributes: {
+        currentUserEmail: current_user&.email,
+        notificationCount: current_user.unread_notifications_count,
+        lastFiveNotifications: current_user.last_five_notifications.as_json
+      },
+      isLoggedIn: current_user.present?
+    }
+  end
 
   def after_sign_in_path_for(resource)
     session[:user_id] = resource.id
