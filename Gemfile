@@ -18,6 +18,7 @@ gem 'pundit'
 gem 'draper'
 gem 'webpacker'
 gem 'react-rails'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'factory_bot_rails'
