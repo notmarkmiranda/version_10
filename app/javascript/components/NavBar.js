@@ -4,7 +4,14 @@ import PropTypes from 'prop-types'
 import UserNav from './UserNav'
 
 class NavBar extends Component {
-  constructor
+  constructor(props) {
+    super(props)
+
+    this.state = { ...props.attributes }
+  }
+
+
+
   render () {
     const { isLoggedIn, userAttributes, routes } = this.props.attributes
     const { rootPath } = routes
