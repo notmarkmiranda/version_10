@@ -16,8 +16,13 @@ Rails.application.routes.draw do
     resource :approve, only: [:update]
     resource :reject, only: [:update]
   end
-
   resources :notifications, only: [:index, :show]
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      get '/last_five_notifications', to: 'notifications#last_five'
+    end
+  end
 
   get '/user_stats/:user_id', to: 'user_stats#show', as: 'user_stats'
   get '/dashboard', to: 'dashboard#show', as: 'dashboard'
