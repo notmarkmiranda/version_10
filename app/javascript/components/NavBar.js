@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 
 import UserNav from './UserNav'
+import VisitorNav from './VisitorNav'
 
 class NavBar extends Component {
   constructor(props) {
@@ -11,10 +12,13 @@ class NavBar extends Component {
   }
 
   componentDidMount() {
-    axios.get(this.state.routes.lastFiveNotificationsPath)
-      .then((response) => {
-        this.setState({ notifications: response.data })
-      })
+    if (this.state.isLoggedIn) {
+      axios.get(this.state.routes.lastFiveNotificationsPath)
+        .then((response) => {
+          this.setState({ notifications: response.data })
+        })
+    } else {
+    }
   }
 
   render () {
@@ -32,7 +36,7 @@ class NavBar extends Component {
           </button>
           { isLoggedIn
             ? <UserNav routes={ routes } userAttributes={ userAttributes } notifications={ notifications } />
-            : <VisitorNav />
+            : <VisitorNav routes={ routes } />
           }
         </div>
       </nav>
