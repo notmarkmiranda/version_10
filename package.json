@@ -4,9 +4,8 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "axios": "^0.18.0",
-    "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
-    "babel-polyfill": "^6.26.0",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-preset-react": "^6.24.1",
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
@@ -16,6 +15,11 @@
     "react_ujs": "^2.4.4"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "7",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "webpack-dev-server": "2.11.2"
   }
 }
