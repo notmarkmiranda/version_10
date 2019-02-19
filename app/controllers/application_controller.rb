@@ -9,7 +9,10 @@ class ApplicationController < ActionController::Base
         leaguesPath: leagues_path,
         dashboardPath: dashboard_path,
         newLeaguePath: new_league_path,
-        destroyUserSessionPath: destroy_user_session_path
+        destroyUserSessionPath: destroy_user_session_path,
+        lastFiveNotificationsPath: api_v1_last_five_notifications_path,
+        notificationsPath: notifications_path
+
       },
       userAttributes: {
         currentUserEmail: current_user&.email,
