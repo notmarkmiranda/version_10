@@ -5,7 +5,7 @@ import Notification from './Notification'
 class UserNav extends Component {
   renderNotifications = (notes) => {
     return notes.map((note) => {
-      return <Notification notificationText={ note.note_text } />
+      return <Notification notificationText={ note.note_text } key={ note.id } />
     })
   }
 
