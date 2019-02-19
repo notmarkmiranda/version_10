@@ -11,13 +11,13 @@ class ApplicationController < ActionController::Base
         newLeaguePath: new_league_path,
         destroyUserSessionPath: destroy_user_session_path,
         lastFiveNotificationsPath: api_v1_last_five_notifications_path,
-        notificationsPath: notifications_path
-
+        notificationsPath: notifications_path,
+        newUserSessionPath: new_user_session_path,
+        newUserRegistrationPath: new_user_registration_path
       },
       userAttributes: {
         currentUserEmail: current_user&.email,
-        notificationCount: current_user&.unread_notifications_count,
-        lastFiveNotifications: current_user&.last_five_notifications.as_json || 0
+        notificationCount: current_user&.unread_notifications_count
       },
       isLoggedIn: current_user.present?
     }
