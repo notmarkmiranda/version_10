@@ -8,7 +8,7 @@ const Notification = ({ notificationText, notificationReadAt, notificationCreate
         { notificationCreatedAt }
         {
           !notificationReadAt &&
-            <span> | <a onClick={ () =>  markSingleNotificationAsRead(notificationId) } className="muted-text caption-text">mark as read</a></span>
+            <span> | <a href="#" onClick={ () =>  markSingleNotificationAsRead(notificationId) } className="muted-text caption-text">mark as read</a></span>
         }
       </div>
     </div>
