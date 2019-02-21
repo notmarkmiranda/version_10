@@ -65,7 +65,8 @@ class UserNav extends Component {
             <div className="dropdown-divider"></div>
             <a href={ notificationsPath } className="dropdown-item">view all notifications</a>
             {
-              unreadNotificationCount > 0 && <a href='#' className="dropdown-item">mark all as read</a>
+              unreadNotificationCount > 0 &&
+                <a href='#' onClick={ () => markSingleNotificationAsRead() } className="dropdown-item">mark all as read</a>
             }
             </div>
           </li> { /* notifications dropdown */ }

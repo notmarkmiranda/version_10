@@ -13,7 +13,8 @@ class Api::V1::NotificationsController < Api::ApiController
       notification.mark_as_read!
       render json: notification, status: 200
     else
-      current_user.notifications.update_all(read_at: Time.now)
+      current_user.notifications.where(read_at: nil).update_all(read_at: Time.now)
+      render json: current_user.last_five_notifications
     end
   end
 
