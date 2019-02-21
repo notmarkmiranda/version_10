@@ -1,18 +1,25 @@
-import React, { Component } from 'react'
+ import React, { Component } from 'react'
 
 import Notification from './Notification'
 
 class UserNav extends Component {
   renderNotifications = (notes) => {
     return notes.map((note) => {
-      return <Notification notificationText={ note.note_text } key={ note.id } />
+      return <Notification
+               notificationText={ note.note_text }
+               notificationReadAt={ note.read_at }
+               notificationCreatedAt={ note.decorated_created_at }
+               notificationId={ note.id }
+               markSingleNotificationAsRead={ this.props.markSingleNotificationAsRead }
+               key={ note.id }
+             />
     })
   }
 
   render() {
-    const { routes, userAttributes, notifications } = this.props
+    const { routes, userAttributes, notifications, markSingleNotificationAsRead } = this.props
     const { leaguesPath, dashboardPath, newLeaguePath, destroyUserSessionPath, notificationsPath } = routes
-    const { currentUserEmail, notificationCount } = userAttributes
+    const { currentUserEmail, unreadNotificationCount } = userAttributes
 
     return (
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -41,23 +48,25 @@ class UserNav extends Component {
               </a>
             </div>
           </li> { /* user dropdown */ }
-          <li className="nav-item-dropdown">
+          <li className="nav-item dropdown">
             <a className="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <h6>
                 <span className="badge badge-info dropdown-toggle">
-                  { notificationCount }
+                  { unreadNotificationCount }
                 </span>
               </h6>
             </a>
             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               {
-                notifications
+                notifications && notifications.length > 0
                 ? this.renderNotifications(notifications)
-                : <div>nope</div>
+                : <div className="dropdown-item">There are currently no notifications!</div>
               }
             <div className="dropdown-divider"></div>
             <a href={ notificationsPath } className="dropdown-item">view all notifications</a>
-            <a href='#' className="dropdown-item">mark all as read</a>
+            {
+              unreadNotificationCount > 0 && <a href='#' className="dropdown-item">mark all as read</a>
+            }
             </div>
           </li> { /* notifications dropdown */ }
         </ul>

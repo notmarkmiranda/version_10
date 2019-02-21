@@ -21,7 +21,7 @@ class User < ApplicationRecord
   end
 
   def last_five_notifications
-    notifications.last(5)
+    notifications.order(created_at: :desc).first(5)
   end
 
   def number_of_leagues_played_in

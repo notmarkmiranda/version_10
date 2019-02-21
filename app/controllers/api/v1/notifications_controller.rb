@@ -11,6 +11,7 @@ class Api::V1::NotificationsController < Api::ApiController
     if params[:id]
       notification = current_user.notifications.find(params[:id])
       notification.mark_as_read!
+      render json: notification, status: 200
     else
       current_user.notifications.update_all(read_at: Time.now)
     end
