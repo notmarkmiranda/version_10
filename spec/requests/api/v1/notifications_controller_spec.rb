@@ -9,10 +9,12 @@ describe 'Api::V1::NotificationsController', type: :request do
 
     describe 'as a user' do
       let(:expected_return) do
-        notifications.map do |note|
+        notifications.sort_by(&:created_at).reverse.map do |note|
           {
             "id" => note.id,
-            "note_text" => note.notification_text
+            "note_text" => note.notification_text,
+            "read_at" => note.read_at,
+            "decorated_created_at" => note.decorate.decorated_created_at
           }
         end
       end

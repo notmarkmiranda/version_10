@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
       },
       userAttributes: {
         currentUserEmail: current_user&.email,
-        notificationCount: current_user&.unread_notifications_count
+        unreadNotificationCount: current_user&.unread_notifications_count
       },
       isLoggedIn: current_user.present?
     }
