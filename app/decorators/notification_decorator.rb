@@ -1,6 +1,10 @@
 class NotificationDecorator < ApplicationDecorator
   delegate_all
 
+  def decorated_created_at
+    "#{h.time_ago_in_words(object.created_at)} ago"
+  end
+
   def mark_as_read_link
     unless object.read_at
       "| #{h.link_to 'mark as read', '#'}"
