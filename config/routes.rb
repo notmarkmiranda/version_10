@@ -16,11 +16,20 @@ Rails.application.routes.draw do
     resource :approve, only: [:update]
     resource :reject, only: [:update]
   end
+
   resources :notifications, only: [:index, :show]
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       get '/last_five_notifications', to: 'notifications#last_five'
+      resources :notifications, only: [:show] do
+        member do
+          patch 'mark_as_read'
+        end
+        collection do
+          patch 'mark_as_read'
+        end
+      end
     end
   end
 

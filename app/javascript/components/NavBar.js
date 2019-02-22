@@ -21,6 +21,43 @@ class NavBar extends Component {
     }
   }
 
+  markSingleNotificationAsRead = (notificationId) => {
+    const csrfToken = document.querySelector('[name="csrf-token"]').content;
+    axios.defaults.headers.common['X-CSRF-Token'] = csrfToken;
+
+    if (notificationId) {
+      axios.patch(`/api/v1/notifications/${notificationId}/mark_as_read`)
+        .then((response) => {
+          const index = this.state.notifications.findIndex((notification) => notification.id === notificationId)
+          const updatedNotifications = this.state.notifications
+          updatedNotifications[index] = response.data
+          const newUserAttributes = { ...this.state.userAttributes }
+
+          const newUnreadCount = this.state.userAttributes.unreadNotificationCount - 1
+          newUserAttributes.unreadNotificationCount = newUnreadCount
+
+          this.setState({ notifications: updatedNotifications, userAttributes: newUserAttributes })
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    } else {
+      axios.patch(`/api/v1/notifications/mark_as_read`)
+        .then((response) => {
+          const updatedNotifications = response.data
+
+          const newUserAttributes = { ...this.state.userAttributes }
+          newUserAttributes.unreadNotificationCount = 0
+
+          this.setState({ notifications: updatedNotifications, userAttributes: newUserAttributes })
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+    // make api call
+  }
+
   render () {
     const { isLoggedIn, userAttributes, routes, notifications } = this.state
     const { rootPath } = routes
@@ -35,7 +72,12 @@ class NavBar extends Component {
             <span className="navbar-toggler-icon"></span>
           </button>
           { isLoggedIn
-            ? <UserNav routes={ routes } userAttributes={ userAttributes } notifications={ notifications } />
+            ? <UserNav
+                routes={ routes }
+                userAttributes={ userAttributes }
+                notifications={ notifications }
+                markSingleNotificationAsRead={ this.markSingleNotificationAsRead }
+              />
             : <VisitorNav routes={ routes } />
           }
         </div>
