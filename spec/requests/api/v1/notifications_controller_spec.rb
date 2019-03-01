@@ -23,7 +23,7 @@ describe 'Api::V1::NotificationsController', type: :request do
 
       it 'returns 5 notifications' do
         get_last_five
-
+        
         expect(JSON.parse(response.body)).to eq(expected_return)
       end
     end
