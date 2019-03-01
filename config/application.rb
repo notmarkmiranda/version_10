@@ -11,6 +11,8 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
+require "rack"
+require "rack/cors"
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -29,5 +31,11 @@ module Version10
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '/api/v1/leagues/public', headers: :any, methods: [:get]
+      end
+    end
   end
 end

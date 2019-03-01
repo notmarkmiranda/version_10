@@ -15,7 +15,7 @@ class League < ApplicationRecord
   after_create_commit :create_first_season
   after_create_commit :create_adminship
 
-  scope :non_private, -> { where(privated: false) }
+  scope :non_private, -> { where(privated: false).order(name: :asc) }
 
   def admins
     User

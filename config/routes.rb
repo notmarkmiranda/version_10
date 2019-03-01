@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+
       get '/last_five_notifications', to: 'notifications#last_five'
       resources :notifications, only: [:show] do
         member do
@@ -30,6 +31,12 @@ Rails.application.routes.draw do
           patch 'mark_as_read'
         end
       end
+
+      # Public facing API start
+      namespace :leagues do
+        get 'public'
+      end
+      # Public facing API end
     end
   end
 
