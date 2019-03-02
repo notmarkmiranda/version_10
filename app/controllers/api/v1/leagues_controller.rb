@@ -1,5 +1,6 @@
 class Api::V1::LeaguesController < Api::ApiController
   include ActionController::Serialization
+  skip_before_action :authenticate_api!
   skip_before_action :verify_authenticity_token, only: [:public]
   respond_to :json
 

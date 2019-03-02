@@ -1,4 +1,5 @@
 class Api::V1::SessionsController < Api::ApiController
+  skip_before_action :authenticate_api!
 
   def create
     user = User.find_by_email(auth_params[:email])
@@ -6,6 +7,7 @@ class Api::V1::SessionsController < Api::ApiController
       jwt = Auth.issue({ user: user.id })
       render json: { jwt: jwt }
     else
+      render json: { errors: 'unauthorized' }, status: 401
     end
   end
 
