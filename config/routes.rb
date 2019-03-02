@@ -21,7 +21,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-
+      post '/login', to: 'sessions#create'
+      
       get '/last_five_notifications', to: 'notifications#last_five'
       resources :notifications, only: [:show] do
         member do
