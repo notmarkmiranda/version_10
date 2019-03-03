@@ -33,8 +33,11 @@ Rails.application.routes.draw do
       end
 
       # Public facing API start
-      namespace :leagues do
-        get 'public'
+      post '/login', to: 'sessions#create'
+      resources :leagues, only: [:show] do
+        collection do
+          get 'public'
+        end
       end
       # Public facing API end
     end

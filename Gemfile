@@ -21,6 +21,7 @@ gem 'react-rails'
 gem 'active_model_serializers'
 gem 'newrelic_rpm'
 gem 'rack-cors', require: 'rack/cors'
+gem 'jwt'
 
 group :development, :test do
   gem 'factory_bot_rails'
@@ -28,6 +29,7 @@ group :development, :test do
   gem 'pry'
   gem 'rb-readline'
   gem 'rspec-rails'
+  gem 'figaro'
 end
 
 group :development do

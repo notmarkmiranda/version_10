@@ -1,6 +1,8 @@
+# This controller was initially made for an internal api call, thats why there are 2 authenticate calls
 class Api::V1::NotificationsController < Api::ApiController
   include ActionController::Serialization
   respond_to :json
+  skip_before_action :authenticate_api!
   before_action :authenticate_user!
 
   def last_five
