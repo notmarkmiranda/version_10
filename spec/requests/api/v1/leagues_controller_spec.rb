@@ -41,7 +41,8 @@ describe 'Api::V1::LeaguesController', type: :request do
         "name" => public_league.name,
         "games_count" => public_league.games_count,
         "average_players_per_game" => public_league.average_players_per_game,
-        "average_pot_size" => public_league.average_pot_size
+        "average_pot_size" => public_league.average_pot_size,
+        "location" => public_league.location
       }
 
       get_public_leagues
@@ -59,7 +60,8 @@ describe 'Api::V1::LeaguesController', type: :request do
                             "name" => league.name,
                             "games_count" => league.games_count,
                             "average_players_per_game" => league.average_players_per_game,
-                            "average_pot_size" => league.average_pot_size
+                            "average_pot_size" => league.average_pot_size,
+                            "location" => league.location
                           }
                         end
 
