@@ -1,8 +1,28 @@
 require 'rails_helper'
 
 describe 'Api::V1::LeaguesController', type: :request do
-  describe 'get#public' do
-    subject(:get_public_leagues) { get api_v1_leagues_public_path }
+  describe 'GET#show' do
+    before do
+      create_list(:game, 3, season: league.current_season)
+      get api_v1_league_path(league)
+    end
+
+    describe 'for a public league' do
+      let(:league) { create(:league, privated: false, location: 'Denver, CO') }
+      let(:parsed_response) { JSON.parse(response.body) }
+
+      it 'returns the league with all of the things associated' do
+        expect(parsed_response['id']).to eq(league.id)
+        expect(parsed_response['leader_full_name']).to eq("No One")
+        expect(parsed_response['most_second_place_finishes']).to eq([['Stat not yet available.'], 0])
+      end
+    end
+
+    describe 'for a private league'
+  end
+
+  describe 'GET#public' do
+    subject(:get_public_leagues) { get public_api_v1_leagues_path }
 
     let!(:private_league) { create(:league, privated: true) }
 

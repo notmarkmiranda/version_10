@@ -21,8 +21,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      post '/login', to: 'sessions#create'
-      
+
       get '/last_five_notifications', to: 'notifications#last_five'
       resources :notifications, only: [:show] do
         member do
@@ -34,8 +33,11 @@ Rails.application.routes.draw do
       end
 
       # Public facing API start
-      namespace :leagues do
-        get 'public'
+      post '/login', to: 'sessions#create'
+      resources :leagues, only: [:show] do
+        collection do
+          get 'public'
+        end
       end
       # Public facing API end
     end
