@@ -35,6 +35,7 @@ module Version10
       allow do
         origins '*'
         resource '/api/v1/leagues/public', headers: :any, methods: [:get]
+        resource '/api/v1/leagues/:id', headers: :any, methods: [:get]
       end
     end
   end

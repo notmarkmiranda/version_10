@@ -5,6 +5,7 @@ class LeagueDetailsSerializer < ActiveModel::Serializer
              :location,
              :privated_text,
              :seasons_count,
+             :games_count,
              :average_players_per_game,
              :leader_full_name,
              :most_second_place_finishes,

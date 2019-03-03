@@ -2,7 +2,7 @@ require 'action_view'
 require 'action_view/helpers'
 
 class LeagueSerializer < ActiveModel::Serializer
-  attributes :id, :name, :games_count, :average_players_per_game, :average_pot_size
+  attributes :id, :name, :games_count, :average_players_per_game, :average_pot_size, :location
 
   def average_players_per_game
     object.average_players_per_game
