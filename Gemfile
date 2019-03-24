@@ -11,7 +11,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'devise'
+gem 'devise', ">=4.6.0"
 gem 'bootstrap', '~>4.1.1'
 gem 'jquery-rails'
 gem 'pundit'
