@@ -22,6 +22,7 @@ gem 'active_model_serializers'
 gem 'newrelic_rpm'
 gem 'rack-cors', require: 'rack/cors'
 gem 'jwt'
+gem 'activeadmin'
 
 group :development, :test do
   gem 'factory_bot_rails'
