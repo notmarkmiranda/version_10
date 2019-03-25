@@ -10,11 +10,14 @@ class GamesController < ApplicationController
     authorize @game
     if @game.save
       redirect_to @game
+    else
+      flash[:alert] = @game.errors.full_messages.join(", ")
     end
   end
 
   def show
     @game = Game.find(params[:id]).decorate
+    @players = @game.completed? ? @game.players.in_place : @game.players.in_finishing_order
   end
 
   def complete

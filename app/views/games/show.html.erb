@@ -14,7 +14,7 @@
         <li class="list-group-item header-text user-header-text">
           <%= @game.standings_title %>
         </li>
-        <% @game.players.in_place.decorate.each do |player, index| %>
+        <% @players.in_place.decorate.each do |player, index| %>
           <%= link_to user_stats_path(user_id: player.user_id, season: @game.season_id), class: 'list-group-item list-group-item-action stat-line standing' do %>
             <div>
               <%= player.name_with_place %>
