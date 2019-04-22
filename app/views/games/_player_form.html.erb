@@ -1,7 +1,7 @@
 <%= form_for Player.new(user_id: params[:user_id]) do |f| %>
   <div class="form-group">
     <%= f.select :user_id, @game.available_players, { prompt: 'Choose a Player' }, { class: 'form-control user-select mb-1' } %>
-    <a href="#" data-toggle="modal" class="new-user-link" data-target="#exampleModalCenter">Add a User</a>
+    <a href="#" data-toggle="modal" class="new-user-link btn btn-outline-info btn-block mt-2" data-target="#exampleModalCenter">Add a User</a>
   </div>
   <div class="form-group">
     <%= f.label :additional_expense, 'Rebuy or Add-on' %>
