@@ -1,7 +1,7 @@
 class GameUsersController < ApplicationController
   def create
     authorize game
-    user_creator = UserCreator.new(user_params, game_id)
+    user_creator = UserCreator.new(user_params, game_id, current_user)
     user = user_creator.save
     if user
       redirect_to game_path game, user_id: user.id

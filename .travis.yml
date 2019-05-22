@@ -23,6 +23,8 @@ script:
   - bundle exec rails webpacker:compile
   - bundle exec rspec
 before_install:
+  - npm install -g node-gyp
+  - yarn add node-sass
   - export TZ=US/Mountain
 deploy:
   provider: heroku

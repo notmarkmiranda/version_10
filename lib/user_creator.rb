@@ -1,9 +1,10 @@
 class UserCreator
-  attr_reader :user, :game_id
+  attr_reader :user, :game_id, :requestor 
 
-  def initialize(user_params, game_id, role=nil)
+  def initialize(user_params, game_id, requestor, role=nil)
     @user = User.new(user_params)
     @game_id = game_id
+    @requestor = requestor
   end
 
   def save
@@ -15,7 +16,7 @@ class UserCreator
   private
 
   def create_membership
-    game.league.memberships.create!(user: user, role: 0)
+    game.league.memberships.create!(user: user, role: 0, status: "approved", requestor: requestor)
     user
   end
 
