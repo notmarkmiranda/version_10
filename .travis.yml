@@ -5,31 +5,31 @@ env:
   matrix:
   - DB=postgresql
 before_script:
-  - cp config/database.travis.yml config/database.yml
-  - psql -c 'create database travis_ci_test;' -U postgres
-  - RAILS_ENV=test bundle exec rake db:create db:migrate --trace
+- cp config/database.travis.yml config/database.yml
+- psql -c 'create database travis_ci_test;' -U postgres
+- RAILS_ENV=test bundle exec rake db:create db:migrate --trace
 cache:
   bundler: true
   directories:
-    - node_modules
+  - node_modules
   yarn: true
 install:
-  - bundle install
-  - nvm install node
-  - node -v
-  - npm i -g yarn
-  - yarn
+- bundle install
+- nvm install node
+- node -v
+- npm i -g yarn
+- yarn
 script:
-  - bundle exec rails webpacker:compile
-  - bundle exec rspec
+- bundle exec rails webpacker:compile
+- bundle exec rspec
 before_install:
-  - npm install -g node-gyp
-  - yarn add node-sass
-  - export TZ=US/Mountain
+- npm install -g node-gyp
+- yarn add node-sass
+- export TZ=US/Mountain
 deploy:
   provider: heroku
   api_key:
-    secure: mCJTcQp//m3838TpZZcvpxHkdWhUAvt6DNWSjP4egbtxkUegbJ+g/w2jXqa7PCHRMecDNvBtInqzB5dIzdWHU1dw/WB45ZrLe1e93hRDzk/EWrH83kYIv2fsrPV+ks6LBboKll6FYJpp2nu0SWhN0OQqFlvp5Yksq7XKKI64yC52P8FsOu/l3pxJz67lA+Y5GlHui/Rp9+bji/RldenRNResebYF2szOIMrHZSjXrqjRzkCWVSAZ1cfMUkO68GO5B/UwH4nYE+EYmKvq9jKrOhSyIvLd83FpEySx0ok0hgVAXur+s2MB65H1LBuPeD3tTuTACmf/JxckU+1uN0+ICogi/7wnYuQO8Ktoaw1fA2b+E26LT/fjAUn4oOhXRmXxxNOz5J4zrGMPuco15XYMUicNc/u8EHVJD4i5voNVTzP/onSu5LPQ5YholFQ5EIEEBG1rqLf7NNSiXPdCEzRnojlmU1CSTnuzo4qkGBo/ZP8BKB69bSGFvnLK4uSX0BYTOaIgKYvkRbbM9xr9030SBFkxf6ET9A1M4yWqxbUtAfgSzCTL9rogKiRt5TxrQGngz72IrVusnbLkmEcVta2DffPCG4bIbesFhdYd/HQPR6KOpmcsADmgFFqBKjpmIswWOM47/GXi9kBW8yTLwNIsGgZAYfLYDiVCzDujyugnVxs=
+    secure: QLVADpn+vqujWe/6lo/zDkR7QwK5XQutRYRvNA5ejl6ZOT8/BGhGfeV7fo34zBy9/L6gF1/iHNtcpjz+ZesLkOFMQEt7G/Gifr1kZXT68WSTEUXwSXyCpW94aLeKGy8iXV0c8EvxOqBp/sxy2bMUkx0lOIo6ffJT+JahIFAJfS/R9oZMoJYGF/K36F503Vg5xR/7QSKPldpf7mY/EcIW39SxCS4NxBAaxRm5Jvdg8bmC9B3689rdMIp1wYu5DVzWmhhFaZ1y3goGT60bwKYwfPdhHe4uiVjdKHIoj5krdXUmV9n45ORwrcfL00NL+KSFYhHjRKQE3GSsdGyGdc8HoH9J6NMKs74rukUUD2cSuQqNeMRdI9UnCC/rYgbFaY4t6yUIBNfu3k3Io/CaQ7uxNNDzl8q9E0kp/9YxE1fgA641l7ko6mJla5WWDBvRflQG3WZc8xhHMEQboapW4H/+0Yavll3ODZyuEUD8pQPqwf9WXdraQNrwnlOgb9tI+9ZOGJJyI/WKHzwqll6D3j/ZHltg05Y4hMazw9fQ0Gt+Q/Xa+Mj+bkQFfouVJ9MZ0xXozJB0yh15yfD+ZzBJYWqvCG2Ieevn8Lt2T8LTF13bw4+ecuguvHmapls1dtWow07SCh5TSIFiPdPgdGSp7yZjjbTdJPl18Z/d+ud+LKug6hA=
   app: big-blind
   run: rake db:migrate
   on:
