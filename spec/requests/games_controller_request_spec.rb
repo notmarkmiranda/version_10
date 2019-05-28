@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Games Controller', type: :request do
   let(:league) { create(:league) }
   let(:user) { league.user }
-  let(:game) { create(:game, season: league.current_season) }
+  let(:game) { create(:game, season: league.current_season, buy_in: 1) }
 
   describe 'GET#new' do
     before do
@@ -47,7 +47,7 @@ describe 'Games Controller', type: :request do
         expect {
           post_games
         }.to change { Game.count }.by(1)
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(302)
       end
     end
   end
@@ -56,7 +56,73 @@ describe 'Games Controller', type: :request do
     it 'renders the show template' do
       get "/games/#{game.id}"
 
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe 'GET#edit' do
+    before { stub_current_user(user) }
+
+    subject(:get_edit) { get "/games/#{game.id}/edit" }
+
+    describe 'As an admin' do
+      it 'renders the edit template' do
+        get_edit
+
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    describe 'As a regular user' do
+      let(:membership) { create(:membership, league: league, role: 0) }
+      let(:user) { membership.user }
+
+      it 'redirects the user' do
+        get_edit
+
+        expect(response).to have_http_status(302)
+      end
+    end
+  end
+
+  describe 'PATCH#update' do
+    before { stub_current_user(user) }
+
+    let(:game_params) do
+      { buy_in: 100}
+    end
+
+    subject(:patch_update) { patch "/games/#{game.id}", params: { game: game_params } }
+
+    describe 'As an admin' do
+      it 'updates the game' do
+        expect {
+          patch_update
+        }.to change { game.reload; game.buy_in }
+      end
+
+      it 'redirects the user' do
+        patch_update
+
+        expect(response).to have_http_status(302)
+      end
+    end
+
+    describe 'As a regular user' do
+      let(:membership) { create(:membership, league: league, role: 0) }
+      let(:user) { membership.user }
+
+      it 'does not update the game' do
+        expect {
+          patch_update
+        }.not_to change { game.reload; game.buy_in }
+      end
+
+      it 'redirects the user' do
+        patch_update
+
+        expect(response).to have_http_status(302)
+      end
     end
   end
 
