@@ -20,6 +20,18 @@ class GamesController < ApplicationController
     @players = @game.completed? ? @game.players.in_place : @game.players.in_finishing_order
   end
 
+  def edit
+    @game = Game.find(params[:id]).decorate
+    authorize @game
+  end
+
+  def update
+    @game = Game.find(params[:id]).decorate
+    authorize @game
+    @game.update(game_params)
+    redirect_to @game
+  end
+
   def complete
     @game = Game.find(params[:id])
     authorize @game
