@@ -3,6 +3,9 @@
     <div class="game-actions">
       <%= link_to 'Return to League', league_path(@game.league), class: 'btn btn-outline-primary btn-sm mb-2 mr-2' %>
       <%= @game.complete_or_uncomplete_buttons %>
+      <% if policy(@game).can_edit? %>
+        <%= link_to 'Edit Game', edit_game_path(@game), class: 'btn btn-outline-info btn-sm mb-2 ml-2' %>
+      <% end %>
     </div>
     <div class="card border-primary standings mb-4">
       <div class="card-header header-text border-primary text-primary">

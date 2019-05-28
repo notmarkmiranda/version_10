@@ -6,6 +6,10 @@ class GamePolicy < ApplicationPolicy
     @game = game
   end
 
+  def can_edit?
+    user_is_admin? && game.not_completed?
+  end
+  
   def create?
     user_is_admin?
   end
@@ -15,6 +19,14 @@ class GamePolicy < ApplicationPolicy
   end
 
   def new?
+    user_is_admin?
+  end
+
+  def edit?
+    user_is_admin?
+  end
+
+  def update?
     user_is_admin?
   end
 
