@@ -2,4 +2,7 @@ a.list-group-item.public-league {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  &:hover {
+    text-decoration: none;
+  }
 }
