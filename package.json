@@ -1,13 +1,18 @@
 {
   "name": "version_10",
   "private": true,
+  "engines": {
+    "node": ">=0.12.4",
+    "npm": ">=1.3.14"
+  },
   "dependencies": {
     "@rails/webpacker": "3.5",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "babel-eslint": "^10.0.1",
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-preset-react": "^6.24.1",
     "babelify": "^10.0.0",
+    "bcrypt-nodejs": "0.0.3",
     "browserify": "^16.2.3",
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
@@ -22,5 +27,8 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "webpack-dev-server": "2.11.2"
+  },
+  "scripts": {
+    "postinstall": "npm rebuild node-sass"
   }
 }
