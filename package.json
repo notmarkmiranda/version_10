@@ -1,9 +1,13 @@
 {
   "name": "version_10",
   "private": true,
+  "engines": {
+    "node": ">=0.12.4",
+    "npm": ">=1.3.14"
+  },
   "dependencies": {
     "@rails/webpacker": "3.5",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "babel-eslint": "^10.0.1",
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-preset-react": "^6.24.1",
